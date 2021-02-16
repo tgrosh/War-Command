@@ -1295,11 +1295,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1363811600}
   - component: {fileID: 1363811601}
+  - component: {fileID: 1363811605}
+  - component: {fileID: 1363811604}
   - component: {fileID: 1363811602}
   - component: {fileID: 1363811606}
   - component: {fileID: 1363811603}
-  - component: {fileID: 1363811604}
-  - component: {fileID: 1363811605}
+  - component: {fileID: 1363811607}
   m_Layer: 0
   m_Name: Probe
   m_TagString: Untagged
@@ -1416,6 +1417,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!114 &1363811607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363811599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35fd423f3ed8ad2498d4949516b101c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectionMarkerPrefab: {fileID: 1548235043369970, guid: 9360c83fe1796ad4d9de6afe0ccf9b58, type: 3}
 --- !u!1001 &1756555773
 PrefabInstance:
   m_ObjectHideFlags: 0

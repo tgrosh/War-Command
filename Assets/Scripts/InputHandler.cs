@@ -37,6 +37,7 @@ public class InputHandler : MonoBehaviour
                 {
                     foreach (Mover mover in GetMovers())
                     {
+                        mover.ClearDestination();
                         mover.SetDestinationPosition(hit.collider.transform.position);
 
                         Targeter targeter = mover.GetComponent<Targeter>();
@@ -52,6 +53,12 @@ public class InputHandler : MonoBehaviour
                     {
                         mover.SetDestinationPosition(hit.point);
                         mover.ShowDestinationMarker(hit.point);
+
+                        Targeter targeter = mover.GetComponent<Targeter>();
+                        if (targeter)
+                        {
+                            targeter.ClearTarget();
+                        }
                     }
                 }
             }

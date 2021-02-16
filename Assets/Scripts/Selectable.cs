@@ -27,6 +27,7 @@ public class Selectable : MonoBehaviour
 
     void ShowMarker()
     {
-        marker = Instantiate(selectionMarkerPrefab, (Vector3.up * .6f), Quaternion.Euler(Vector3.right * 90), transform);
+        marker = Instantiate(selectionMarkerPrefab, transform.position + (Vector3.up * .6f), Quaternion.Euler(Vector3.right * 90));
+        marker.transform.parent = transform;
     }
 }

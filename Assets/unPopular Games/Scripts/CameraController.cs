@@ -84,15 +84,13 @@ public class CameraController : MonoBehaviour
 
         
         if (!Mouse.current.middleButton.isPressed)
-        {            
-            Cursor.lockState = CursorLockMode.None; 
+        {
             isRotating = false;
+            Cursor.visible = cursorVisible;
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = cursorVisible;
-
+            Cursor.visible = false;
             newRotation *= Quaternion.Euler(Vector3.up * Mouse.current.delta.x.ReadValue() * _camRotationMouseSpeed);
         }
 

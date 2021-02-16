@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class Targeter : MonoBehaviour
     {
         if (target == null)
         {
-            Destroy(marker);
+            ClearTarget();
         }
     }
 
@@ -32,4 +33,12 @@ public class Targeter : MonoBehaviour
         marker = Instantiate(targetMarkerPrefab, target.position + (Vector3.up * .1f), Quaternion.Euler(Vector3.right * 90));
     }
 
+    public void ClearTarget()
+    {
+        target = null;
+        if (marker)
+        {
+            Destroy(marker);
+        }
+    }
 }

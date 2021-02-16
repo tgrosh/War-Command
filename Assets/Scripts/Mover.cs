@@ -30,6 +30,14 @@ public class Mover : MonoBehaviour
         agent.destination = targetPosition;
     }
 
+    public void ClearDestination()
+    {
+        if (marker)
+        {
+            Destroy(marker);
+        }
+    }
+
     public void ShowDestinationMarker(Vector3 markerPosition)
     {
         if (marker)

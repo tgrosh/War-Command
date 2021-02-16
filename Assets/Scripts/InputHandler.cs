@@ -35,16 +35,23 @@ public class InputHandler : MonoBehaviour
             {
                 if (hit.collider.GetComponent<MoveTarget>())
                 {
-                    foreach (Moveable moveable in GetMoveables())
+                    foreach (Mover mover in GetMovers())
                     {
-                        moveable.SetDestinationTarget(hit.collider.transform);
+                        mover.SetDestinationPosition(hit.collider.transform.position);
+
+                        Targeter targeter = mover.GetComponent<Targeter>();
+                        if (targeter)
+                        {
+                            targeter.SetTarget(hit.collider.transform);
+                        }
                     }
                 }
                 else
                 {
-                    foreach (Moveable moveable in GetMoveables())
+                    foreach (Mover mover in GetMovers())
                     {
-                        moveable.SetDestinationPosition(hit.point);
+                        mover.SetDestinationPosition(hit.point);
+                        mover.ShowDestinationMarker(hit.point);
                     }
                 }
             }
@@ -60,20 +67,20 @@ public class InputHandler : MonoBehaviour
         selectedObjects.Clear();
     }
 
-    List<Moveable> GetMoveables()
+    List<Mover> GetMovers()
     {
-        List<Moveable> moveables = new List<Moveable>();
+        List<Mover> movers = new List<Mover>();
 
         foreach (Selectable selectable in selectedObjects)
         {
-            Moveable moveable = selectable.GetComponent<Moveable>();
+            Mover moveable = selectable.GetComponent<Mover>();
             if (moveable)
             {
-                moveables.Add(moveable);
+                movers.Add(moveable);
             }
         }
 
-        return moveables;
+        return movers;
     }
 
     RaycastHit RayCast() {

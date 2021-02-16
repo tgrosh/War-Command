@@ -13,24 +13,7 @@ public class Selectable : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            RaycastHit hit;
-
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 500))
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    isSelected = true;
-                }
-                else
-                {
-                    isSelected = false;
-                }
-            }
-        }
-
+    {        
         if (marker && !isSelected)
         {
             Destroy(marker);

@@ -8,6 +8,7 @@ public class Collector : MonoBehaviour
 {
     public VisualEffect collectorEffect;
     public float collectionPerSecond;
+    public float collectionFacingSpeed;
 
     NavMeshAgent agent;
     bool atResourceTarget;
@@ -40,6 +41,7 @@ public class Collector : MonoBehaviour
 
         if (atResourceTarget)
         {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(resourceTarget.transform.position - transform.position), Time.deltaTime * collectionFacingSpeed);
             if (collectionPerSecond > 0 && collectionTimer > 1/collectionPerSecond)
             {
                 EventManager.Emit(EventManager.Events.ResourceCollected, 1);

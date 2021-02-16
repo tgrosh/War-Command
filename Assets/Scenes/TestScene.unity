@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 24575117}
   - component: {fileID: 24575116}
   - component: {fileID: 24575119}
+  - component: {fileID: 24575120}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -210,6 +211,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c0d4fe8de60cb498129c20c9cf4a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &24575120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24575115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d046f7a8a1f3a34f947d63a8552d199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedObjects: []
 --- !u!1 &31599100 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1011319553682498, guid: 8ad137f6808375f4e885d60451f0c4fc, type: 3}
@@ -1297,10 +1311,10 @@ GameObject:
   - component: {fileID: 1363811601}
   - component: {fileID: 1363811605}
   - component: {fileID: 1363811604}
-  - component: {fileID: 1363811602}
   - component: {fileID: 1363811606}
   - component: {fileID: 1363811603}
   - component: {fileID: 1363811607}
+  - component: {fileID: 1363811602}
   m_Layer: 0
   m_Name: Probe
   m_TagString: Untagged
@@ -1355,7 +1369,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1363811599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b94ed326dc4ec254e9821c4bc857bdb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 86e22299b97efbc4e9510d68ce093a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   locationMarkerPrefab: {fileID: 1101137432051902, guid: 283b2aa23e3253e4ea509137c58785b7, type: 3}
@@ -1430,6 +1444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionMarkerPrefab: {fileID: 1548235043369970, guid: 9360c83fe1796ad4d9de6afe0ccf9b58, type: 3}
+  isSelected: 0
 --- !u!1001 &1756555773
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -26,6 +26,29 @@ public class InputHandler : MonoBehaviour
                 }
             }
         }
+
+        if (Mouse.current.rightButton.wasPressedThisFrame && selectedObjects.Count > 0)
+        {
+            RaycastHit hit = RayCast();
+
+            if (hit.collider)
+            {
+                if (hit.collider.GetComponent<MoveTarget>())
+                {
+                    foreach (Moveable moveable in GetMoveables())
+                    {
+                        moveable.SetDestinationTarget(hit.collider.transform);
+                    }
+                }
+                else
+                {
+                    foreach (Moveable moveable in GetMoveables())
+                    {
+                        moveable.SetDestinationPosition(hit.point);
+                    }
+                }
+            }
+        }
     }
 
     void ClearSelection()
@@ -35,6 +58,22 @@ public class InputHandler : MonoBehaviour
             selectable.isSelected = false;
         }
         selectedObjects.Clear();
+    }
+
+    List<Moveable> GetMoveables()
+    {
+        List<Moveable> moveables = new List<Moveable>();
+
+        foreach (Selectable selectable in selectedObjects)
+        {
+            Moveable moveable = selectable.GetComponent<Moveable>();
+            if (moveable)
+            {
+                moveables.Add(moveable);
+            }
+        }
+
+        return moveables;
     }
 
     RaycastHit RayCast() {

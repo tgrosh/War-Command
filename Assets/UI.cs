@@ -1,0 +1,29 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UI : MonoBehaviour
+{
+    public Text resourceCounter;
+
+    int resources;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        EventManager.Subscribe(EventManager.Events.ResourceCollected, ResourceCollected);
+    }
+
+    private void ResourceCollected(object arg)
+    {
+        resources += (int)arg;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        resourceCounter.text = resources.ToString();
+    }
+}

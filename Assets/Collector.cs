@@ -7,7 +7,6 @@ using UnityEngine.VFX;
 public class Collector : MonoBehaviour
 {
     public VisualEffect collectorEffect;
-    public int collectedAmount;
     public float collectionPerSecond;
 
     NavMeshAgent agent;
@@ -29,6 +28,9 @@ public class Collector : MonoBehaviour
         if (targeter.target)
         {
             resourceTarget = targeter.target.GetComponent<ResourceNode>();
+        } else
+        {
+            resourceTarget = null;
         }
 
         if (!resourceTarget)
@@ -40,7 +42,7 @@ public class Collector : MonoBehaviour
         {
             if (collectionPerSecond > 0 && collectionTimer > 1/collectionPerSecond)
             {
-                collectedAmount += resourceTarget.Collect();
+                EventManager.Emit(EventManager.Events.ResourceCollected, 1);
                 collectionTimer = 0f;
             }
             collectionTimer += Time.deltaTime;

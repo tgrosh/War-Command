@@ -14,7 +14,7 @@ public class ClickToMove : MonoBehaviour
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();        
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -28,9 +28,9 @@ public class ClickToMove : MonoBehaviour
             {
                 if (hit.collider.GetComponent<MoveTarget>())
                 {
-                    SetTarget(hit.collider.transform);
-                } else { 
-                    SetDestination(hit.point);
+                    SetDestinationTarget(hit.collider.transform);
+                } else {
+                    SetDestinationPosition(hit.point);
                 }
             }
         }
@@ -41,16 +41,28 @@ public class ClickToMove : MonoBehaviour
         }
     }
 
-    void SetTarget(Transform targetTransform)
+    void SetDestinationTarget(Transform targetTransform)
     {
         agent.destination = targetTransform.position;
         ShowMarker(targetMarkerPrefab, new Vector3(targetTransform.position.x, .55f, targetTransform.position.z));
+        SetTarget(targetTransform);
     }
 
-    void SetDestination( Vector3 targetPosition)
+    void SetTarget(Transform targetTransform)
+    {
+        Targeter targeter = GetComponent<Targeter>();
+
+        if (targeter)
+        {
+            targeter.target = targetTransform;
+        }
+    }
+
+    void SetDestinationPosition( Vector3 targetPosition)
     {
         agent.destination = targetPosition;
         ShowMarker(locationMarkerPrefab, targetPosition);
+        SetTarget(null);
     }
 
     void ShowMarker(GameObject prefab, Vector3 markerPosition)

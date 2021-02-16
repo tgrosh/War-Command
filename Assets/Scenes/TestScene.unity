@@ -1312,9 +1312,9 @@ GameObject:
   - component: {fileID: 1363811605}
   - component: {fileID: 1363811604}
   - component: {fileID: 1363811606}
+  - component: {fileID: 1363811602}
   - component: {fileID: 1363811603}
   - component: {fileID: 1363811607}
-  - component: {fileID: 1363811602}
   m_Layer: 0
   m_Name: Probe
   m_TagString: Untagged
@@ -1373,7 +1373,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locationMarkerPrefab: {fileID: 1101137432051902, guid: 283b2aa23e3253e4ea509137c58785b7, type: 3}
-  targetMarkerPrefab: {fileID: 1180672090123032, guid: 5d4fd87639fae7344aec91e10766c92a, type: 3}
 --- !u!114 &1363811603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1431,6 +1430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  targetMarkerPrefab: {fileID: 1180672090123032, guid: 5d4fd87639fae7344aec91e10766c92a, type: 3}
 --- !u!114 &1363811607
 MonoBehaviour:
   m_ObjectHideFlags: 0

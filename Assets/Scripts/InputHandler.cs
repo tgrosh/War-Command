@@ -24,6 +24,12 @@ public class InputHandler : MonoBehaviour
                     selectable.isSelected = true;
                     selectedObjects.Add(selectable);
                 }
+
+                Builder builder = hit.collider.GetComponent<Builder>();
+                if (builder)
+                {
+                    builder.Select();
+                }
             }
         }
 

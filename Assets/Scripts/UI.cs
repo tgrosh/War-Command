@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     public Text resourceCounter;
+    public GameObject toolbar;
+    public Button buildButtonPrefab;
 
     int resources;
 
@@ -14,6 +16,18 @@ public class UI : MonoBehaviour
     void Start()
     {
         EventManager.Subscribe(EventManager.Events.ResourceCollected, ResourceCollected);
+        EventManager.Subscribe(EventManager.Events.RegisterBuildMenuItems, RegisterBuildMenuItems);
+    }
+
+    private void RegisterBuildMenuItems(object arg0)
+    {
+        List<BuildMenuItem> items = arg0 as List<BuildMenuItem>;
+
+        foreach (BuildMenuItem item in items)
+        {
+            Button button = Instantiate(buildButtonPrefab, toolbar.transform);
+            button.transform.Find("Image").GetComponent<Image>().sprite = item.menuIcon;
+        }
     }
 
     private void ResourceCollected(object arg)

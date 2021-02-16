@@ -8,7 +8,8 @@ public class EventManager : MonoBehaviour
     public Dictionary<Events, UnityEvent<object>> eventDictionary;
     public enum Events
     {
-        ResourceCollected
+        ResourceCollected,
+        RegisterBuildMenuItems
     }
 
     private static EventManager eventManager;

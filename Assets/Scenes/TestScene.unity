@@ -1178,7 +1178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94ed326dc4ec254e9821c4bc857bdb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationMarkerPrefab: {fileID: 1180672090123032, guid: 5d4fd87639fae7344aec91e10766c92a, type: 3}
+  locationMarkerPrefab: {fileID: 1101137432051902, guid: 283b2aa23e3253e4ea509137c58785b7, type: 3}
+  targetMarkerPrefab: {fileID: 1180672090123032, guid: 5d4fd87639fae7344aec91e10766c92a, type: 3}
 --- !u!1 &1609357852
 GameObject:
   m_ObjectHideFlags: 0

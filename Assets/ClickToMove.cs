@@ -7,9 +7,10 @@ using UnityEngine.InputSystem;
 public class ClickToMove : MonoBehaviour
 {
     public GameObject locationMarkerPrefab;
+    public GameObject targetMarkerPrefab;
 
     NavMeshAgent agent;
-    GameObject locationMarker;
+    GameObject marker;
 
     void Start()
     {
@@ -23,30 +24,42 @@ public class ClickToMove : MonoBehaviour
         {
             RaycastHit hit;
 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 100))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 500))
             {
                 if (hit.collider.GetComponent<MoveTarget>())
                 {
-                    SetDestination(hit.transform.position);
+                    SetTarget(hit.collider.transform);
+                } else { 
+                    SetDestination(hit.point);
                 }
-                SetDestination(hit.point);
             }
         }
 
-        if (agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
+        if (marker && agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
         {
-            Destroy(locationMarker);
+            Destroy(marker);
         }
     }
 
-    void SetDestination(Vector3 targetPosition)
+    void SetTarget(Transform targetTransform)
+    {
+        agent.destination = targetTransform.position;
+        ShowMarker(targetMarkerPrefab, new Vector3(targetTransform.position.x, .55f, targetTransform.position.z));
+    }
+
+    void SetDestination( Vector3 targetPosition)
     {
         agent.destination = targetPosition;
-        if (locationMarker)
+        ShowMarker(locationMarkerPrefab, targetPosition);
+    }
+
+    void ShowMarker(GameObject prefab, Vector3 markerPosition)
+    {
+        if (marker)
         {
-            Destroy(locationMarker);
+            Destroy(marker);
         }
-        locationMarker = Instantiate(locationMarkerPrefab, targetPosition+(Vector3.up*1.55f), Quaternion.Euler(Vector3.right*90));
+        marker = Instantiate(prefab, markerPosition + (Vector3.up*.1f), Quaternion.Euler(Vector3.right * 90));
     }
         
 }

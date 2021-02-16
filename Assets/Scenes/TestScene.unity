@@ -1386,6 +1386,7 @@ MonoBehaviour:
   _camMovementSpeed: 1
   _camSmoothness: 10
   _camRotationAmount: 1
+  _camRotationMouseSpeed: 0.25
   _camBorderMovement: 5
   _maxCamZoom: 10
   _minCamZoom: 100
@@ -1399,8 +1400,8 @@ MonoBehaviour:
   newPosition: {x: 0, y: 0, z: 0}
   newRotation: {x: 0, y: 0, z: 0, w: 0}
   newZoom: {x: 0, y: 0, z: 0}
-  rotateStartPosition: {x: 0, y: 0, z: 0}
-  rotateCurrentPosition: {x: 0, y: 0, z: 0}
+  rotateStartPosition: 0
+  rotateCurrentPosition: 0
 --- !u!4 &1760517287
 Transform:
   m_ObjectHideFlags: 0

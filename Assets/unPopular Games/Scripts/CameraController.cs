@@ -19,6 +19,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _camSmoothness = 10f;
 
     [SerializeField] private float _camRotationAmount = 1f;
+    [SerializeField] private float _camRotationMouseSpeed = .5f;
     [SerializeField] private float _camBorderMovement = 5f;
 
     [SerializeField] private float _maxCamZoom = 30f;
@@ -39,8 +40,9 @@ public class CameraController : MonoBehaviour
     public Vector3 newZoom;
 
     //MouseMovement
-    public Vector3 rotateStartPosition;
-    public Vector3 rotateCurrentPosition;
+    public float rotateStartPosition;
+    public float rotateCurrentPosition;
+    bool isRotating;
 
     Vector2 pos1;
     Vector2 pos2;
@@ -80,17 +82,18 @@ public class CameraController : MonoBehaviour
 
         //Camera rotating on mouse scroll button hold
 
-
+        
         if (!Mouse.current.middleButton.isPressed)
         {            
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.None; 
+            isRotating = false;
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = cursorVisible;
 
-            newRotation *= Quaternion.Euler(Vector3.up * Mouse.current.position.x.ReadValue());
+            newRotation *= Quaternion.Euler(Vector3.up * Mouse.current.delta.x.ReadValue() * _camRotationMouseSpeed);
         }
 
     }

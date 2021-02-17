@@ -97,6 +97,7 @@ public class InputHandler : MonoBehaviour
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
             currentBuildable = Instantiate(buildAction.buildable.gameObject, hit.point, transform.rotation);
+            currentBuildable.GetComponent<Buildable>().currentBuildState = BuildState.Placing;
         }
     }
 

@@ -9,7 +9,6 @@ public class Builder : MonoBehaviour
 
     private void Start()
     {
-        
     }
 
     private void Update()

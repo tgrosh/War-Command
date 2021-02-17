@@ -10,7 +10,7 @@ public class InputHandler : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Subscribe(EventManager.Events.ToolbarButtonPressed, ToolbarButtonPressed);
+        EventManager.Subscribe(EventManager.Events.BuildButtonPressed, BuildButtonPressed);
     }
 
     // Update is called once per frame
@@ -77,11 +77,15 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    private void ToolbarButtonPressed(object arg0)
+    private void BuildButtonPressed(object arg0)
     {
         BuildAction buildAction = arg0 as BuildAction;
-
-        Debug.Log(buildAction);
+        RaycastHit hit;
+        
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
+        {
+            Instantiate(buildAction.buildable.gameObject, hit.point, transform.rotation);
+        }
     }
 
     void ClearSelection()

@@ -8,6 +8,6 @@ public class BuildButton : MonoBehaviour
 
     public void ToolbarButtonPressed()
     {
-        EventManager.Emit(EventManager.Events.ToolbarButtonPressed, buildAction); 
+        EventManager.Emit(EventManager.Events.BuildButtonPressed, buildAction); 
     }
 }

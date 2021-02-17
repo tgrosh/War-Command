@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
+    public GameObject currentBuildable;
 
     private void Start()
     {
@@ -16,6 +17,17 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentBuildable)
+        {
+            //follow the mouse
+            RaycastHit hit = RayCast();
+
+            if (hit.collider && hit.collider.gameObject != currentBuildable.gameObject)
+            {
+                currentBuildable.transform.position = hit.point;
+            }
+        }
+
         if (!EventSystem.current.IsPointerOverGameObject(-1) && Mouse.current.leftButton.wasPressedThisFrame)
         {
             RaycastHit hit = RayCast();
@@ -84,7 +96,7 @@ public class InputHandler : MonoBehaviour
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
-            Instantiate(buildAction.buildable.gameObject, hit.point, transform.rotation);
+            currentBuildable = Instantiate(buildAction.buildable.gameObject, hit.point, transform.rotation);
         }
     }
 

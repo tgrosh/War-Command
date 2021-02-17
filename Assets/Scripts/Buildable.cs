@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Buildable : MonoBehaviour
 {
@@ -17,5 +18,11 @@ public class Buildable : MonoBehaviour
     void Update()
     {
         placeholderActor.SetActive(currentBuildState == BuildState.Placing);
+
+        if (currentBuildState == BuildState.Placing)
+        {
+            NavMeshHit navMeshHit;
+            Debug.Log(NavMesh.SamplePosition(transform.position, out navMeshHit, .5f, NavMesh.AllAreas));
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ public class InputHandler : MonoBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
     public GameObject currentBuildable;
+    public LayerMask rayLayers;
 
     private void Start()
     {
@@ -135,7 +137,7 @@ public class InputHandler : MonoBehaviour
     RaycastHit RayCast() {
         RaycastHit hit;
 
-        Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 500);
+        Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 500, rayLayers);
 
         return hit;
     }

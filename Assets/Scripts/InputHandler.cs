@@ -7,6 +7,11 @@ public class InputHandler : MonoBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
 
+    private void Start()
+    {
+        EventManager.Subscribe(EventManager.Events.ToolbarButtonPressed, ToolbarButtonPressed);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -71,11 +76,24 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    private void ToolbarButtonPressed(object arg0)
+    {
+        BuildAction buildAction = arg0 as BuildAction;
+
+        Debug.Log(buildAction);
+    }
+
     void ClearSelection()
     {
         foreach (Selectable selectable in selectedObjects)
         {
             selectable.isSelected = false;
+
+            Builder builder = selectable.GetComponent<Builder>();
+            if (builder)
+            {
+                builder.Unselect();
+            }
         }
         selectedObjects.Clear();
     }

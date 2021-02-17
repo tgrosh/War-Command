@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BuildButton : MonoBehaviour
 {
-    public string buildId;
+    public BuildAction buildAction;
 
     public void ToolbarButtonPressed()
     {
-        EventManager.Emit(EventManager.Events.ToolbarButtonPressed, buildId); 
+        EventManager.Emit(EventManager.Events.ToolbarButtonPressed, buildAction); 
     }
 }

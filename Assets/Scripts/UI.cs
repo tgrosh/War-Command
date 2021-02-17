@@ -11,22 +11,31 @@ public class UI : MonoBehaviour
     public Button buildButtonPrefab;
 
     int resources;
+    Builder currentBuilder;
 
     // Start is called before the first frame update
     void Start()
     {
         EventManager.Subscribe(EventManager.Events.ResourceCollected, ResourceCollected);
-        EventManager.Subscribe(EventManager.Events.RegisterBuildMenuItems, RegisterBuildMenuItems);
+        EventManager.Subscribe(EventManager.Events.RegisterBuilder, RegisterBuilder);
     }
 
-    private void RegisterBuildMenuItems(object arg0)
+    private void RegisterBuilder(object arg0)
     {
-        List<BuildMenuItem> items = arg0 as List<BuildMenuItem>;
+        Builder builder = arg0 as Builder;
+        currentBuilder = builder;
+        if (builder)
+        {
+            RegisterBuildMenuItems(builder.buildMenuItems);
+        }
+    }
 
-        foreach (BuildMenuItem item in items)
+    private void RegisterBuildMenuItems(List<BuildAction> items)
+    {
+        foreach (BuildAction item in items)
         {
             Button button = Instantiate(buildButtonPrefab, toolbar.transform);
-            button.GetComponent<BuildButton>().buildId = item.id;
+            button.GetComponent<BuildButton>().buildAction = item;
             button.transform.Find("Image").GetComponent<Image>().sprite = item.menuIcon;
         }
     }
@@ -40,6 +49,14 @@ public class UI : MonoBehaviour
     void Update()
     {
         resourceCounter.text = resources.ToString();
+
+        if (currentBuilder == null)
+        {
+            foreach (Transform child in toolbar.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+        }
     }
 
 }

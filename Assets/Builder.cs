@@ -5,22 +5,25 @@ using UnityEngine;
 
 public class Builder : MonoBehaviour
 {
-    public List<BuildMenuItem> buildMenuItems = new List<BuildMenuItem>();
+    public List<BuildAction> buildMenuItems = new List<BuildAction>();
 
     private void Start()
     {
-        EventManager.Subscribe(EventManager.Events.ToolbarButtonPressed, ToolbarButtonPressed);
+        
     }
 
-    private void ToolbarButtonPressed(object arg0)
+    private void Update()
     {
-        string id = arg0 as string;
         
-        // do something with that id
     }
 
     public void Select()
     {
-        EventManager.Emit(EventManager.Events.RegisterBuildMenuItems, buildMenuItems);
+        EventManager.Emit(EventManager.Events.RegisterBuilder, this);
+    }
+
+    public void Unselect()
+    {
+        EventManager.Emit(EventManager.Events.RegisterBuilder, null);
     }
 }

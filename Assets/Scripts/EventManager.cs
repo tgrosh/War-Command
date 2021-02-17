@@ -9,8 +9,8 @@ public class EventManager : MonoBehaviour
     public enum Events
     {
         ResourceCollected,
-        RegisterBuildMenuItems,
-        ToolbarButtonPressed
+        ToolbarButtonPressed,
+        RegisterBuilder
     }
 
     private static EventManager eventManager;

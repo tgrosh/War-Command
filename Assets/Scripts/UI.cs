@@ -26,6 +26,7 @@ public class UI : MonoBehaviour
         foreach (BuildMenuItem item in items)
         {
             Button button = Instantiate(buildButtonPrefab, toolbar.transform);
+            button.GetComponent<BuildButton>().buildId = item.id;
             button.transform.Find("Image").GetComponent<Image>().sprite = item.menuIcon;
         }
     }
@@ -40,4 +41,5 @@ public class UI : MonoBehaviour
     {
         resourceCounter.text = resources.ToString();
     }
+
 }

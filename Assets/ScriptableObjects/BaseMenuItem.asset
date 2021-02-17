@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3d333e16f6941469796a8f3563c22d, type: 3}
   m_Name: BaseMenuItem
   m_EditorClassIdentifier: 
+  id: BuildBase
+  title: Build Base
   menuIcon: {fileID: 21300000, guid: 112aa1cbfb7f5481992a893927e886bb, type: 3}
   buildable: {fileID: 5459268800770653939, guid: 1f3f0ded37def974c9e5f72607a60c74, type: 3}

@@ -780,6 +780,7 @@ GameObject:
   - component: {fileID: 934219304}
   - component: {fileID: 934219303}
   - component: {fileID: 934219302}
+  - component: {fileID: 934219306}
   m_Layer: 3
   m_Name: Obstacle
   m_TagString: Untagged
@@ -863,6 +864,22 @@ Transform:
   m_Father: {fileID: 199543375}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!208 &934219306
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934219301}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &970285056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,6 +1075,7 @@ GameObject:
   - component: {fileID: 1043879293}
   - component: {fileID: 1043879292}
   - component: {fileID: 1043879291}
+  - component: {fileID: 1043879295}
   m_Layer: 3
   m_Name: Obstacle (1)
   m_TagString: Untagged
@@ -1141,6 +1159,22 @@ Transform:
   m_Father: {fileID: 199543375}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 83.316, z: 0}
+--- !u!208 &1043879295
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043879290}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1123657049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,6 +1587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locationMarkerPrefab: {fileID: 6886364940454071289, guid: 38b19a26bc823a246a2384e809601e20, type: 3}
+  showPath: 0
 --- !u!114 &1363811603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1640,7 +1675,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildMenuItems:
   - {fileID: 11400000, guid: 39b05d9afe411854bac42c32609c7d86, type: 2}
-  showPath: 0
 --- !u!120 &1363811609
 LineRenderer:
   m_ObjectHideFlags: 0

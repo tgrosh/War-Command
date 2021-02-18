@@ -83,13 +83,9 @@ public class InputHandler : MonoBehaviour
                 if (hit.collider.GetComponent<MoveTarget>())
                 {
                     foreach (Mover mover in GetMovers())
-                    {
-                        NavMeshHit navHit = GetNavMeshPosition(hit.collider.transform.position, hit.collider.bounds.size.magnitude * 2f, NavMesh.AllAreas);
-                        if (navHit.hit)
-                        {
-                            mover.ClearDestination();
-                            mover.SetDestinationPosition(navHit.position);
-                        }
+                    {                        
+                        mover.ClearDestination();
+                        mover.SetDestination(hit.collider.transform.position, hit.collider.bounds.size.magnitude * 2f);                        
 
                         Targeter targeter = mover.GetComponent<Targeter>();
                         if (targeter)
@@ -102,12 +98,8 @@ public class InputHandler : MonoBehaviour
                 {
                     foreach (Mover mover in GetMovers())
                     {
-                        NavMeshHit navHit = GetNavMeshPosition(hit.point, 3f, NavMesh.AllAreas);
-                        if (navHit.hit)
-                        {
-                            mover.SetDestinationPosition(navHit.position);
-                            mover.ShowDestinationMarker(navHit.position);
-                        }                        
+                        mover.SetDestination(hit.point);
+                        mover.ShowDestinationMarker();
 
                         Targeter targeter = mover.GetComponent<Targeter>();
                         if (targeter)
@@ -186,12 +178,4 @@ public class InputHandler : MonoBehaviour
         return navMeshHit;
     }
 
-    NavMeshHit GetNavMeshPosition(Vector3 point, float range, int navMeshAreaMask)
-    {
-        NavMeshHit navMeshHit;
-
-        NavMesh.SamplePosition(point, out navMeshHit, range, navMeshAreaMask);
-
-        return navMeshHit;
-    }
 }

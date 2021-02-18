@@ -30,10 +30,15 @@ public class Mover : MonoBehaviour
         if (showPath) ShowPath();
     }
 
-    public void SetDestinationPosition(Vector3 targetPosition)
+    public void SetDestination(Vector3 targetPosition, float range = 3f, int navLayerMask = NavMesh.AllAreas)
     {
-        agent.ResetPath();
-        agent.destination = targetPosition;
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(targetPosition, out navHit, range, navLayerMask);
+        
+        if (navHit.hit) {
+            agent.ResetPath();
+            agent.destination = navHit.position;
+        }
     }
 
     public void ClearDestination()
@@ -44,14 +49,17 @@ public class Mover : MonoBehaviour
         }
     }
 
-    public void ShowDestinationMarker(Vector3 markerPosition)
+    public void ShowDestinationMarker()
     {
         if (marker)
         {
             Destroy(marker);
         }
-        marker = Instantiate(locationMarkerPrefab, markerPosition, Quaternion.identity);
-        marker.transform.localScale = Vector3.one * 2f;
+        if (agent.destination != transform.position)
+        {
+            marker = Instantiate(locationMarkerPrefab, agent.destination, Quaternion.identity);
+            marker.transform.localScale = Vector3.one * 2f;
+        }
     }
 
     public void ShowPath()

@@ -36,7 +36,7 @@ public class Builder : MonoBehaviour
         NavMeshHit navMeshHit;
         if (NavMesh.SamplePosition(buildable.transform.position, out navMeshHit, buildable.currentActor.GetComponent<NavMeshObstacle>().radius * 1.25f, NavMesh.AllAreas))
         {
-            mover.SetDestinationPosition(navMeshHit.position);
+            mover.SetDestination(navMeshHit.position);
         }
         // when it gets there, call build on the buildable
     }

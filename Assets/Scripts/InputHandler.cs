@@ -45,20 +45,31 @@ public class InputHandler : MonoBehaviour
 
             if (hit.collider)
             {
-                ClearSelection();
-                Selectable selectable = hit.collider.GetComponent<Selectable>();
-
-                if (selectable)
+                if (currentBuildable)
                 {
-                    selectable.isSelected = true;
-                    selectedObjects.Add(selectable);
+                    //placing buildable
+                    currentBuildable.ShowPendingBuild();
+                    GetCurrentBuilder().Build(currentBuildable);
+                    currentBuildable = null;
                 }
-
-                Builder builder = hit.collider.GetComponent<Builder>();
-                if (builder)
+                else
                 {
-                    builder.Select();
-                }
+                    //not placing buildable
+                    ClearSelection();
+                    Selectable selectable = hit.collider.GetComponent<Selectable>();
+
+                    if (selectable)
+                    {
+                        selectable.isSelected = true;
+                        selectedObjects.Add(selectable);
+                    }
+
+                    Builder builder = hit.collider.GetComponent<Builder>();
+                    if (builder)
+                    {
+                        builder.Select();
+                    }
+                }                
             }
         }
 
@@ -125,6 +136,11 @@ public class InputHandler : MonoBehaviour
             }
         }
         selectedObjects.Clear();
+    }
+
+    Builder GetCurrentBuilder()
+    {
+        return selectedObjects.Find(selectable => selectable.GetComponent<Builder>() != null ).GetComponent<Builder>();
     }
 
     List<Mover> GetMovers()

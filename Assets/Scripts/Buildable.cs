@@ -10,6 +10,8 @@ public class Buildable : MonoBehaviour
     public GameObject placeholderInvalidActor;
     public GameObject inProgressActor;
 
+    public GameObject currentActor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,13 +21,19 @@ public class Buildable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        placeholderActor.SetActive(currentBuildState == BuildState.Placing);
-        placeholderInvalidActor.SetActive(currentBuildState == BuildState.InvalidPlacement);
-        inProgressActor.SetActive(currentBuildState == BuildState.PendingBuild);
+        SetActor(placeholderActor, (currentBuildState == BuildState.Placing));
+        SetActor(placeholderInvalidActor, (currentBuildState == BuildState.InvalidPlacement));
+        SetActor(inProgressActor, (currentBuildState == BuildState.PendingBuild));
     }
 
     public void ShowPendingBuild()
     {
         currentBuildState = BuildState.PendingBuild;
+    }
+
+    public void SetActor(GameObject actor, bool isActive)
+    {
+        actor.SetActive(isActive);
+        if (isActive) currentActor = actor;
     }
 }

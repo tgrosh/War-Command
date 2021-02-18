@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class Builder : MonoBehaviour
 {
     public List<BuildAction> buildMenuItems = new List<BuildAction>();
+    public bool showPath;
 
     NavMeshAgent agent;
     LineRenderer pathRenderer;
@@ -19,7 +20,7 @@ public class Builder : MonoBehaviour
 
     private void Update()
     {
-        ShowPath();
+        if (showPath) ShowPath();
     }
 
     public void Select()
@@ -36,7 +37,7 @@ public class Builder : MonoBehaviour
     {
         // goto buildable location
         NavMeshHit navMeshHit;
-        if (NavMesh.SamplePosition(buildable.transform.position, out navMeshHit, buildable.inProgressActor.GetComponent<NavMeshObstacle>().radius * 1.25f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(buildable.transform.position, out navMeshHit, buildable.currentActor.GetComponent<NavMeshObstacle>().radius * 1.25f, NavMesh.AllAreas))
         {
             agent.SetDestination(navMeshHit.position);
         }

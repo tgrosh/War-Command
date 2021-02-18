@@ -27,6 +27,7 @@ public class Mover : MonoBehaviour
 
     public void SetDestinationPosition(Vector3 targetPosition)
     {
+        agent.ResetPath();
         agent.destination = targetPosition;
     }
 
@@ -44,6 +45,7 @@ public class Mover : MonoBehaviour
         {
             Destroy(marker);
         }
-        marker = Instantiate(locationMarkerPrefab, markerPosition + (Vector3.up * .1f), Quaternion.Euler(Vector3.right * 90));
+        marker = Instantiate(locationMarkerPrefab, markerPosition, Quaternion.identity);
+        marker.transform.localScale = Vector3.one * 2f;
     }
 }

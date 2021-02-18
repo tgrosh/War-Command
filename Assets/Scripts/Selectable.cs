@@ -27,7 +27,8 @@ public class Selectable : MonoBehaviour
 
     void ShowMarker()
     {
-        marker = Instantiate(selectionMarkerPrefab, transform.position + (Vector3.up * .6f), Quaternion.Euler(Vector3.right * 90));
+        marker = Instantiate(selectionMarkerPrefab, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
         marker.transform.parent = transform;
+        marker.transform.localScale = Vector3.one * GetComponent<Collider>().bounds.size.magnitude;
     }
 }

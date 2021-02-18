@@ -29,9 +29,7 @@ public class Collector : MonoBehaviour
         if (targeter.target)
         {
             resourceTarget = targeter.target.GetComponent<ResourceNode>();
-        } else
-        {
-            resourceTarget = null;
+            atResourceTarget = agent.hasPath && agent.remainingDistance < agent.stoppingDistance;
         }
 
         if (!resourceTarget)
@@ -41,10 +39,12 @@ public class Collector : MonoBehaviour
 
         if (atResourceTarget)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(resourceTarget.transform.position - transform.position), Time.deltaTime * collectionFacingSpeed);
+            // transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(resourceTarget.transform.position - transform.position), Time.deltaTime * collectionFacingSpeed);
+            transform.LookAt(new Vector3(resourceTarget.transform.position.x, transform.position.y, resourceTarget.transform.position.z));
             if (collectionPerSecond > 0 && collectionTimer > 1/collectionPerSecond)
             {
-                EventManager.Emit(EventManager.Events.ResourceCollected, 1);
+                int collectionAmount = resourceTarget.Collect();
+                EventManager.Emit(EventManager.Events.ResourceCollected, collectionAmount);
                 collectionTimer = 0f;
             }
             collectionTimer += Time.deltaTime;
@@ -56,19 +56,4 @@ public class Collector : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (resourceTarget && other.gameObject == resourceTarget.gameObject && agent.remainingDistance <= agent.stoppingDistance)
-        {
-            atResourceTarget = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (resourceTarget && other.gameObject == resourceTarget.gameObject)
-        {
-            atResourceTarget = false;
-        }
-    }
 }

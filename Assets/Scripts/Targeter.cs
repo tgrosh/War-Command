@@ -2,16 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Targeter : MonoBehaviour
 {
     public Transform target;
     public GameObject targetMarkerPrefab;
 
+    NavMeshAgent agent;
     GameObject marker;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
 
     void Update()
     {
+        if (agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
+        {
+            ClearTarget();
+        }
+
         if (target == null)
         {
             ClearTarget();
@@ -30,7 +43,9 @@ public class Targeter : MonoBehaviour
         {
             Destroy(marker);
         }
-        marker = Instantiate(targetMarkerPrefab, target.position + (Vector3.up * .1f), Quaternion.Euler(Vector3.right * 90));
+        marker = Instantiate(targetMarkerPrefab, new Vector3(target.position.x, 0, target.position.z), Quaternion.identity);
+        marker.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
+        marker.transform.localScale = Vector3.one * target.GetComponent<Collider>().bounds.extents.magnitude;
     }
 
     public void ClearTarget()

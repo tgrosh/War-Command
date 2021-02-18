@@ -6,9 +6,10 @@ using UnityEngine.AI;
 public class Mover : MonoBehaviour
 {
     public GameObject locationMarkerPrefab;
+    public bool moveComplete;
     public bool showPath;
+    public NavMeshAgent agent;
 
-    NavMeshAgent agent;
     GameObject marker; 
     LineRenderer pathRenderer;
 
@@ -22,9 +23,13 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (marker && agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
+        if (agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
         {
-            Destroy(marker);
+            moveComplete = true;
+            if (marker)
+            {
+                Destroy(marker);
+            }
         }
 
         if (showPath) ShowPath();
@@ -36,8 +41,9 @@ public class Mover : MonoBehaviour
         NavMesh.SamplePosition(targetPosition, out navHit, range, navLayerMask);
         
         if (navHit.hit) {
-            agent.ResetPath();
+            ClearDestination();
             agent.destination = navHit.position;
+            moveComplete = false;
         }
     }
 
@@ -47,6 +53,7 @@ public class Mover : MonoBehaviour
         {
             Destroy(marker);
         }
+        agent.ResetPath();
     }
 
     public void ShowDestinationMarker()

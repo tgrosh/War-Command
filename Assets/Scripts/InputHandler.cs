@@ -83,8 +83,7 @@ public class InputHandler : MonoBehaviour
                 if (hit.collider.GetComponent<MoveTarget>())
                 {
                     foreach (Mover mover in GetMovers())
-                    {                        
-                        mover.ClearDestination();
+                    {
                         mover.SetDestination(hit.collider.transform.position, hit.collider.bounds.size.magnitude * 2f);                        
 
                         Targeter targeter = mover.GetComponent<Targeter>();

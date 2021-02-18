@@ -7,17 +7,28 @@ using UnityEngine.AI;
 public class Builder : MonoBehaviour
 {
     public List<BuildAction> buildMenuItems = new List<BuildAction>();
+    public float buildRange;
 
     Mover mover;
+    Targeter targeter;
+    Buildable currentBuildable;
+    bool buildStarted;
 
     private void Start()
     {
         mover = GetComponent<Mover>();
+        targeter = GetComponent<Targeter>();
     }
 
     private void Update()
     {
-        
+        if (!buildStarted && currentBuildable && Vector3.Distance(transform.position, currentBuildable.transform.position) < buildRange && mover.moveComplete)
+        {
+            //start the build
+            mover.ClearDestination();
+            StartBuild();
+            buildStarted = true;
+        }
     }
 
     public void Select()
@@ -32,13 +43,15 @@ public class Builder : MonoBehaviour
 
     public void Build(Buildable buildable)
     {
+        currentBuildable = buildable;
+
         // goto buildable location
-        NavMeshHit navMeshHit;
-        if (NavMesh.SamplePosition(buildable.transform.position, out navMeshHit, buildable.currentActor.GetComponent<NavMeshObstacle>().radius * 1.25f, NavMesh.AllAreas))
-        {
-            mover.SetDestination(navMeshHit.position);
-        }
-        // when it gets there, call build on the buildable
+        mover.SetDestination(buildable.transform.position);
+    }
+
+    void StartBuild()
+    {
+        currentBuildable.Build();
     }
 
 }

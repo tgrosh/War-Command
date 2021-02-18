@@ -8,8 +8,8 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
-    public GameObject currentBuildable;
-    public LayerMask rayLayers;
+    public Buildable currentBuildable;
+    public LayerMask rayLayers;    
 
     private void Start()
     {
@@ -21,12 +21,21 @@ public class InputHandler : MonoBehaviour
     {
         if (currentBuildable)
         {
-            //follow the mouse
             RaycastHit hit = RayCast();
 
-            if (hit.collider && hit.collider.gameObject != currentBuildable.gameObject)
+            if (hit.collider)
             {
-                currentBuildable.transform.position = hit.point;
+                NavMeshHit navMeshHit;
+                int placeableMask = 1 << NavMesh.GetAreaFromName("Placeable");
+                if (NavMesh.SamplePosition(hit.point, out navMeshHit, .25f, placeableMask))
+                {
+                    currentBuildable.transform.position = navMeshHit.position;
+                    currentBuildable.currentBuildState = BuildState.Placing;
+                } else
+                {
+                    currentBuildable.transform.position = hit.point;
+                    currentBuildable.currentBuildState = BuildState.InvalidPlacement;
+                }
             }
         }
 
@@ -98,8 +107,8 @@ public class InputHandler : MonoBehaviour
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
-            currentBuildable = Instantiate(buildAction.buildable.gameObject, hit.point, transform.rotation);
-            currentBuildable.GetComponent<Buildable>().currentBuildState = BuildState.Placing;
+            currentBuildable = Instantiate(buildAction.buildable, hit.point, transform.rotation).GetComponent<Buildable>();
+            currentBuildable.currentBuildState = BuildState.Placing;
         }
     }
 

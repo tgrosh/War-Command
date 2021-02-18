@@ -7,6 +7,7 @@ public class Buildable : MonoBehaviour
 {
     public BuildState currentBuildState = BuildState.None;
     public GameObject placeholderActor;
+    public GameObject placeholderInvalidActor;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +19,6 @@ public class Buildable : MonoBehaviour
     void Update()
     {
         placeholderActor.SetActive(currentBuildState == BuildState.Placing);
-
-        if (currentBuildState == BuildState.Placing)
-        {
-            NavMeshHit navMeshHit;
-            Debug.Log(NavMesh.SamplePosition(transform.position, out navMeshHit, .5f, NavMesh.AllAreas));
-        }
+        placeholderInvalidActor.SetActive(currentBuildState == BuildState.InvalidPlacement);
     }
 }

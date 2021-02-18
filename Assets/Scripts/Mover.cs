@@ -6,14 +6,17 @@ using UnityEngine.AI;
 public class Mover : MonoBehaviour
 {
     public GameObject locationMarkerPrefab;
+    public bool showPath;
 
     NavMeshAgent agent;
-    GameObject marker;
+    GameObject marker; 
+    LineRenderer pathRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        pathRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -23,6 +26,8 @@ public class Mover : MonoBehaviour
         {
             Destroy(marker);
         }
+
+        if (showPath) ShowPath();
     }
 
     public void SetDestinationPosition(Vector3 targetPosition)
@@ -47,5 +52,13 @@ public class Mover : MonoBehaviour
         }
         marker = Instantiate(locationMarkerPrefab, markerPosition, Quaternion.identity);
         marker.transform.localScale = Vector3.one * 2f;
+    }
+
+    public void ShowPath()
+    {
+        NavMeshPath path = new NavMeshPath(); ;
+        NavMesh.CalculatePath(transform.position, agent.destination, NavMesh.AllAreas, path);
+        pathRenderer.positionCount = path.corners.Length;
+        pathRenderer.SetPositions(path.corners);
     }
 }

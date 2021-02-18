@@ -25,9 +25,10 @@ public class InputHandler : MonoBehaviour
 
             if (hit.collider)
             {
-                NavMeshHit navMeshHit;
                 int placeableMask = 1 << NavMesh.GetAreaFromName("Placeable");
-                if (NavMesh.SamplePosition(hit.point, out navMeshHit, .25f, placeableMask))
+                NavMeshHit navMeshHit = GetNavMeshAtMouse(.25f, placeableMask);
+
+                if (navMeshHit.hit)
                 {
                     currentBuildable.transform.position = navMeshHit.position;
                     currentBuildable.currentBuildState = BuildState.Placing;
@@ -83,8 +84,12 @@ public class InputHandler : MonoBehaviour
                 {
                     foreach (Mover mover in GetMovers())
                     {
-                        mover.ClearDestination();
-                        mover.SetDestinationPosition(hit.collider.transform.position);
+                        NavMeshHit navHit = GetNavMeshPosition(hit.collider.transform.position, hit.collider.bounds.size.magnitude * 2f, NavMesh.AllAreas);
+                        if (navHit.hit)
+                        {
+                            mover.ClearDestination();
+                            mover.SetDestinationPosition(navHit.position);
+                        }
 
                         Targeter targeter = mover.GetComponent<Targeter>();
                         if (targeter)
@@ -97,8 +102,12 @@ public class InputHandler : MonoBehaviour
                 {
                     foreach (Mover mover in GetMovers())
                     {
-                        mover.SetDestinationPosition(hit.point);
-                        mover.ShowDestinationMarker(hit.point);
+                        NavMeshHit navHit = GetNavMeshPosition(hit.point, 3f, NavMesh.AllAreas);
+                        if (navHit.hit)
+                        {
+                            mover.SetDestinationPosition(navHit.position);
+                            mover.ShowDestinationMarker(navHit.position);
+                        }                        
 
                         Targeter targeter = mover.GetComponent<Targeter>();
                         if (targeter)
@@ -165,5 +174,24 @@ public class InputHandler : MonoBehaviour
         Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 500, rayLayers);
 
         return hit;
+    }
+
+    NavMeshHit GetNavMeshAtMouse(float range, int navMeshAreaMask)
+    {
+        RaycastHit hit = RayCast();
+        NavMeshHit navMeshHit;
+
+        NavMesh.SamplePosition(hit.point, out navMeshHit, range, navMeshAreaMask);
+
+        return navMeshHit;
+    }
+
+    NavMeshHit GetNavMeshPosition(Vector3 point, float range, int navMeshAreaMask)
+    {
+        NavMeshHit navMeshHit;
+
+        NavMesh.SamplePosition(point, out navMeshHit, range, navMeshAreaMask);
+
+        return navMeshHit;
     }
 }

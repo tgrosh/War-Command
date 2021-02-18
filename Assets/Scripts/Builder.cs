@@ -8,11 +8,11 @@ public class Builder : MonoBehaviour
 {
     public List<BuildAction> buildMenuItems = new List<BuildAction>();
 
-    NavMeshAgent agent;
+    Mover mover;
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        mover = GetComponent<Mover>();
     }
 
     private void Update()
@@ -36,7 +36,7 @@ public class Builder : MonoBehaviour
         NavMeshHit navMeshHit;
         if (NavMesh.SamplePosition(buildable.transform.position, out navMeshHit, buildable.currentActor.GetComponent<NavMeshObstacle>().radius * 1.25f, NavMesh.AllAreas))
         {
-            agent.SetDestination(navMeshHit.position);
+            mover.SetDestinationPosition(navMeshHit.position);
         }
         // when it gets there, call build on the buildable
     }

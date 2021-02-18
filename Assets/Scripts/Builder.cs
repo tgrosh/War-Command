@@ -7,12 +7,10 @@ using UnityEngine.AI;
 public class Builder : MonoBehaviour
 {
     public List<BuildAction> buildMenuItems = new List<BuildAction>();
-    public float buildRange;
 
     Mover mover;
     Targeter targeter;
     Buildable currentBuildable;
-    bool buildStarted;
 
     private void Start()
     {
@@ -22,12 +20,11 @@ public class Builder : MonoBehaviour
 
     private void Update()
     {
-        if (!buildStarted && currentBuildable && Vector3.Distance(transform.position, currentBuildable.transform.position) < buildRange && mover.moveComplete)
+        if (currentBuildable && mover.moveComplete)
         {
             //start the build
             mover.ClearDestination();
             StartBuild();
-            buildStarted = true;
         }
     }
 
@@ -52,6 +49,7 @@ public class Builder : MonoBehaviour
     void StartBuild()
     {
         currentBuildable.Build();
+        currentBuildable = null;
     }
 
 }

@@ -26,7 +26,10 @@ public class Producer : MonoBehaviour
 
         if (navHit.hit)
         {
-            GameObject obj = Instantiate(action.produceable, navHit.position, Quaternion.identity);
+            if (ResourceBank.Withdraw(action.cost))
+            {
+                Instantiate(action.produceable, navHit.position, Quaternion.identity);
+            }
         }        
     }
 

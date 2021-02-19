@@ -40,7 +40,7 @@ public class ResourceBank : MonoBehaviour
 
     public static bool Withdraw(int amount)
     {
-        if (instance.currentResources <= amount) return false;
+        if (instance.currentResources < amount) return false;
 
         instance.currentResources -= amount;
         EventManager.Emit(EventManager.Events.ResourceAmountChanged, instance.currentResources);

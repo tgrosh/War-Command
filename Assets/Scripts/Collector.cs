@@ -14,6 +14,7 @@ public class Collector : MonoBehaviour
 
     Mover mover;
     bool atResourceTarget;
+    bool isDelivering;
     ResourceNode resourceTarget;
     Targeter targeter;
     float collectionTimer;
@@ -32,6 +33,13 @@ public class Collector : MonoBehaviour
         if (targeter.target)
         {
             resourceTarget = targeter.target.GetComponent<ResourceNode>();            
+        }
+
+        //if we have a resource target, and we are not full, and we are not returning to base to deliver
+        if (resourceTarget && !atResourceTarget && currentlyCollectedResources < maxResources && !isDelivering)
+        {
+            //move to resource node and collect
+            mover.SetDestination(resourceTarget.transform.position);
         }
 
         atResourceTarget = mover.moveComplete && resourceTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;

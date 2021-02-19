@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ResourceDepot : MonoBehaviour
 {
-    int currentResources;
+    public static int currentResources;
 
     public void Deposit(int amount)
     {
         currentResources += amount;
-        EventManager.Emit(EventManager.Events.ResourceAmountChanged, currentResources);
+        EventManager.Emit(EventManager.Events.ResourcesDeposited, amount);
     }
 
     public bool Withdraw(int amount)
@@ -17,7 +17,7 @@ public class ResourceDepot : MonoBehaviour
         if (currentResources < amount) return false;
 
         currentResources -= amount;
-        EventManager.Emit(EventManager.Events.ResourceAmountChanged, currentResources);
+        EventManager.Emit(EventManager.Events.ResourcesWithdrawn, amount);
         return true;
     }
 }

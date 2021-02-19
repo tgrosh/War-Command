@@ -20,15 +20,7 @@ public class Targeter : MonoBehaviour
 
     void Update()
     {
-        if (agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
-        {
-            ClearTarget();
-        }
-
-        if (target == null)
-        {
-            ClearTarget();
-        }
+        
     }
 
     public void SetTarget(Transform targetTransform)

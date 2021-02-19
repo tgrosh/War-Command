@@ -34,6 +34,9 @@ public class Collector : MonoBehaviour
         if (targeter.target)
         {
             resourceTarget = targeter.target.GetComponent<ResourceNode>();
+        } else
+        {
+            resourceTarget = null;
         }
 
         atResourceTarget = mover.moveComplete && resourceTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
@@ -59,9 +62,13 @@ public class Collector : MonoBehaviour
             //move to delivery target
             if (!deliveryTarget)
             {
-                deliveryTarget = FindNearestBase().GetComponent<Base>();
+                SetDeliveryTarget();
             }
-            mover.SetDestination(deliveryTarget.transform.position);
+
+            if (deliveryTarget)
+            {
+                mover.SetDestination(deliveryTarget.transform.position);
+            }
         }
 
         //if we dont have a resource target, and we have any resources, and we are not at delivery target
@@ -70,9 +77,13 @@ public class Collector : MonoBehaviour
             //move to delivery target
             if (!deliveryTarget)
             {
-                deliveryTarget = FindNearestBase().GetComponent<Base>();
+                SetDeliveryTarget();
             }
-            mover.SetDestination(deliveryTarget.transform.position);
+
+            if (deliveryTarget)
+            {
+                mover.SetDestination(deliveryTarget.transform.position);
+            }
         }
 
         //if we have a delivery target, and we are at the delivery target, and we have resources to deliver
@@ -112,6 +123,15 @@ public class Collector : MonoBehaviour
         currentlyCollectedResources = 0;
     }
 
+    void SetDeliveryTarget()
+    {
+        Transform nearest = FindNearestBase();
+        if (nearest)
+        {
+            deliveryTarget = FindNearestBase().GetComponent<Base>();
+        }
+    }
+
     Transform FindNearestBase()
     {
         GameObject closest = null;
@@ -131,6 +151,6 @@ public class Collector : MonoBehaviour
             }
         }
 
-        return closest.transform;
+        return closest ? closest.transform : null;
     }
 }

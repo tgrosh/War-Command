@@ -1603,11 +1603,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4429ed0fb84dc9147bbc64182887a0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectorEffect: {fileID: 599280530}
-  collectionRange: 5
-  collectionPerSecond: 1
-  currentlyCollectedResources: 0
   maxResources: 5
+  collectionPerSecond: 1
+  collectionRange: 5
+  deliveryRange: 5
+  collectorEffect: {fileID: 599280530}
+  currentlyCollectedResources: 0
 --- !u!136 &1363811604
 CapsuleCollider:
   m_ObjectHideFlags: 0

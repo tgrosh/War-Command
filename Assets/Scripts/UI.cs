@@ -16,7 +16,8 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.Subscribe(EventManager.Events.ResourcesDeposited, ResourceCollected);
+        EventManager.Subscribe(EventManager.Events.ResourcesDeposited, ResourcesDeposited);
+        EventManager.Subscribe(EventManager.Events.ResourcesWithdrawn, ResourcesWithdrawn);
         EventManager.Subscribe(EventManager.Events.RegisterBuilder, RegisterBuilder);
     }
 
@@ -40,9 +41,14 @@ public class UI : MonoBehaviour
         }
     }
 
-    private void ResourceCollected(object arg)
+    private void ResourcesDeposited(object arg)
     {
         resources += (int)arg;
+    }
+
+    private void ResourcesWithdrawn(object arg)
+    {
+        resources -= (int)arg;
     }
 
     // Update is called once per frame

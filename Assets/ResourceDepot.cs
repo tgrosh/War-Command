@@ -14,7 +14,7 @@ public class ResourceDepot : MonoBehaviour
 
     public bool Withdraw(int amount)
     {
-        if (currentResources < amount) return false;
+        if (currentResources <= amount) return false;
 
         currentResources -= amount;
         EventManager.Emit(EventManager.Events.ResourcesWithdrawn, amount);

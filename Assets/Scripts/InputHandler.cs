@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
+    public BuildAction currentBuildAction;
     public Buildable currentBuildable;
     public LayerMask rayLayers;    
 
@@ -50,8 +51,9 @@ public class InputHandler : MonoBehaviour
                 {
                     //placing buildable
                     currentBuildable.ShowPendingBuild();
-                    GetCurrentBuilder().Build(currentBuildable);
+                    GetCurrentBuilder().Build(currentBuildable, currentBuildAction);
                     currentBuildable = null;
+                    currentBuildAction = null;
                 }
                 else
                 {
@@ -107,12 +109,12 @@ public class InputHandler : MonoBehaviour
 
     private void BuildButtonPressed(object arg0)
     {
-        BuildAction buildAction = arg0 as BuildAction;
+        currentBuildAction = arg0 as BuildAction;
         RaycastHit hit;
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
-            currentBuildable = Instantiate(buildAction.buildable, hit.point, transform.rotation).GetComponent<Buildable>();
+            currentBuildable = Instantiate(currentBuildAction.buildable, hit.point, transform.rotation).GetComponent<Buildable>();
             currentBuildable.currentBuildState = BuildState.Placing;
         }
     }

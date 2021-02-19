@@ -7,12 +7,15 @@ using UnityEngine.AI;
 public class Builder : MonoBehaviour
 {
     public List<BuildAction> buildMenuItems = new List<BuildAction>();
+    public float buildRange;
 
     Mover mover;
     Selectable selectable;
+    BuildAction currentBuildAction;
     Buildable currentBuildable;
 
     bool registered;
+    bool atBuildTarget;
 
     private void Start()
     {
@@ -22,6 +25,8 @@ public class Builder : MonoBehaviour
 
     private void Update()
     {
+        atBuildTarget = mover.moveComplete && currentBuildable && Vector3.Distance(transform.position, currentBuildable.transform.position) < buildRange;
+
         if (selectable && selectable.isSelected && !registered)
         {
             EventManager.Emit(EventManager.Events.RegisterBuilder, this);
@@ -34,7 +39,7 @@ public class Builder : MonoBehaviour
             registered = false;
         }
 
-        if (currentBuildable && mover.moveComplete)
+        if (atBuildTarget)
         {
             //start the build
             mover.ClearDestination();
@@ -42,18 +47,23 @@ public class Builder : MonoBehaviour
         }
     }
 
-    public void Build(Buildable buildable)
+    public void Build(Buildable buildable, BuildAction buildAction)
     {
+        currentBuildAction = buildAction;
         currentBuildable = buildable;
 
         // goto buildable location
-        mover.SetDestination(buildable.transform.position);
+        mover.SetDestination(currentBuildable.transform.position);
     }
 
     void StartBuild()
     {
-        currentBuildable.Build();
-        currentBuildable = null;
+        if (ResourceBank.Withdraw(currentBuildAction.cost))
+        {
+            currentBuildable.GetComponent<Buildable>().Build();
+            currentBuildAction = null;
+            currentBuildable = null;
+        }
     }
 
 }

@@ -23,7 +23,7 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
+        if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance < agent.stoppingDistance)
         {
             moveComplete = true;
             if (marker)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Producer : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class Producer : MonoBehaviour
             {
                 Instantiate(action.produceable, navHit.position, Quaternion.identity);
             }
-        }        
+        }
     }
 
     // Update is called once per frame
@@ -47,5 +48,18 @@ public class Producer : MonoBehaviour
             EventManager.Emit(EventManager.Events.RegisterProducer, null);
             registered = false;
         }
+    }
+
+    public Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        randomDirection += transform.position;
+        NavMeshHit hit;
+        Vector3 finalPosition = transform.position;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, NavMesh.AllAreas))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
     }
 }

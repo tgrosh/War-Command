@@ -431,6 +431,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Probe
       objectReference: {fileID: 0}
+    - target: {fileID: 3182244660871480619, guid: 55aab13c85008db45860e49c80193dd2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793171510991142646, guid: 55aab13c85008db45860e49c80193dd2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7071182760956848314, guid: 55aab13c85008db45860e49c80193dd2, type: 3}
       propertyPath: m_CastShadows
       value: 2

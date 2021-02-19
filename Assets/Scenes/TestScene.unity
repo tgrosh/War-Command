@@ -1604,6 +1604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectorEffect: {fileID: 599280530}
+  collectionRange: 3
   collectionPerSecond: 1
   collectionFacingSpeed: 200
   currentlyCollectedResources: 0

@@ -7,8 +7,8 @@ using UnityEngine.VFX;
 public class Collector : MonoBehaviour
 {
     public VisualEffect collectorEffect;
+    public float collectionRange;
     public float collectionPerSecond;
-    public float collectionFacingSpeed;
     public int currentlyCollectedResources;
     public int maxResources;
 
@@ -31,18 +31,13 @@ public class Collector : MonoBehaviour
     {
         if (targeter.target)
         {
-            resourceTarget = targeter.target.GetComponent<ResourceNode>();
-            atResourceTarget = mover.agent.hasPath && mover.agent.remainingDistance < mover.agent.stoppingDistance;
+            resourceTarget = targeter.target.GetComponent<ResourceNode>();            
         }
 
-        if (!resourceTarget)
-        {
-            atResourceTarget = false;
-        }
+        atResourceTarget = mover.moveComplete && resourceTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
 
         if (atResourceTarget)
         {
-            // transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(resourceTarget.transform.position - transform.position), Time.deltaTime * collectionFacingSpeed);
             transform.LookAt(new Vector3(resourceTarget.transform.position.x, transform.position.y, resourceTarget.transform.position.z));
             if (collectionPerSecond > 0 && collectionTimer > 1/collectionPerSecond)
             {

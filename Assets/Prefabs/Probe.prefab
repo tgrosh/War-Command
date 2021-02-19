@@ -170,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildMenuItems:
   - {fileID: 11400000, guid: 39b05d9afe411854bac42c32609c7d86, type: 2}
+  buildRange: 7
 --- !u!120 &2451251457783030685
 LineRenderer:
   m_ObjectHideFlags: 0

@@ -72,19 +72,19 @@ public class Collector : MonoBehaviour
         }
 
         //if we dont have a resource target, and we have any resources, and we are not at delivery target
-        if (!resourceTarget && currentlyCollectedResources > 0 && !atDeliveryTarget)
-        {
-            //move to delivery target
-            if (!depotTarget)
-            {
-                SetDeliveryTarget();
-            }
+        //if (!resourceTarget && currentlyCollectedResources > 0 && !atDeliveryTarget)
+        //{
+        //    //move to delivery target
+        //    if (!depotTarget)
+        //    {
+        //        SetDeliveryTarget();
+        //    }
 
-            if (depotTarget)
-            {
-                mover.SetDestination(depotTarget.transform.position);
-            }
-        }
+        //    if (depotTarget)
+        //    {
+        //        mover.SetDestination(depotTarget.transform.position);
+        //    }
+        //}
 
         //if we have a delivery target, and we are at the delivery target, and we have resources to deliver
         if (depotTarget && atDeliveryTarget && currentlyCollectedResources > 0)

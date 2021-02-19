@@ -16,7 +16,7 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.Subscribe(EventManager.Events.ResourceCollected, ResourceCollected);
+        EventManager.Subscribe(EventManager.Events.ResourceAmountChanged, ResourceCollected);
         EventManager.Subscribe(EventManager.Events.RegisterBuilder, RegisterBuilder);
     }
 

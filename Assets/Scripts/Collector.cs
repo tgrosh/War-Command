@@ -16,7 +16,7 @@ public class Collector : MonoBehaviour
     bool atResourceTarget;
     bool atDeliveryTarget;
 
-    Base deliveryTarget; // the place i will deliver to
+    ResourceDepot depotTarget; // the place i will deliver to
     ResourceNode resourceTarget; // the place i will collect from
 
     float collectionTimer;
@@ -40,7 +40,7 @@ public class Collector : MonoBehaviour
         }
 
         atResourceTarget = mover.moveComplete && resourceTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
-        atDeliveryTarget = mover.moveComplete && deliveryTarget && Vector3.Distance(transform.position, deliveryTarget.transform.position) < deliveryRange;
+        atDeliveryTarget = mover.moveComplete && depotTarget && Vector3.Distance(transform.position, depotTarget.transform.position) < deliveryRange;
 
         //if we have a resource target, and we are not at the resource, and we are not full
         if (resourceTarget && !atResourceTarget && CanCollectFromResource(resourceTarget))
@@ -60,14 +60,14 @@ public class Collector : MonoBehaviour
         if (resourceTarget && !CanCollectFromResource(resourceTarget) && !atDeliveryTarget)
         {
             //move to delivery target
-            if (!deliveryTarget)
+            if (!depotTarget)
             {
                 SetDeliveryTarget();
             }
 
-            if (deliveryTarget)
+            if (depotTarget)
             {
-                mover.SetDestination(deliveryTarget.transform.position);
+                mover.SetDestination(depotTarget.transform.position);
             }
         }
 
@@ -75,19 +75,19 @@ public class Collector : MonoBehaviour
         if (!resourceTarget && currentlyCollectedResources > 0 && !atDeliveryTarget)
         {
             //move to delivery target
-            if (!deliveryTarget)
+            if (!depotTarget)
             {
                 SetDeliveryTarget();
             }
 
-            if (deliveryTarget)
+            if (depotTarget)
             {
-                mover.SetDestination(deliveryTarget.transform.position);
+                mover.SetDestination(depotTarget.transform.position);
             }
         }
 
         //if we have a delivery target, and we are at the delivery target, and we have resources to deliver
-        if (deliveryTarget && atDeliveryTarget && currentlyCollectedResources > 0)
+        if (depotTarget && atDeliveryTarget && currentlyCollectedResources > 0)
         {
             //deliver
             Deliver();
@@ -119,7 +119,7 @@ public class Collector : MonoBehaviour
 
     void Deliver()
     {
-        EventManager.Emit(EventManager.Events.ResourceCollected, currentlyCollectedResources);
+        depotTarget.Deposit(currentlyCollectedResources);
         currentlyCollectedResources = 0;
     }
 
@@ -128,29 +128,26 @@ public class Collector : MonoBehaviour
         Transform nearest = FindNearestBase();
         if (nearest)
         {
-            deliveryTarget = FindNearestBase().GetComponent<Base>();
+            depotTarget = FindNearestBase().GetComponent<ResourceDepot>();
         }
     }
 
     Transform FindNearestBase()
     {
-        GameObject closest = null;
+        ResourceDepot closestDepot = null;
         float closestDistance = 0f;
 
-        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Base"))
+        foreach (ResourceDepot depot in GameObject.FindObjectsOfType<ResourceDepot>())
         {
-            Base goBase = go.GetComponent<Base>();
-            if (go == null) continue;
+            float depotDistance = Vector3.Distance(transform.position, depot.transform.position);
 
-            float goDistance = Vector3.Distance(transform.position, go.transform.position);
-
-            if (closest == null || goDistance < closestDistance)
+            if (closestDepot == null || depotDistance < closestDistance)
             {
-                closest = go;
-                closestDistance = goDistance;
+                closestDepot = depot;
+                closestDistance = depotDistance;
             }
         }
 
-        return closest ? closest.transform : null;
+        return closestDepot ? closestDepot.transform : null;
     }
 }

@@ -9,9 +9,10 @@ public class UI : MonoBehaviour
     public Text resourceCounter;
     public GameObject toolbar;
     public Button buildButtonPrefab;
+    public Button producerButtonPrefab;
 
     int resources;
-    Builder currentBuilder;
+    object currentRegistered;
 
     // Start is called before the first frame update
     void Start()
@@ -19,15 +20,36 @@ public class UI : MonoBehaviour
         EventManager.Subscribe(EventManager.Events.ResourcesDeposited, ResourcesDeposited);
         EventManager.Subscribe(EventManager.Events.ResourcesWithdrawn, ResourcesWithdrawn);
         EventManager.Subscribe(EventManager.Events.RegisterBuilder, RegisterBuilder);
+        EventManager.Subscribe(EventManager.Events.RegisterProducer, RegisterProducer);
+    }
+
+    private void RegisterProducer(object arg0)
+    {
+        Producer producer = arg0 as Producer;
+        currentRegistered = producer;
+        if (producer)
+        {
+            RegisterProducerMenuItems(producer.producerMenuItems);
+        }
     }
 
     private void RegisterBuilder(object arg0)
     {
         Builder builder = arg0 as Builder;
-        currentBuilder = builder;
+        currentRegistered = builder;
         if (builder)
         {
             RegisterBuildMenuItems(builder.buildMenuItems);
+        }
+    }
+
+    private void RegisterProducerMenuItems(List<ProducerAction> items)
+    {
+        foreach (ProducerAction item in items)
+        {
+            Button button = Instantiate(producerButtonPrefab, toolbar.transform);
+            button.GetComponent<ProducerButton>().producerAction = item;
+            button.transform.Find("Image").GetComponent<Image>().sprite = item.menuIcon;
         }
     }
 
@@ -56,7 +78,7 @@ public class UI : MonoBehaviour
     {
         resourceCounter.text = resources.ToString();
 
-        if (currentBuilder == null)
+        if (currentRegistered == null)
         {
             foreach (Transform child in toolbar.transform)
             {

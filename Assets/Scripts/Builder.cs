@@ -9,33 +9,37 @@ public class Builder : MonoBehaviour
     public List<BuildAction> buildMenuItems = new List<BuildAction>();
 
     Mover mover;
-    Targeter targeter;
+    Selectable selectable;
     Buildable currentBuildable;
+
+    bool registered;
 
     private void Start()
     {
         mover = GetComponent<Mover>();
-        targeter = GetComponent<Targeter>();
+        selectable = GetComponent<Selectable>();
     }
 
     private void Update()
     {
+        if (selectable && selectable.isSelected && !registered)
+        {
+            EventManager.Emit(EventManager.Events.RegisterBuilder, this);
+            registered = true;
+        }
+
+        if (!selectable || (!selectable.isSelected && registered))
+        {
+            EventManager.Emit(EventManager.Events.RegisterBuilder, null);
+            registered = false;
+        }
+
         if (currentBuildable && mover.moveComplete)
         {
             //start the build
             mover.ClearDestination();
             StartBuild();
         }
-    }
-
-    public void Select()
-    {
-        EventManager.Emit(EventManager.Events.RegisterBuilder, this);
-    }
-
-    public void Unselect()
-    {
-        EventManager.Emit(EventManager.Events.RegisterBuilder, null);
     }
 
     public void Build(Buildable buildable)

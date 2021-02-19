@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 419726809}
   - component: {fileID: 3180108700929556212}
   - component: {fileID: 4309161660065086300}
+  - component: {fileID: 6358222247304954919}
+  - component: {fileID: -8783326025675532898}
   m_Layer: 0
   m_Name: Base
   m_TagString: Base
@@ -127,6 +129,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc0f188e6c331741bf6282d02ca52e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6358222247304954919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477107107202714280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4138ba3201db34f8bf366e6cc00f92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  producerMenuItems:
+  - {fileID: 11400000, guid: 141ba63cf25869a48ac89c7db6972685, type: 2}
+  producerRange: 12
+--- !u!114 &-8783326025675532898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477107107202714280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35fd423f3ed8ad2498d4949516b101c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectionMarkerPrefab: {fileID: 6886364940454071289, guid: 484b1db94be870d4394906cb04d003b6, type: 3}
+  isSelected: 0
+  scale: 12
 --- !u!208 &7529208741531854221
 NavMeshObstacle:
   m_ObjectHideFlags: 0

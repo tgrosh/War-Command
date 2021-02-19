@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60b914d3b7eadd489d901e274ba891d, type: 3}
+  m_Name: ProduceProbe
+  m_EditorClassIdentifier: 
+  id: ProduceProbe
+  title: Produce Probe
+  menuIcon: {fileID: 21300000, guid: 19364acd6c9c641a9b6b2dab8bcc60df, type: 3}
+  produceable: {fileID: 2451251457783030667, guid: 0e3e6e4f4d2c7f241873abc7f2b87921, type: 3}

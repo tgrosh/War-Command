@@ -7,9 +7,9 @@ public class Selectable : MonoBehaviour
 {
     public GameObject selectionMarkerPrefab;
     public bool isSelected;
+    public float scale;
     
     GameObject marker;
-
 
     // Update is called once per frame
     void Update()
@@ -29,6 +29,6 @@ public class Selectable : MonoBehaviour
     {
         marker = Instantiate(selectionMarkerPrefab, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
         marker.transform.parent = transform;
-        marker.transform.localScale = Vector3.one * GetComponent<Collider>().bounds.size.magnitude;
+        marker.transform.localScale = new Vector3(scale, 1, scale);
     }
 }

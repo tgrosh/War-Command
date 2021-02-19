@@ -57,18 +57,12 @@ public class InputHandler : MonoBehaviour
                 {
                     //not placing buildable
                     ClearSelection();
-                    Selectable selectable = hit.collider.GetComponent<Selectable>();
+                    Selectable selectable = hit.collider.GetComponentInParent<Selectable>();
 
                     if (selectable)
                     {
                         selectable.isSelected = true;
                         selectedObjects.Add(selectable);
-                    }
-
-                    Builder builder = hit.collider.GetComponent<Builder>();
-                    if (builder)
-                    {
-                        builder.Select();
                     }
                 }                
             }
@@ -128,12 +122,6 @@ public class InputHandler : MonoBehaviour
         foreach (Selectable selectable in selectedObjects)
         {
             selectable.isSelected = false;
-
-            Builder builder = selectable.GetComponent<Builder>();
-            if (builder)
-            {
-                builder.Unselect();
-            }
         }
         selectedObjects.Clear();
     }

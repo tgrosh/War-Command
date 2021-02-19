@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e3d333e16f6941469796a8f3563c22d, type: 3}
-  m_Name: BaseMenuItem
+  m_Name: BuildBase
   m_EditorClassIdentifier: 
   id: BuildBase
   title: Build Base

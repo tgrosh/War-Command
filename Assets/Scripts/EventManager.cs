@@ -5,16 +5,16 @@ using UnityEngine.Events;
 
 public class EventManager : MonoBehaviour
 {
-    public Dictionary<Events, UnityEvent<object>> eventDictionary;
-    public enum Events
+    public Dictionary<EventMessage, UnityEvent<object>> eventDictionary;
+    public enum EventMessage
     {
         ResourcesDeposited,
         BuildButtonPressed,
-        RegisterBuilder,
         ResourcesWithdrawn,
-        RegisterProducer,
         ProducerButtonPressed,
-        ResourceAmountChanged
+        ResourceAmountChanged,
+        RegisterToolbarProvider,
+        UnRegisterToolbarProvider
     }
 
     private static EventManager eventManager;
@@ -44,11 +44,11 @@ public class EventManager : MonoBehaviour
     {
         if (eventDictionary == null)
         {
-            eventDictionary = new Dictionary<Events, UnityEvent<object>>();
+            eventDictionary = new Dictionary<EventMessage, UnityEvent<object>>();
         }
     }
 
-    public static void Subscribe(Events eventName, UnityAction<object> listener)
+    public static void Subscribe(EventMessage eventName, UnityAction<object> listener)
     {
         UnityEvent<object> thisEvent = null;
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
@@ -63,7 +63,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public static void Unsubscribe(Events eventName, UnityAction<object> listener)
+    public static void Unsubscribe(EventMessage eventName, UnityAction<object> listener)
     {
         if (eventManager == null) return;
         UnityEvent<object> thisEvent = null;
@@ -73,7 +73,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public static void Emit(Events eventName, object gameObject)
+    public static void Emit(EventMessage eventName, object gameObject)
     {
         UnityEvent<object> thisEvent = null;
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))

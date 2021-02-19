@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedObjects: []
-  currentBuildAction: {fileID: 0}
+  currentToolbarAction: {fileID: 0}
   currentBuildable: {fileID: 0}
   rayLayers:
     serializedVersion: 2
@@ -1978,8 +1978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceCounter: {fileID: 1020563111}
   toolbar: {fileID: 1301267934}
-  buildButtonPrefab: {fileID: 3329804753779398292, guid: 72acf762bc00c12419d83d9f71495fb3, type: 3}
-  producerButtonPrefab: {fileID: 3329804753779398292, guid: b377ed6e2544cdd40939b55e6a7ba455, type: 3}
+  toolbarButtonPrefab: {fileID: 3329804753779398292, guid: 9971d3aba0efadd4e8ec34a4e400af1e, type: 3}
 --- !u!1001 &2451251459138453124
 PrefabInstance:
   m_ObjectHideFlags: 0

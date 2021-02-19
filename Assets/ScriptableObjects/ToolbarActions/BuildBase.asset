@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3d333e16f6941469796a8f3563c22d, type: 3}
+  m_Script: {fileID: 11500000, guid: 607462b435f0b634988ae282c9b3df26, type: 3}
   m_Name: BuildBase
   m_EditorClassIdentifier: 
   id: BuildBase
   title: Build Base
   menuIcon: {fileID: 21300000, guid: 112aa1cbfb7f5481992a893927e886bb, type: 3}
-  buildable: {fileID: 7477107107202714280, guid: f0e16befa5bac4642807efe1ac1f648c, type: 3}
+  prefab: {fileID: 7477107107202714280, guid: f0e16befa5bac4642807efe1ac1f648c, type: 3}
   cost: 50
+  eventType: 1

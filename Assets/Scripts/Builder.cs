@@ -6,38 +6,22 @@ using UnityEngine.AI;
 
 public class Builder : MonoBehaviour
 {
-    public List<BuildAction> buildMenuItems = new List<BuildAction>();
     public float buildRange;
 
     Mover mover;
-    Selectable selectable;
-    BuildAction currentBuildAction;
+    ToolbarAction currentBuildAction;
     Buildable currentBuildable;
 
-    bool registered;
     bool atBuildTarget;
 
     private void Start()
     {
         mover = GetComponent<Mover>();
-        selectable = GetComponent<Selectable>();
     }
 
     private void Update()
     {
         atBuildTarget = mover.moveComplete && currentBuildable && Vector3.Distance(transform.position, currentBuildable.transform.position) < buildRange;
-
-        if (selectable && selectable.isSelected && !registered)
-        {
-            EventManager.Emit(EventManager.Events.RegisterBuilder, this);
-            registered = true;
-        }
-
-        if (!selectable || (!selectable.isSelected && registered))
-        {
-            EventManager.Emit(EventManager.Events.RegisterBuilder, null);
-            registered = false;
-        }
 
         if (atBuildTarget)
         {
@@ -47,7 +31,7 @@ public class Builder : MonoBehaviour
         }
     }
 
-    public void Build(Buildable buildable, BuildAction buildAction)
+    public void Build(Buildable buildable, ToolbarAction buildAction)
     {
         currentBuildAction = buildAction;
         currentBuildable = buildable;

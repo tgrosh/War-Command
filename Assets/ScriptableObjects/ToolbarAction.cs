@@ -2,11 +2,12 @@
 using UnityEngine;
 
 [CreateAssetMenu]
-public class ProducerAction : ScriptableObject
+public class ToolbarAction : ScriptableObject
 {
     public string id;
     public string title;
     public Sprite menuIcon;
-    public GameObject produceable;
+    public GameObject prefab;
     public int cost;
+    public EventManager.EventMessage eventType;
 }

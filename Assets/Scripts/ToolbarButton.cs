@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildButton : MonoBehaviour
+public class ToolbarButton : MonoBehaviour
 {
-    public BuildAction buildAction;
+    public ToolbarAction toolbarAction;
 
     Button button;
     Color originalButtonColor;
@@ -20,7 +20,7 @@ public class BuildButton : MonoBehaviour
 
     private void Update()
     {
-        button.enabled = buildAction.cost <= ResourceBank.GetCurrentResources();
+        button.enabled = toolbarAction.cost <= ResourceBank.instance.currentResources;
         if (button.enabled)
         {
             button.transform.Find("Image").GetComponent<Image>().color = originalImageColor;
@@ -34,6 +34,6 @@ public class BuildButton : MonoBehaviour
 
     public void ToolbarButtonPressed()
     {
-        EventManager.Emit(EventManager.Events.BuildButtonPressed, buildAction); 
+        EventManager.Emit(toolbarAction.eventType, toolbarAction);
     }
 }

@@ -8,13 +8,13 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
-    public BuildAction currentBuildAction;
+    public ToolbarAction currentToolbarAction;
     public Buildable currentBuildable;
     public LayerMask rayLayers;    
 
     private void Start()
     {
-        EventManager.Subscribe(EventManager.Events.BuildButtonPressed, BuildButtonPressed);
+        EventManager.Subscribe(EventManager.EventMessage.BuildButtonPressed, BuildButtonPressed);
     }
 
     // Update is called once per frame
@@ -51,9 +51,9 @@ public class InputHandler : MonoBehaviour
                 {
                     //placing buildable
                     currentBuildable.ShowPendingBuild();
-                    GetCurrentBuilder().Build(currentBuildable, currentBuildAction);
+                    GetCurrentBuilder().Build(currentBuildable, currentToolbarAction);
                     currentBuildable = null;
-                    currentBuildAction = null;
+                    currentToolbarAction = null;
                 }
                 else
                 {
@@ -109,12 +109,12 @@ public class InputHandler : MonoBehaviour
 
     private void BuildButtonPressed(object arg0)
     {
-        currentBuildAction = arg0 as BuildAction;
+        currentToolbarAction = arg0 as ToolbarAction;
         RaycastHit hit;
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
-            currentBuildable = Instantiate(currentBuildAction.buildable, hit.point, transform.rotation).GetComponent<Buildable>();
+            currentBuildable = Instantiate(currentToolbarAction.prefab, hit.point, transform.rotation).GetComponent<Buildable>();
             currentBuildable.currentBuildState = BuildState.Placing;
         }
     }

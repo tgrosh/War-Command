@@ -24,7 +24,7 @@ public class ResourceBank : MonoBehaviour
     private void Start()
     {
         instance.currentResources = startingResources;
-        EventManager.Emit(EventManager.Events.ResourceAmountChanged, instance.currentResources);
+        EventManager.Emit(EventManager.EventMessage.ResourceAmountChanged, instance.currentResources);
     }
 
     public static int GetCurrentResources()
@@ -35,7 +35,7 @@ public class ResourceBank : MonoBehaviour
     public static void Deposit(int amount)
     {
         instance.currentResources += amount;
-        EventManager.Emit(EventManager.Events.ResourceAmountChanged, instance.currentResources);
+        EventManager.Emit(EventManager.EventMessage.ResourceAmountChanged, instance.currentResources);
     }
 
     public static bool Withdraw(int amount)
@@ -43,7 +43,7 @@ public class ResourceBank : MonoBehaviour
         if (instance.currentResources < amount) return false;
 
         instance.currentResources -= amount;
-        EventManager.Emit(EventManager.Events.ResourceAmountChanged, instance.currentResources);
+        EventManager.Emit(EventManager.EventMessage.ResourceAmountChanged, instance.currentResources);
         return true;
     }
 }

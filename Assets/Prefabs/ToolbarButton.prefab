@@ -87,9 +87,9 @@ GameObject:
   - component: {fileID: 3329804753779398294}
   - component: {fileID: 3329804753779398293}
   - component: {fileID: 3329804753779398292}
-  - component: {fileID: 5635089094227095645}
+  - component: {fileID: 1372901303185905904}
   m_Layer: 5
-  m_Name: ProducerButton
+  m_Name: ToolbarButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,8 +197,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5635089094227095645}
-        m_TargetAssemblyTypeName: ProducerButton, Assembly-CSharp
+      - m_Target: {fileID: 1372901303185905904}
+        m_TargetAssemblyTypeName: ToolbarButton, Assembly-CSharp
         m_MethodName: ToolbarButtonPressed
         m_Mode: 1
         m_Arguments:
@@ -209,7 +209,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5635089094227095645
+--- !u!114 &1372901303185905904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3329804753779398298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66305e88ff3d70c45a6becdf6b855ac6, type: 3}
+  m_Script: {fileID: 11500000, guid: 844b7caee819a09468a0ce0523b7f8fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  producerAction: {fileID: 0}
+  toolbarAction: {fileID: 0}

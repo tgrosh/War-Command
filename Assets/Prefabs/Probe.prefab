@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2451251457783030675}
   - component: {fileID: 2451251457783030684}
   - component: {fileID: 2451251457783030685}
+  - component: {fileID: 3616137158467159839}
   m_Layer: 0
   m_Name: Probe
   m_TagString: Untagged
@@ -168,8 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb53ecb062b6e740a07d62f2c57033e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildMenuItems:
-  - {fileID: 11400000, guid: 39b05d9afe411854bac42c32609c7d86, type: 2}
   buildRange: 7
 --- !u!120 &2451251457783030685
 LineRenderer:
@@ -267,6 +266,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &3616137158467159839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2451251457783030667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc5fbd46bce34e4f9ce2f079fb79afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolbarActions:
+  - {fileID: 11400000, guid: ead3298431fe882479b256d688251810, type: 2}
 --- !u!1 &2451251458627253515
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,56 +8,53 @@ public class UI : MonoBehaviour
 {
     public Text resourceCounter;
     public GameObject toolbar;
-    public Button buildButtonPrefab;
-    public Button producerButtonPrefab;
+    public Button toolbarButtonPrefab;
 
-    object currentRegistered;
+    ToolbarProvider currentProvider;
     int resources;
 
     void Awake()
     {
-        EventManager.Subscribe(EventManager.Events.ResourceAmountChanged, ResourceAmountChanged);
-        EventManager.Subscribe(EventManager.Events.RegisterBuilder, RegisterBuilder);
-        EventManager.Subscribe(EventManager.Events.RegisterProducer, RegisterProducer);
+        EventManager.Subscribe(EventManager.EventMessage.ResourceAmountChanged, ResourceAmountChanged);
+        EventManager.Subscribe(EventManager.EventMessage.RegisterToolbarProvider, RegisterToolbarProvider);
+        EventManager.Subscribe(EventManager.EventMessage.UnRegisterToolbarProvider, UnRegisterToolbarProvider);
     }
 
-    private void RegisterProducer(object arg0)
+    private void UnRegisterToolbarProvider(object arg0)
     {
-        Producer producer = arg0 as Producer;
-        currentRegistered = producer;
-        if (producer)
+        ToolbarProvider provider = arg0 as ToolbarProvider;
+        if (currentProvider == provider)
         {
-            RegisterProducerMenuItems(producer.producerMenuItems);
+            currentProvider = null;
         }
     }
 
-    private void RegisterBuilder(object arg0)
+    private void RegisterToolbarProvider(object arg0)
     {
-        Builder builder = arg0 as Builder;
-        currentRegistered = builder;
-        if (builder)
+        ToolbarProvider provider = arg0 as ToolbarProvider;
+        currentProvider = provider;
+        if (provider)
         {
-            RegisterBuildMenuItems(builder.buildMenuItems);
+            RegisterMenuItems(provider.toolbarActions);
         }
     }
 
-    private void RegisterProducerMenuItems(List<ProducerAction> items)
+    private void RegisterMenuItems(List<ToolbarAction> items)
     {
-        foreach (ProducerAction item in items)
+        ClearToolbar();
+        foreach (ToolbarAction item in items)
         {
-            Button button = Instantiate(producerButtonPrefab, toolbar.transform);
-            button.GetComponent<ProducerButton>().producerAction = item;
+            Button button = Instantiate(toolbarButtonPrefab, toolbar.transform);
+            button.GetComponent<ToolbarButton>().toolbarAction = item;
             button.transform.Find("Image").GetComponent<Image>().sprite = item.menuIcon;
         }
     }
 
-    private void RegisterBuildMenuItems(List<BuildAction> items)
-    {
-        foreach (BuildAction item in items)
+    void ClearToolbar()
+    {        
+        foreach (Transform child in toolbar.transform)
         {
-            Button button = Instantiate(buildButtonPrefab, toolbar.transform);
-            button.GetComponent<BuildButton>().buildAction = item;
-            button.transform.Find("Image").GetComponent<Image>().sprite = item.menuIcon;
+            GameObject.Destroy(child.gameObject);
         }
     }
 
@@ -66,17 +63,12 @@ public class UI : MonoBehaviour
         resources = (int)arg;
     }
 
-    // Update is called once per frame
     void Update()
     {
         resourceCounter.text = resources.ToString();
-
-        if (currentRegistered == null)
+        if(currentProvider == null)
         {
-            foreach (Transform child in toolbar.transform)
-            {
-                GameObject.Destroy(child.gameObject);
-            }
+            ClearToolbar();
         }
     }
 

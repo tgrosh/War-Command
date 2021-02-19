@@ -289,6 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableResourceAmount: 0
   totalResourceAmount: 500
+  resourcesPerCollect: 1
 --- !u!4 &137188636 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 55aab13c85008db45860e49c80193dd2, type: 3}
@@ -1588,7 +1589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationMarkerPrefab: {fileID: 6886364940454071289, guid: 38b19a26bc823a246a2384e809601e20, type: 3}
   moveComplete: 0
-  showPath: 0
+  showPath: 1
   agent: {fileID: 0}
 --- !u!114 &1363811603
 MonoBehaviour:
@@ -1605,6 +1606,8 @@ MonoBehaviour:
   collectorEffect: {fileID: 599280530}
   collectionPerSecond: 1
   collectionFacingSpeed: 200
+  currentlyCollectedResources: 0
+  maxResources: 5
 --- !u!136 &1363811604
 CapsuleCollider:
   m_ObjectHideFlags: 0

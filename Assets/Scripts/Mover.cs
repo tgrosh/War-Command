@@ -35,7 +35,7 @@ public class Mover : MonoBehaviour
         if (showPath) ShowPath();
     }
 
-    public void SetDestination(Vector3 targetPosition, float range = 3f, int navLayerMask = NavMesh.AllAreas)
+    public void SetDestination(Vector3 targetPosition, float range = 10f, int navLayerMask = NavMesh.AllAreas)
     {
         NavMeshHit navHit;
         NavMesh.SamplePosition(targetPosition, out navHit, range, navLayerMask);

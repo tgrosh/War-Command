@@ -9,17 +9,20 @@ public class Collector : MonoBehaviour
     public VisualEffect collectorEffect;
     public float collectionPerSecond;
     public float collectionFacingSpeed;
+    public int currentlyCollectedResources;
+    public int maxResources;
 
-    NavMeshAgent agent;
+    Mover mover;
     bool atResourceTarget;
     ResourceNode resourceTarget;
     Targeter targeter;
     float collectionTimer;
+    Base nearestBase;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        mover = GetComponent<Mover>();
         targeter = GetComponent<Targeter>();
     }
 
@@ -29,7 +32,7 @@ public class Collector : MonoBehaviour
         if (targeter.target)
         {
             resourceTarget = targeter.target.GetComponent<ResourceNode>();
-            atResourceTarget = agent.hasPath && agent.remainingDistance < agent.stoppingDistance;
+            atResourceTarget = mover.agent.hasPath && mover.agent.remainingDistance < mover.agent.stoppingDistance;
         }
 
         if (!resourceTarget)
@@ -43,8 +46,21 @@ public class Collector : MonoBehaviour
             transform.LookAt(new Vector3(resourceTarget.transform.position.x, transform.position.y, resourceTarget.transform.position.z));
             if (collectionPerSecond > 0 && collectionTimer > 1/collectionPerSecond)
             {
-                int collectionAmount = resourceTarget.Collect();
-                EventManager.Emit(EventManager.Events.ResourceCollected, collectionAmount);
+                int collectionAmount = resourceTarget.resourcesPerCollect;
+                if (currentlyCollectedResources <= maxResources - collectionAmount)
+                {
+                    resourceTarget.Collect();
+                    currentlyCollectedResources += collectionAmount;
+                } else
+                {
+                    //go back to base
+                    Transform nearestBaseTransform = FindNearestBase();
+                    if (nearestBaseTransform != null)
+                    {
+                        nearestBase = nearestBaseTransform.gameObject.GetComponent<Base>();
+                        mover.SetDestination(nearestBase.transform.position);
+                    }                    
+                }
                 collectionTimer = 0f;
             }
             collectionTimer += Time.deltaTime;
@@ -56,4 +72,25 @@ public class Collector : MonoBehaviour
         }
     }
 
+    Transform FindNearestBase()
+    {
+        GameObject closest = null;
+        float closestDistance = 0f;
+
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Base"))
+        {
+            Base goBase = go.GetComponent<Base>();
+            if (go == null) continue;
+
+            float goDistance = Vector3.Distance(transform.position, go.transform.position);
+
+            if (closest == null || goDistance < closestDistance)
+            {
+                closest = go;
+                closestDistance = goDistance;
+            }
+        }
+
+        return closest.transform;
+    }
 }

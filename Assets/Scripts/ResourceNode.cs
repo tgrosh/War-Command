@@ -6,6 +6,7 @@ public class ResourceNode : MonoBehaviour
 {
     public int availableResourceAmount;
     public int totalResourceAmount;
+    public int resourcesPerCollect = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +16,11 @@ public class ResourceNode : MonoBehaviour
 
     public int Collect()
     {
-        availableResourceAmount--;
-        return availableResourceAmount > 0 ? 1: 0;
+        if (availableResourceAmount > resourcesPerCollect)
+        {
+            availableResourceAmount -= resourcesPerCollect;
+            return resourcesPerCollect;
+        }
+        return 0;
     }
 }

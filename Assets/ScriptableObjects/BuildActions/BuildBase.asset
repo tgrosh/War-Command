@@ -16,3 +16,4 @@ MonoBehaviour:
   title: Build Base
   menuIcon: {fileID: 21300000, guid: 112aa1cbfb7f5481992a893927e886bb, type: 3}
   buildable: {fileID: 7477107107202714280, guid: f0e16befa5bac4642807efe1ac1f648c, type: 3}
+  cost: 50

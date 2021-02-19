@@ -8,4 +8,5 @@ public class ProducerAction : ScriptableObject
     public string title;
     public Sprite menuIcon;
     public GameObject produceable;
+    public int cost;
 }

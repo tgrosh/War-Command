@@ -9,4 +9,5 @@ public class BuildAction : ScriptableObject
     public string title;
     public Sprite menuIcon;
     public GameObject buildable;
+    public int cost;
 }

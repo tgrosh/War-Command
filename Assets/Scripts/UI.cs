@@ -11,14 +11,12 @@ public class UI : MonoBehaviour
     public Button buildButtonPrefab;
     public Button producerButtonPrefab;
 
-    int resources;
     object currentRegistered;
+    int resources;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        EventManager.Subscribe(EventManager.Events.ResourcesDeposited, ResourcesDeposited);
-        EventManager.Subscribe(EventManager.Events.ResourcesWithdrawn, ResourcesWithdrawn);
+        EventManager.Subscribe(EventManager.Events.ResourceAmountChanged, ResourceAmountChanged);
         EventManager.Subscribe(EventManager.Events.RegisterBuilder, RegisterBuilder);
         EventManager.Subscribe(EventManager.Events.RegisterProducer, RegisterProducer);
     }
@@ -63,14 +61,9 @@ public class UI : MonoBehaviour
         }
     }
 
-    private void ResourcesDeposited(object arg)
+    private void ResourceAmountChanged(object arg)
     {
-        resources += (int)arg;
-    }
-
-    private void ResourcesWithdrawn(object arg)
-    {
-        resources -= (int)arg;
+        resources = (int)arg;
     }
 
     // Update is called once per frame

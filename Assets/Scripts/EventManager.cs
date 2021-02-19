@@ -13,7 +13,8 @@ public class EventManager : MonoBehaviour
         RegisterBuilder,
         ResourcesWithdrawn,
         RegisterProducer,
-        ProducerButtonPressed
+        ProducerButtonPressed,
+        ResourceAmountChanged
     }
 
     private static EventManager eventManager;

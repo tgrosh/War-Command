@@ -13,24 +13,42 @@ public class Mover : MonoBehaviour
     GameObject marker; 
     LineRenderer pathRenderer;
     Vector3 currentTargetPosition;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        moveComplete = true;
         agent = GetComponent<NavMeshAgent>();
         pathRenderer = GetComponent<LineRenderer>();
+        animator = GetComponent<Animator>();
+        if (!animator)
+        {
+            animator = gameObject.AddComponent(typeof(Animator)) as Animator;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance < agent.stoppingDistance)
+        if (!moveComplete && agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
         {
             moveComplete = true;
             if (marker)
             {
                 Destroy(marker);
             }
+        }
+
+        if (!moveComplete)
+        {
+            animator.SetTrigger("move");
+            animator.ResetTrigger("idle");
+        }
+        if (moveComplete)
+        {
+            animator.SetTrigger("idle");
+            animator.ResetTrigger("move");
         }
 
         if (showPath) ShowPath();
@@ -46,6 +64,7 @@ public class Mover : MonoBehaviour
         if (navHit.hit) {
             ClearDestination();
             agent.destination = navHit.position;
+            currentTargetPosition = navHit.position;
             moveComplete = false;
         }
     }
@@ -56,6 +75,7 @@ public class Mover : MonoBehaviour
         
         ClearDestination();
         agent.destination = RandomNavmeshLocation(targetPosition, range);
+        currentTargetPosition = targetPosition;
         moveComplete = false;
     }
 

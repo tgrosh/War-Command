@@ -50,6 +50,8 @@ GameObject:
   - component: {fileID: 6358222247304954919}
   - component: {fileID: -8783326025675532898}
   - component: {fileID: 6001698514678692661}
+  - component: {fileID: 5445571644609751940}
+  - component: {fileID: 182310210848309507}
   m_Layer: 0
   m_Name: Base
   m_TagString: Base
@@ -172,6 +174,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolbarActions:
   - {fileID: 11400000, guid: 4d744fb1e45d36842a4541901e58c31d, type: 2}
+--- !u!114 &5445571644609751940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477107107202714280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82555756dfb56b3418041066a7270e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &182310210848309507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477107107202714280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96582c0bd765ecf408d52d8a7d04b2e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 500
 --- !u!208 &7529208741531854221
 NavMeshObstacle:
   m_ObjectHideFlags: 0

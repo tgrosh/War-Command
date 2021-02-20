@@ -56,7 +56,7 @@ NavMeshAgent:
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 720
-  m_StoppingDistance: 3
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb53ecb062b6e740a07d62f2c57033e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildRange: 7
+  buildRange: 15
 --- !u!120 &2451251457783030685
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -280,6 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolbarActions:
   - {fileID: 11400000, guid: ead3298431fe882479b256d688251810, type: 2}
+  - {fileID: 11400000, guid: feb4c23260afe9346b2873e50a4230a8, type: 2}
 --- !u!1 &2451251458627253515
 GameObject:
   m_ObjectHideFlags: 0

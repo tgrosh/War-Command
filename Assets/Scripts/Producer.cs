@@ -24,7 +24,7 @@ public class Producer : MonoBehaviour
         {
             if (ResourceBank.Withdraw(action.cost))
             {
-                Instantiate(action.prefab, navHit.position, Quaternion.identity);
+                Instantiate(action.prefab, navHit.position, Quaternion.LookRotation(navHit.position - transform.position));
             }
         }
     }

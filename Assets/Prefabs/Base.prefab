@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4138ba3201db34f8bf366e6cc00f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  producerRange: 12
+  producerRange: 18
 --- !u!114 &-8783326025675532898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionMarkerPrefab: {fileID: 6886364940454071289, guid: c321f3b41be83f64fbd9ca28fd9ad5a8, type: 3}
   isSelected: 0
-  scale: 12
+  scale: 18
 --- !u!114 &6001698514678692661
 MonoBehaviour:
   m_ObjectHideFlags: 0

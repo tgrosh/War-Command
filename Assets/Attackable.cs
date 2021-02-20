@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Attackable : MonoBehaviour
 {
-    Health health;
+    public Health health;
     Animator animator;
     bool isDead;
 

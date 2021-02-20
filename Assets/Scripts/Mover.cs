@@ -86,6 +86,7 @@ public class Mover : MonoBehaviour
             Destroy(marker);
         }
         agent.ResetPath();
+        moveComplete = true;
     }
 
     public void ShowDestinationMarker()

@@ -49,6 +49,10 @@ public class Attacker : MonoBehaviour
         {
             MoveToTarget();
         }
+        if (!attackTarget)
+        {
+            StopAttack();
+        }
 
         if (attacking)
         {
@@ -58,6 +62,11 @@ public class Attacker : MonoBehaviour
             {
                 attackTarget.Attack(attackType);
                 attackTimer = 0f;
+
+                if (attackTarget.health.currentHealth == 0)
+                {
+                    StopAttack();
+                }
             }
         }
     }
@@ -69,6 +78,12 @@ public class Attacker : MonoBehaviour
         animator.ResetTrigger("idle");
         animator.ResetTrigger("move");
         attacking = true;
+    }
+
+    void StopAttack()
+    {
+        animator.ResetTrigger("shoot");
+        attacking = false;
     }
     
     void MoveToTarget()

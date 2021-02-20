@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackId: SoldierRifle
   attackName: Soldier Rifle
-  range: 10
+  range: 15
   damageType: 0
   attackSpeed: 1
   healthDamage: 15

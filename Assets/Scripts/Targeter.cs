@@ -46,7 +46,7 @@ public class Targeter : MonoBehaviour
         if (!target) return;
         marker = Instantiate(targetMarkerPrefab, new Vector3(target.position.x, 0, target.position.z), Quaternion.identity);
         marker.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
-        marker.transform.localScale = Vector3.one * target.GetComponent<Collider>().bounds.extents.magnitude;
+        marker.transform.localScale = new Vector3(target.GetComponent<Collider>().bounds.extents.magnitude*2, 1, target.GetComponent<Collider>().bounds.extents.magnitude * 2);
     }
 
     void ClearMarker()

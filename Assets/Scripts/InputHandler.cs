@@ -76,12 +76,10 @@ public class InputHandler : MonoBehaviour
 
             if (hit.collider)
             {
-                if (hit.collider.GetComponent<MoveTarget>())
+                if (hit.collider.GetComponentInParent<Targetable>())
                 {
                     foreach (Mover mover in GetMovers())
                     {
-                        mover.SetDestination(hit.collider.transform.position, hit.collider.bounds.size.magnitude * 2f);                        
-
                         Targeter targeter = mover.GetComponent<Targeter>();
                         if (targeter)
                         {

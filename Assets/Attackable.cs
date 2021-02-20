@@ -22,7 +22,7 @@ public class Attackable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDead)
+        if (!isDead && health.currentHealth == 0)
         {
             animator.SetTrigger("die");
             isDead = true;
@@ -30,11 +30,11 @@ public class Attackable : MonoBehaviour
         }
     }
 
-    public void Attack(int amount)
+    public void Attack(AttackType attackType)
     {
         if (health)
         {
-            health.Damage(amount);
+            health.Damage(attackType.healthDamage);
         }
     }
 }

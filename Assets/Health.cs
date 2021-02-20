@@ -18,6 +18,9 @@ public class Health : MonoBehaviour
         if (currentHealth >= amount)
         {
             currentHealth -= amount;
+        } else
+        {
+            currentHealth = 0;
         }
     }
 
@@ -26,6 +29,9 @@ public class Health : MonoBehaviour
         if (currentHealth + amount <= maxHealth)
         {
             currentHealth += amount;
+        } else
+        {
+            currentHealth = maxHealth;
         }
     }
 }

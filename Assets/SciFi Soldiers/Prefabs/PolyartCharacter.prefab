@@ -1723,6 +1723,8 @@ GameObject:
   - component: {fileID: -6526739423661537752}
   - component: {fileID: 4597585455990780693}
   - component: {fileID: 5468002025877655313}
+  - component: {fileID: 1476368293613547897}
+  - component: {fileID: 3248110986507274580}
   m_Layer: 0
   m_Name: PolyartCharacter
   m_TagString: Untagged
@@ -1837,6 +1839,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1476368293613547897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7072444061591711186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29250546b2b19fb41abd995719f9cbd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackType: {fileID: 11400000, guid: 286cda5aca1de48429e914ed08e98b00, type: 2}
+--- !u!114 &3248110986507274580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7072444061591711186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3df3720272572749bd929856ad5c81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  targetMarkerPrefab: {fileID: 6886364940454071289, guid: 484b1db94be870d4394906cb04d003b6, type: 3}
 --- !u!1 &7072444061591711188
 GameObject:
   m_ObjectHideFlags: 0

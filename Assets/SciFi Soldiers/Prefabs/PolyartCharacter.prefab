@@ -1725,6 +1725,7 @@ GameObject:
   - component: {fileID: 5468002025877655313}
   - component: {fileID: 1476368293613547897}
   - component: {fileID: 3248110986507274580}
+  - component: {fileID: -5685122289468771464}
   m_Layer: 0
   m_Name: PolyartCharacter
   m_TagString: Untagged
@@ -1866,6 +1867,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   targetMarkerPrefab: {fileID: 6886364940454071289, guid: 484b1db94be870d4394906cb04d003b6, type: 3}
+--- !u!114 &-5685122289468771464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7072444061591711186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &7072444061591711188
 GameObject:
   m_ObjectHideFlags: 0

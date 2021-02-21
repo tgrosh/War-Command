@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 903608442256289785}
   - component: {fileID: 5257546794149975180}
   - component: {fileID: -7871484859802348591}
+  - component: {fileID: 3595547657009498894}
   m_Layer: 0
   m_Name: Barracks
   m_TagString: Untagged
@@ -150,8 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35fd423f3ed8ad2498d4949516b101c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   selectionMarkerPrefab: {fileID: 6886364940454071289, guid: c321f3b41be83f64fbd9ca28fd9ad5a8, type: 3}
-  isSelected: 0
   scale: 18
 --- !u!114 &8696080550720480746
 MonoBehaviour:
@@ -235,6 +237,24 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &3595547657009498894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6793095865541371764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  localPositionSensitivity: 0.1
+  localRotationSensitivity: 0.1
+  localScaleSensitivity: 0.1
 --- !u!1 &6793095865819637319
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,11 +789,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 10c1e7b30f1327d4aa765d9c2f08f916, type: 3}
   m_PrefabInstance: {fileID: 6793095865544905506}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7151072580677746480 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4429389382850423826, guid: 10c1e7b30f1327d4aa765d9c2f08f916, type: 3}
-  m_PrefabInstance: {fileID: 6793095865544905506}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4787111148301528058 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7193708158812309288, guid: 10c1e7b30f1327d4aa765d9c2f08f916, type: 3}
@@ -782,6 +797,11 @@ GameObject:
 --- !u!1 &6650877531316358135 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 146724684514695381, guid: 10c1e7b30f1327d4aa765d9c2f08f916, type: 3}
+  m_PrefabInstance: {fileID: 6793095865544905506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7151072580677746480 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4429389382850423826, guid: 10c1e7b30f1327d4aa765d9c2f08f916, type: 3}
   m_PrefabInstance: {fileID: 6793095865544905506}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6793095865997409900

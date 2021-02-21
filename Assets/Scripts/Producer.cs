@@ -1,3 +1,4 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class Producer : MonoBehaviour
+public class Producer : NetworkBehaviour
 {
     public float producerRange;
 
@@ -24,9 +25,16 @@ public class Producer : MonoBehaviour
         {
             if (ResourceBank.Withdraw(action.cost))
             {
-                Instantiate(action.prefab, navHit.position, Quaternion.LookRotation(navHit.position - transform.position));
+                GameObject obj = Instantiate(action.prefab, navHit.position, Quaternion.LookRotation(navHit.position - transform.position));
+                CmdSpawnProducable(obj);                
             }
         }
+    }
+
+    [Command]
+    private void CmdSpawnProducable(GameObject obj)
+    {
+        NetworkServer.Spawn(obj, connectionToClient);
     }
 
     public Vector3 RandomNavmeshLocation(float radius)

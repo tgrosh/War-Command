@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class InputHandler : NetworkBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
     public ToolbarAction currentToolbarAction;
+    [SyncVar]
     public Buildable currentBuildable;
     public LayerMask rayLayers;    
 
@@ -56,7 +58,7 @@ public class InputHandler : NetworkBehaviour
                 {
                     //placing buildable
                     currentBuildable.ShowPendingBuild();
-                    NetworkServer.Spawn(currentBuildable.gameObject, connectionToClient);
+                    CmdSpawnBuildable(currentBuildable.gameObject);
                     GetCurrentBuilder().Build(currentBuildable, currentToolbarAction);
                     currentBuildable = null;
                     currentToolbarAction = null;
@@ -109,6 +111,12 @@ public class InputHandler : NetworkBehaviour
                 }
             }
         }
+    }
+
+    [Command]
+    private void CmdSpawnBuildable(GameObject obj)
+    {
+        NetworkServer.Spawn(obj, connectionToClient);
     }
 
     private void BuildButtonPressed(object arg0)

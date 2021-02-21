@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class WarCommandPlayer : NetworkBehaviour
 {
+    public GameObject startingProbe;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,8 @@ public class WarCommandPlayer : NetworkBehaviour
         {
             Camera.main.transform.SetParent(this.transform, false);
             GetComponent<CameraController>().cameraTransform = Camera.main.transform;
+            GameObject go = Instantiate(startingProbe, transform.position, transform.rotation);
+            NetworkServer.Spawn(go, gameObject);
         }
 
         base.OnStartClient();

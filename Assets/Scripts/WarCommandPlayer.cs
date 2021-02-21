@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class WarCommandPlayer : NetworkBehaviour
 {
-    public GameObject probePrefab;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +17,15 @@ public class WarCommandPlayer : NetworkBehaviour
         
     }
 
-    public override void OnStartLocalPlayer()
+    public override void OnStartClient()
     {
-        base.OnStartLocalPlayer();
+        if (isLocalPlayer)
+        {
+            Camera.main.transform.SetParent(this.transform);
+            GetComponent<CameraController>().cameraTransform = Camera.main.transform;
+        }
 
-        GameObject go = Instantiate(probePrefab);
-        NetworkServer.Spawn(go, connectionToServer);
+        base.OnStartClient();
     }
+
 }

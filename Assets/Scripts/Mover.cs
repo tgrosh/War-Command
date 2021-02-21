@@ -22,10 +22,6 @@ public class Mover : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         pathRenderer = GetComponent<LineRenderer>();
         animator = GetComponent<Animator>();
-        if (!animator)
-        {
-            animator = gameObject.AddComponent(typeof(Animator)) as Animator;
-        }
     }
 
     // Update is called once per frame
@@ -42,13 +38,13 @@ public class Mover : MonoBehaviour
 
         if (!moveComplete)
         {
-            animator.SetTrigger("move");
-            animator.ResetTrigger("idle");
+            if (animator) animator.SetTrigger("move");
+            if (animator) animator?.ResetTrigger("idle");
         }
         if (moveComplete)
         {
-            animator.SetTrigger("idle");
-            animator.ResetTrigger("move");
+            if (animator) animator?.SetTrigger("idle");
+            if (animator) animator?.ResetTrigger("move");
         }
 
         if (showPath) ShowPath();

@@ -19,7 +19,6 @@ public class Collector : NetworkBehaviour
     bool atDeliveryTarget;
 
     ResourceDepot depotTarget; // the place i will deliver to
-    [SyncVar]
     ResourceNode resourceTarget; // the place i will collect from
 
     float collectionTimer;
@@ -38,11 +37,11 @@ public class Collector : NetworkBehaviour
 
         if (targeter.target)
         {
-            CmdSetResourceTarget(targeter.target.GetComponent<ResourceNode>());
+            resourceTarget = targeter.target.GetComponent<ResourceNode>();
         }
         else
         {
-            CmdSetResourceTarget(null);
+            resourceTarget = null;
         }        
 
         atResourceTarget = mover.moveComplete && resourceTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
@@ -67,7 +66,7 @@ public class Collector : NetworkBehaviour
                     if (CanCollectFromResource(resourceTarget))
                     {
                         //collect
-                        CmdCollect();
+                        CmdCollect(resourceTarget);
                         currentlyCollectedResources += collectionAmount;
                     }
                     collectionTimer = 0f;
@@ -102,21 +101,15 @@ public class Collector : NetworkBehaviour
         collectorEffect.gameObject.SetActive(resourceTarget && atResourceTarget && CanCollectFromResource(resourceTarget));
     }
 
-    [Command]
-    private void CmdSetResourceTarget(ResourceNode node)
-    {
-        resourceTarget = node;
-    }
-
     bool CanCollectFromResource(ResourceNode resource)
     {
         return currentlyCollectedResources <= maxResources - resource.resourcesPerCollect;
     }
 
     [Command]
-    void CmdCollect()
+    void CmdCollect(ResourceNode node)
     {
-        resourceTarget.Collect();
+        node.Collect();
     }
 
     void Deliver()

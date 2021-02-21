@@ -11,7 +11,6 @@ public class InputHandler : NetworkBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
     public ToolbarAction currentToolbarAction;
-    [SyncVar]
     public Buildable currentBuildable;
     public LayerMask rayLayers;    
 
@@ -58,7 +57,7 @@ public class InputHandler : NetworkBehaviour
                 {
                     //placing buildable
                     currentBuildable.ShowPendingBuild();
-                    CmdSpawnBuildable(currentBuildable.gameObject);
+                    CmdSpawnCurrentBuildable();
                     GetCurrentBuilder().Build(currentBuildable, currentToolbarAction);
                     currentBuildable = null;
                     currentToolbarAction = null;
@@ -114,9 +113,9 @@ public class InputHandler : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSpawnBuildable(GameObject obj)
+    private void CmdSpawnCurrentBuildable()
     {
-        NetworkServer.Spawn(obj, connectionToClient);
+        NetworkServer.Spawn(currentBuildable.gameObject, connectionToClient);
     }
 
     private void BuildButtonPressed(object arg0)

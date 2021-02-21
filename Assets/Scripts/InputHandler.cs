@@ -56,6 +56,7 @@ public class InputHandler : NetworkBehaviour
                 {
                     //placing buildable
                     currentBuildable.ShowPendingBuild();
+                    NetworkServer.Spawn(currentBuildable.gameObject, connectionToClient);
                     GetCurrentBuilder().Build(currentBuildable, currentToolbarAction);
                     currentBuildable = null;
                     currentToolbarAction = null;

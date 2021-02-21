@@ -1,10 +1,12 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Buildable : MonoBehaviour
+public class Buildable : NetworkBehaviour
 {
+    [SyncVar]
     public BuildState currentBuildState = BuildState.None;
     public GameObject actor;
     public GameObject placeholderActor;

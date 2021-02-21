@@ -10,9 +10,9 @@ namespace Assets.Scripts
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
             base.OnServerAddPlayer(conn);
-           
-            GameObject probe = Instantiate(probePrefab);
-            NetworkServer.Spawn(probe, conn);            
+                       
+            GameObject probe = Instantiate(probePrefab, startPositions[startPositionIndex].transform.position, startPositions[startPositionIndex].transform.rotation);
+            NetworkServer.Spawn(probe, conn);
         }
     }
 }

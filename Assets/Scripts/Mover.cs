@@ -19,8 +19,6 @@ public class Mover : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!hasAuthority) return;
-
         moveComplete = true;
         agent = GetComponent<NavMeshAgent>();
         pathRenderer = GetComponent<LineRenderer>();

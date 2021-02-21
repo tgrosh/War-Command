@@ -25,4 +25,5 @@ public class ResourceNode : NetworkBehaviour
         }
         return 0;
     }
+
 }

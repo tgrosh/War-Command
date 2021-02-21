@@ -1,7 +1,9 @@
+using Mirror;
+using System;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class Collector : MonoBehaviour
+public class Collector : NetworkBehaviour
 {
     public int maxResources;
     public float collectionPerSecond;
@@ -17,6 +19,7 @@ public class Collector : MonoBehaviour
     bool atDeliveryTarget;
 
     ResourceDepot depotTarget; // the place i will deliver to
+    [SyncVar]
     ResourceNode resourceTarget; // the place i will collect from
 
     float collectionTimer;
@@ -31,13 +34,16 @@ public class Collector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!hasAuthority) return;
+
         if (targeter.target)
         {
-            resourceTarget = targeter.target.GetComponent<ResourceNode>();
-        } else
-        {
-            resourceTarget = null;
+            CmdSetResourceTarget(targeter.target.GetComponent<ResourceNode>());
         }
+        else
+        {
+            CmdSetResourceTarget(null);
+        }        
 
         atResourceTarget = mover.moveComplete && resourceTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
         atDeliveryTarget = mover.moveComplete && depotTarget && Vector3.Distance(transform.position, depotTarget.transform.position) < deliveryRange;
@@ -52,8 +58,23 @@ public class Collector : MonoBehaviour
         //if we have a resource target, and we are at the resource, and we are not full
         if (resourceTarget && atResourceTarget && CanCollectFromResource(resourceTarget))
         {
-            //collect
-            Collect();
+            if (hasAuthority)
+            {
+                transform.LookAt(new Vector3(resourceTarget.transform.position.x, transform.position.y, resourceTarget.transform.position.z));
+                if (collectionPerSecond > 0 && collectionTimer > 1 / collectionPerSecond)
+                {
+                    int collectionAmount = resourceTarget.resourcesPerCollect;
+                    if (CanCollectFromResource(resourceTarget))
+                    {
+                        //collect
+                        CmdCollect();
+                        currentlyCollectedResources += collectionAmount;
+                    }
+                    collectionTimer = 0f;
+                }
+                collectionTimer += Time.deltaTime;
+
+            }
         }
 
         //if we have a resource target, and we are full, and we are not at delivery target
@@ -71,21 +92,6 @@ public class Collector : MonoBehaviour
             }
         }
 
-        //if we dont have a resource target, and we have any resources, and we are not at delivery target
-        //if (!resourceTarget && currentlyCollectedResources > 0 && !atDeliveryTarget)
-        //{
-        //    //move to delivery target
-        //    if (!depotTarget)
-        //    {
-        //        SetDeliveryTarget();
-        //    }
-
-        //    if (depotTarget)
-        //    {
-        //        mover.SetDestination(depotTarget.transform.position);
-        //    }
-        //}
-
         //if we have a delivery target, and we are at the delivery target, and we have resources to deliver
         if (depotTarget && atDeliveryTarget && currentlyCollectedResources > 0)
         {
@@ -96,25 +102,21 @@ public class Collector : MonoBehaviour
         collectorEffect.gameObject.SetActive(resourceTarget && atResourceTarget && CanCollectFromResource(resourceTarget));
     }
 
+    [Command]
+    private void CmdSetResourceTarget(ResourceNode node)
+    {
+        resourceTarget = node;
+    }
+
     bool CanCollectFromResource(ResourceNode resource)
     {
         return currentlyCollectedResources <= maxResources - resource.resourcesPerCollect;
     }
 
-    void Collect()
+    [Command]
+    void CmdCollect()
     {
-        transform.LookAt(new Vector3(resourceTarget.transform.position.x, transform.position.y, resourceTarget.transform.position.z));
-        if (collectionPerSecond > 0 && collectionTimer > 1 / collectionPerSecond)
-        {
-            int collectionAmount = resourceTarget.resourcesPerCollect;
-            if (CanCollectFromResource(resourceTarget))
-            {
-                resourceTarget.Collect();
-                currentlyCollectedResources += collectionAmount;
-            }
-            collectionTimer = 0f;
-        }
-        collectionTimer += Time.deltaTime;
+        resourceTarget.Collect();
     }
 
     void Deliver()

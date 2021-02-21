@@ -68,7 +68,7 @@ public class InputHandler : NetworkBehaviour
 
                     if (selectable)
                     {
-                        selectable.isSelected = true;
+                        selectable.Select();
                         selectedObjects.Add(selectable);
                     }
                 }                
@@ -126,7 +126,7 @@ public class InputHandler : NetworkBehaviour
     {
         foreach (Selectable selectable in selectedObjects)
         {
-            selectable.isSelected = false;
+            selectable.DeSelect();
         }
         selectedObjects.Clear();
     }

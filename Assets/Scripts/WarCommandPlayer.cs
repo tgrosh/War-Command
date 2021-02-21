@@ -21,7 +21,7 @@ public class WarCommandPlayer : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            Camera.main.transform.SetParent(this.transform);
+            Camera.main.transform.SetParent(this.transform, false);
             GetComponent<CameraController>().cameraTransform = Camera.main.transform;
         }
 

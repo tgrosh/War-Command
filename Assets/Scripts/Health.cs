@@ -1,10 +1,13 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : NetworkBehaviour
 {
+    [SyncVar]
     public int currentHealth;
+    [SyncVar]
     public int maxHealth;
 
     // Start is called before the first frame update

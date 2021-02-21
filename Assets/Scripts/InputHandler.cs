@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class InputHandler : MonoBehaviour
+public class InputHandler : NetworkBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
     public ToolbarAction currentToolbarAction;
@@ -14,12 +15,16 @@ public class InputHandler : MonoBehaviour
 
     private void Start()
     {
+        if (!isLocalPlayer) return;
+
         EventManager.Subscribe(EventManager.EventMessage.BuildButtonPressed, BuildButtonPressed);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer) return;
+
         if (currentBuildable)
         {
             RaycastHit hit = RayCast();

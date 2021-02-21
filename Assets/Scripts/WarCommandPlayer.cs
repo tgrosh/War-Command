@@ -25,11 +25,16 @@ public class WarCommandPlayer : NetworkBehaviour
         {
             Camera.main.transform.SetParent(this.transform, false);
             GetComponent<CameraController>().cameraTransform = Camera.main.transform;
-            GameObject go = Instantiate(startingProbe, transform.position, transform.rotation);
-            NetworkServer.Spawn(go, gameObject);
+            CmdSpawnProbe();
         }
 
         base.OnStartClient();
     }
 
+    [Command]
+    void CmdSpawnProbe()
+    {
+        GameObject probe = Instantiate(startingProbe, transform.position, transform.rotation);
+        NetworkServer.Spawn(probe, connectionToClient);
+    }
 }

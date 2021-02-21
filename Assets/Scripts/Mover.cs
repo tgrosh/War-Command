@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Mover : MonoBehaviour
+public class Mover : NetworkBehaviour
 {
     public GameObject locationMarkerPrefab;
     public bool moveComplete;
@@ -18,6 +19,8 @@ public class Mover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!hasAuthority) return;
+
         moveComplete = true;
         agent = GetComponent<NavMeshAgent>();
         pathRenderer = GetComponent<LineRenderer>();
@@ -27,6 +30,8 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!hasAuthority) return;
+
         if (!moveComplete && agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
         {
             moveComplete = true;

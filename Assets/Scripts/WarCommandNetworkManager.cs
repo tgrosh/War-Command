@@ -2,9 +2,6 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts
+public class WarCommandNetworkManager : NetworkManager
 {
-    public class WarCommandNetworkManager : NetworkManager
-    {
-    }
 }

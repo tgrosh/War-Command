@@ -57,7 +57,6 @@ public class InputHandler : NetworkBehaviour
                 {
                     //placing buildable
                     currentBuildable.ShowPendingBuild();
-                    CmdSpawnCurrentBuildable();
                     GetCurrentBuilder().Build(currentBuildable, currentToolbarAction);
                     currentBuildable = null;
                     currentToolbarAction = null;
@@ -113,9 +112,25 @@ public class InputHandler : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSpawnCurrentBuildable()
+    private void CmdSpawnBuildable(string prefabName, Vector3 position, BuildState buildState)
     {
+        GameObject prefab = FindObjectOfType<WarCommandNetworkManager>().spawnPrefabs.Find(go => go.name == prefabName);
+        if (prefab)
+        {
+            currentBuildable = Instantiate(prefab, position, transform.rotation).GetComponent<Buildable>();
+            currentBuildable.currentBuildState = buildState;
+        }
         NetworkServer.Spawn(currentBuildable.gameObject, connectionToClient);
+        RpcSetCurrentBuildable(currentBuildable);
+    }
+
+    [ClientRpc]
+    void RpcSetCurrentBuildable(Buildable buildable)
+    {
+        if (isLocalPlayer)
+        {
+            currentBuildable = buildable;
+        }
     }
 
     private void BuildButtonPressed(object arg0)
@@ -125,8 +140,7 @@ public class InputHandler : NetworkBehaviour
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
-            currentBuildable = Instantiate(currentToolbarAction.prefab, hit.point, transform.rotation).GetComponent<Buildable>();
-            currentBuildable.currentBuildState = BuildState.Placing;
+            CmdSpawnBuildable(currentToolbarAction.prefab.name, hit.point, BuildState.Placing);
         }
     }
 

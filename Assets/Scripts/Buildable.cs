@@ -32,12 +32,18 @@ public class Buildable : NetworkBehaviour
 
     public void ShowPendingBuild()
     {
-        currentBuildState = BuildState.PendingBuild;
+        CmdSetBuildState(BuildState.PendingBuild);
+    }
+
+    [Command]
+    public void CmdSetBuildState(BuildState buildState)
+    {
+        currentBuildState = buildState;
     }
 
     public void Build()
     {
-        currentBuildState = BuildState.Built; //do more later
+        CmdSetBuildState(BuildState.Built); //do more later
     }
 
     public void SetActor(GameObject actor, bool isActive)

@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attacker : MonoBehaviour
+public class Attacker : NetworkBehaviour
 {
     public AttackType attackType;
 
@@ -11,6 +12,7 @@ public class Attacker : MonoBehaviour
     Targeter targeter;
     Attackable attackTarget;
     bool canAttack;
+    [SyncVar]
     bool attacking;
     float attackTimer;
 
@@ -36,9 +38,9 @@ public class Attacker : MonoBehaviour
 
         canAttack = attackTarget && Vector3.Distance(transform.position, attackTarget.transform.position) <= attackType.range;
 
-        if (!canAttack)
+        if (!canAttack && attacking)
         {
-            attacking = false;
+            CmdSetAttacking(false);
         }
 
         if (attackTarget && canAttack)
@@ -49,13 +51,18 @@ public class Attacker : MonoBehaviour
         {
             MoveToTarget();
         }
-        if (!attackTarget)
+        if (!attackTarget && attacking)
         {
             StopAttack();
         }
 
         if (attacking)
         {
+            animator.SetTrigger("shoot");
+            animator.ResetTrigger("idle");
+            animator.ResetTrigger("move"); 
+            transform.LookAt(new Vector3(attackTarget.transform.position.x, transform.position.y, attackTarget.transform.position.z));
+
             attackTimer += attackType.attackSpeed * Time.deltaTime;
 
             if (attackTimer > attackType.attackSpeed)
@@ -74,21 +81,24 @@ public class Attacker : MonoBehaviour
     void Attack()
     {
         mover.ClearDestination();
-        animator.SetTrigger("shoot");
-        animator.ResetTrigger("idle");
-        animator.ResetTrigger("move");
-        attacking = true;
+        if (!attacking) CmdSetAttacking(true);
+    }
+
+    [Command]
+    void CmdSetAttacking(bool isAttacking)
+    {
+        attacking = isAttacking;
     }
 
     void StopAttack()
     {
         animator.ResetTrigger("shoot");
-        attacking = false;
+        if (attacking) CmdSetAttacking(false);
     }
     
     void MoveToTarget()
     {
         mover.SetDestination(attackTarget.transform.position);
-        attacking = false;
+        if (attacking) CmdSetAttacking(false);
     }
 }

@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attackable : MonoBehaviour
+public class Attackable : NetworkBehaviour
 {
     public Health health;
     Animator animator;
@@ -12,11 +13,7 @@ public class Attackable : MonoBehaviour
     void Start()
     {
         health = GetComponent<Health>();
-        animator = GetComponent<Animator>(); 
-        if (!animator)
-        {
-            animator = gameObject.AddComponent(typeof(Animator)) as Animator;
-        }
+        animator = GetComponent<Animator>();         
     }
 
     // Update is called once per frame
@@ -24,7 +21,7 @@ public class Attackable : MonoBehaviour
     {
         if (!isDead && health.currentHealth == 0)
         {
-            animator.SetTrigger("die");
+            if (animator) animator.SetTrigger("die");
             isDead = true;
             Destroy(gameObject, 2f);
         }

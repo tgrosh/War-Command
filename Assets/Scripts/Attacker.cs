@@ -13,7 +13,8 @@ public class Attacker : NetworkBehaviour
     Attackable attackTarget;
     bool canAttack;
     [SyncVar]
-    bool attacking;
+    bool showAttack;
+    bool isAttacking;
     float attackTimer;
 
     // Start is called before the first frame update
@@ -38,36 +39,36 @@ public class Attacker : NetworkBehaviour
 
         canAttack = attackTarget && Vector3.Distance(transform.position, attackTarget.transform.position) <= attackType.range;
 
-        if (!canAttack && attacking)
-        {
-            CmdSetAttacking(false);
-        }
-
-        if (attackTarget && canAttack)
-        {
-            Attack();
-        }
         if (attackTarget && !canAttack)
         {
             MoveToTarget();
         }
-        if (!attackTarget && attacking)
+        if (attackTarget && canAttack)
+        {
+            Attack();
+        }
+        if (!canAttack && isAttacking)
+        {
+            StopAttack();
+        }
+        if (!attackTarget && isAttacking)
         {
             StopAttack();
         }
 
-        if (attacking)
+        if (showAttack)
         {
             animator.SetTrigger("shoot");
             animator.ResetTrigger("idle");
-            animator.ResetTrigger("move"); 
-            transform.LookAt(new Vector3(attackTarget.transform.position.x, transform.position.y, attackTarget.transform.position.z));
-
+            animator.ResetTrigger("move");
+        }
+        
+        if (isAttacking) {
             attackTimer += attackType.attackSpeed * Time.deltaTime;
 
             if (attackTimer > attackType.attackSpeed)
             {
-                attackTarget.Attack(attackType);
+                CmdAttackTarget(attackTarget, attackType);
                 attackTimer = 0f;
 
                 if (attackTarget.health.currentHealth == 0)
@@ -81,24 +82,33 @@ public class Attacker : NetworkBehaviour
     void Attack()
     {
         mover.ClearDestination();
-        if (!attacking) CmdSetAttacking(true);
+        isAttacking = true; //only local needs to actually perform the attack
+        if (!showAttack) CmdSetShowAttack(true); // all clients need to know to show the attacking anims
     }
 
     [Command]
-    void CmdSetAttacking(bool isAttacking)
+    void CmdAttackTarget(Attackable target, AttackType attackType)
     {
-        attacking = isAttacking;
+        target.Attack(attackType);
+    }
+
+    [Command]
+    void CmdSetShowAttack(bool showAttack)
+    {
+        this.showAttack = showAttack;
     }
 
     void StopAttack()
     {
         animator.ResetTrigger("shoot");
-        if (attacking) CmdSetAttacking(false);
+        isAttacking = false;
+        if (showAttack) CmdSetShowAttack(false);
     }
     
     void MoveToTarget()
     {
         mover.SetDestination(attackTarget.transform.position);
-        if (attacking) CmdSetAttacking(false);
+        isAttacking = false;
+        if (showAttack) CmdSetShowAttack(false);
     }
 }

@@ -9,14 +9,18 @@ using Random = UnityEngine.Random;
 public class Producer : NetworkBehaviour
 {
     public float producerRange;
+    Selectable selectable;
 
     private void Start()
     {
+        selectable = GetComponent<Selectable>();
         EventManager.Subscribe(EventManager.EventMessage.ProducerButtonPressed, ProducerButtonPressed);
     }
 
     private void ProducerButtonPressed(object arg0)
     {
+        if (!selectable.IsSelected) return;
+
         ToolbarAction action = arg0 as ToolbarAction;
         NavMeshHit navHit;
         NavMesh.SamplePosition(transform.position, out navHit, producerRange, NavMesh.AllAreas);

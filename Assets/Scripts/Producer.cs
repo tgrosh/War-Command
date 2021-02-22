@@ -25,16 +25,20 @@ public class Producer : NetworkBehaviour
         {
             if (ResourceBank.Withdraw(action.cost))
             {
-                GameObject obj = Instantiate(action.prefab, navHit.position, Quaternion.LookRotation(navHit.position - transform.position));
-                CmdSpawnProducable(obj);                
+                CmdSpawnProducable(action.prefab.name, navHit.position, Quaternion.LookRotation(navHit.position - transform.position));                
             }
         }
     }
 
     [Command]
-    private void CmdSpawnProducable(GameObject obj)
+    private void CmdSpawnProducable(string prefabName, Vector3 position, Quaternion rotation)
     {
-        NetworkServer.Spawn(obj, connectionToClient);
+        GameObject prefab = FindObjectOfType<WarCommandNetworkManager>().spawnPrefabs.Find(go => go.name == prefabName);
+        if (prefab)
+        {
+            GameObject obj = Instantiate(prefab, position, rotation);
+            NetworkServer.Spawn(obj, connectionToClient);
+        }
     }
 
     public Vector3 RandomNavmeshLocation(float radius)

@@ -130,6 +130,7 @@ public class InputHandler : NetworkBehaviour
         if (isLocalPlayer)
         {
             currentBuildable = buildable;
+            currentBuildable.currentBuildState = BuildState.Placing;
         }
     }
 
@@ -140,7 +141,7 @@ public class InputHandler : NetworkBehaviour
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
-            CmdSpawnBuildable(currentToolbarAction.prefab.name, hit.point, BuildState.Placing);
+            CmdSpawnBuildable(currentToolbarAction.prefab.name, hit.point, BuildState.None);
         }
     }
 

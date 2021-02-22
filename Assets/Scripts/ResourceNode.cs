@@ -1,9 +1,11 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceNode : MonoBehaviour
+public class ResourceNode : NetworkBehaviour
 {
+    [SyncVar]
     public int availableResourceAmount;
     public int totalResourceAmount;
     public int resourcesPerCollect = 1;
@@ -23,4 +25,5 @@ public class ResourceNode : MonoBehaviour
         }
         return 0;
     }
+
 }

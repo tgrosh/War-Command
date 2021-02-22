@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4427681177641870163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4427681177641870162}
+  - component: {fileID: 4541441958660513064}
+  - component: {fileID: -1583563727659194195}
+  - component: {fileID: -7501994330113383911}
+  - component: {fileID: 797214024039896143}
+  m_Layer: 0
+  m_Name: WarCommandPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4427681177641870162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4427681177641870163}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.794301, y: 2.2858558, z: -0.8568814}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4541441958660513064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4427681177641870163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffefa74c604c0e4f835be8687df29ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  startingProbe: {fileID: 2451251457783030667, guid: 0e3e6e4f4d2c7f241873abc7f2b87921, type: 3}
+--- !u!114 &-1583563727659194195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4427681177641870163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &-7501994330113383911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4427681177641870163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d046f7a8a1f3a34f947d63a8552d199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedObjects: []
+  currentToolbarAction: {fileID: 0}
+  currentBuildable: {fileID: 0}
+  rayLayers:
+    serializedVersion: 2
+    m_Bits: 63
+--- !u!114 &797214024039896143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4427681177641870163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68883d73c54c14450b8ac2776560753f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  cameraTransform: {fileID: 0}
+  _camSpeed: 0.25
+  _camSpeedFast: 1
+  _camMovementSpeed: 1
+  _camSmoothness: 10
+  _camRotationAmount: 1
+  _camRotationMouseSpeed: 0.25
+  _camBorderMovement: 5
+  _maxCamZoom: 5
+  _minCamZoom: 25
+  _minZCamMovement: -500
+  _maxZCamMovement: 500
+  _minXCamMovement: -500
+  _maxXCamMovement: 500
+  zoomAmount: 0.01
+  cursorVisible: 1
+  zoomVector: {x: 0, y: 0, z: 0}
+  newPosition: {x: 0, y: 0, z: 0}
+  newRotation: {x: 0, y: 0, z: 0, w: 0}
+  newZoom: {x: 0, y: 0, z: 0}
+  rotateStartPosition: 0
+  rotateCurrentPosition: 0

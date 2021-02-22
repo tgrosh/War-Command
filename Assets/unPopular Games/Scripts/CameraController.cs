@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController : MonoBehaviour
+public class CameraController : NetworkBehaviour
 {
     /* To turn off the visibility 
      * of the float inputs in the editor 
@@ -50,6 +51,8 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!isLocalPlayer) return;
+
         newPosition = transform.position;
         newRotation = transform.rotation;
         newZoom = cameraTransform.localPosition;
@@ -59,6 +62,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer) return;
+
         HandleMovementInput();
         HandleMouseInput();
     }

@@ -1,3 +1,5 @@
+using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class InputHandler : MonoBehaviour
+public class InputHandler : NetworkBehaviour
 {
     public List<Selectable> selectedObjects = new List<Selectable>();
     public ToolbarAction currentToolbarAction;
@@ -14,12 +16,16 @@ public class InputHandler : MonoBehaviour
 
     private void Start()
     {
+        if (!isLocalPlayer) return;
+
         EventManager.Subscribe(EventManager.EventMessage.BuildButtonPressed, BuildButtonPressed);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer) return;
+
         if (currentBuildable)
         {
             RaycastHit hit = RayCast();
@@ -63,7 +69,7 @@ public class InputHandler : MonoBehaviour
 
                     if (selectable)
                     {
-                        selectable.isSelected = true;
+                        selectable.Select();
                         selectedObjects.Add(selectable);
                     }
                 }                
@@ -105,6 +111,29 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    [Command]
+    private void CmdSpawnBuildable(string prefabName, Vector3 position, BuildState buildState)
+    {
+        GameObject prefab = FindObjectOfType<WarCommandNetworkManager>().spawnPrefabs.Find(go => go.name == prefabName);
+        if (prefab)
+        {
+            currentBuildable = Instantiate(prefab, position, transform.rotation).GetComponent<Buildable>();
+            currentBuildable.currentBuildState = buildState;
+        }
+        NetworkServer.Spawn(currentBuildable.gameObject, connectionToClient);
+        RpcSetCurrentBuildable(currentBuildable);
+    }
+
+    [ClientRpc]
+    void RpcSetCurrentBuildable(Buildable buildable)
+    {
+        if (isLocalPlayer)
+        {
+            currentBuildable = buildable;
+            currentBuildable.currentBuildState = BuildState.Placing;
+        }
+    }
+
     private void BuildButtonPressed(object arg0)
     {
         currentToolbarAction = arg0 as ToolbarAction;
@@ -112,8 +141,7 @@ public class InputHandler : MonoBehaviour
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
-            currentBuildable = Instantiate(currentToolbarAction.prefab, hit.point, transform.rotation).GetComponent<Buildable>();
-            currentBuildable.currentBuildState = BuildState.Placing;
+            CmdSpawnBuildable(currentToolbarAction.prefab.name, hit.point, BuildState.None);
         }
     }
 
@@ -121,7 +149,7 @@ public class InputHandler : MonoBehaviour
     {
         foreach (Selectable selectable in selectedObjects)
         {
-            selectable.isSelected = false;
+            selectable.DeSelect();
         }
         selectedObjects.Clear();
     }

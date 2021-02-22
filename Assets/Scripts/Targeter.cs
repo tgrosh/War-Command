@@ -22,7 +22,7 @@ public class Targeter : MonoBehaviour
 
     void Update()
     {
-        if (target && selectable && selectable.isSelected)
+        if (target && selectable && selectable.IsSelected)
         {
             ShowMarker();
         } else

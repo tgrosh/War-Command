@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 24575116}
   - component: {fileID: 24575119}
   - component: {fileID: 24575120}
+  - component: {fileID: 24575121}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -223,12 +224,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d046f7a8a1f3a34f947d63a8552d199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   selectedObjects: []
   currentToolbarAction: {fileID: 0}
   currentBuildable: {fileID: 0}
   rayLayers:
     serializedVersion: 2
     m_Bits: 63
+--- !u!114 &24575121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24575115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 2293685276
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &31599100 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1011319553682498, guid: 8ad137f6808375f4e885d60451f0c4fc, type: 3}
@@ -1690,6 +1709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1760517287}
   - component: {fileID: 1760517286}
+  - component: {fileID: 1760517288}
   m_Layer: 0
   m_Name: CameraController
   m_TagString: Untagged
@@ -1709,6 +1729,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68883d73c54c14450b8ac2776560753f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   cameraTransform: {fileID: 1861125535}
   _camSpeed: 0.25
   _camSpeedFast: 1
@@ -1746,6 +1768,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1760517288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760517285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 2139211891
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &1861125532
 GameObject:
   m_ObjectHideFlags: 0
@@ -2037,6 +2075,10 @@ PrefabInstance:
     - target: {fileID: 2451251458627253525, guid: 0e3e6e4f4d2c7f241873abc7f2b87921, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604904531699388562, guid: 0e3e6e4f4d2c7f241873abc7f2b87921, type: 3}
+      propertyPath: sceneId
+      value: 1241302938
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e3e6e4f4d2c7f241873abc7f2b87921, type: 3}

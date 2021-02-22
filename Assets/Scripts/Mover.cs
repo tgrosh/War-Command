@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Mover : MonoBehaviour
+public class Mover : NetworkBehaviour
 {
     public GameObject locationMarkerPrefab;
     public bool moveComplete;
@@ -14,6 +15,7 @@ public class Mover : MonoBehaviour
     LineRenderer pathRenderer;
     Vector3 currentTargetPosition;
     Animator animator;
+    Vector3 lastPosition = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +24,6 @@ public class Mover : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         pathRenderer = GetComponent<LineRenderer>();
         animator = GetComponent<Animator>();
-        if (!animator)
-        {
-            animator = gameObject.AddComponent(typeof(Animator)) as Animator;
-        }
     }
 
     // Update is called once per frame
@@ -40,19 +38,26 @@ public class Mover : MonoBehaviour
             }
         }
 
-        if (!moveComplete)
+        if (animator)
         {
-            animator.SetTrigger("move");
-            animator.ResetTrigger("idle");
+            if (lastPosition != transform.position)
+            {
+                //we are moving, show animation
+                animator.SetTrigger("move");
+                animator.ResetTrigger("idle");
+            } else
+            {
+                //we are not moving
+                animator.SetTrigger("idle");
+                animator.ResetTrigger("move");
+            }
+            lastPosition = transform.position;
         }
-        if (moveComplete)
-        {
-            animator.SetTrigger("idle");
-            animator.ResetTrigger("move");
-        }
+        
 
-        if (showPath) ShowPath();
+        if (hasAuthority && showPath) ShowPath();
     }
+
 
     public void SetDestination(Vector3 targetPosition, float range = 10f, int navLayerMask = NavMesh.AllAreas)
     {

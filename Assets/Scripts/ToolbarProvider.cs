@@ -16,13 +16,13 @@ public class ToolbarProvider : MonoBehaviour
 
     void Update()
     {
-        if (selectable && selectable.isSelected && !registered)
+        if (selectable && selectable.IsSelected && !registered)
         {
             EventManager.Emit(EventManager.EventMessage.RegisterToolbarProvider, this);
             registered = true;
         }
 
-        if (!selectable || (!selectable.isSelected && registered))
+        if (!selectable || (!selectable.IsSelected && registered))
         {
             EventManager.Emit(EventManager.EventMessage.UnRegisterToolbarProvider, this);
             registered = false;

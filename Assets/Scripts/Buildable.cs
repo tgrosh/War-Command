@@ -1,10 +1,12 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Buildable : MonoBehaviour
+public class Buildable : NetworkBehaviour
 {
+    [SyncVar]
     public BuildState currentBuildState = BuildState.None;
     public GameObject actor;
     public GameObject placeholderActor;
@@ -30,12 +32,18 @@ public class Buildable : MonoBehaviour
 
     public void ShowPendingBuild()
     {
-        currentBuildState = BuildState.PendingBuild;
+        CmdSetBuildState(BuildState.PendingBuild);
+    }
+
+    [Command]
+    public void CmdSetBuildState(BuildState buildState)
+    {
+        currentBuildState = buildState;
     }
 
     public void Build()
     {
-        currentBuildState = BuildState.Built; //do more later
+        CmdSetBuildState(BuildState.Built); //do more later
     }
 
     public void SetActor(GameObject actor, bool isActive)

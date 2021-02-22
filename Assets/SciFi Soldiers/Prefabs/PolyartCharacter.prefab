@@ -1726,6 +1726,7 @@ GameObject:
   - component: {fileID: 1476368293613547897}
   - component: {fileID: 3248110986507274580}
   - component: {fileID: -5685122289468771464}
+  - component: {fileID: 2827081703908722967}
   m_Layer: 0
   m_Name: PolyartCharacter
   m_TagString: Untagged
@@ -1807,8 +1808,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35fd423f3ed8ad2498d4949516b101c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   selectionMarkerPrefab: {fileID: 6886364940454071289, guid: c321f3b41be83f64fbd9ca28fd9ad5a8, type: 3}
-  isSelected: 0
   scale: 1.5
 --- !u!114 &4597585455990780693
 MonoBehaviour:
@@ -1822,6 +1824,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e22299b97efbc4e9510d68ce093a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   locationMarkerPrefab: {fileID: 6886364940454071289, guid: 38b19a26bc823a246a2384e809601e20, type: 3}
   moveComplete: 0
   showPath: 0
@@ -1883,6 +1887,24 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &2827081703908722967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7072444061591711186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
 --- !u!1 &7072444061591711188
 GameObject:
   m_ObjectHideFlags: 0

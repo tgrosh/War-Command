@@ -15,6 +15,7 @@ public class Mover : NetworkBehaviour
     LineRenderer pathRenderer;
     Vector3 currentTargetPosition;
     Animator animator;
+    Vector3 lastPosition = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +29,6 @@ public class Mover : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasAuthority) return;
-
         if (!moveComplete && agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
         {
             moveComplete = true;
@@ -39,19 +38,26 @@ public class Mover : NetworkBehaviour
             }
         }
 
-        if (!moveComplete)
+        if (animator)
         {
-            if (animator) animator.SetTrigger("move");
-            if (animator) animator?.ResetTrigger("idle");
+            if (lastPosition != transform.position)
+            {
+                //we are moving, show animation
+                animator.SetTrigger("move");
+                animator.ResetTrigger("idle");
+            } else
+            {
+                //we are not moving
+                animator.SetTrigger("idle");
+                animator.ResetTrigger("move");
+            }
+            lastPosition = transform.position;
         }
-        if (moveComplete)
-        {
-            if (animator) animator?.SetTrigger("idle");
-            if (animator) animator?.ResetTrigger("move");
-        }
+        
 
-        if (showPath) ShowPath();
+        if (hasAuthority && showPath) ShowPath();
     }
+
 
     public void SetDestination(Vector3 targetPosition, float range = 10f, int navLayerMask = NavMesh.AllAreas)
     {

@@ -16,5 +16,5 @@ MonoBehaviour:
   title: Produce Probe
   menuIcon: {fileID: 21300000, guid: 19364acd6c9c641a9b6b2dab8bcc60df, type: 3}
   prefab: {fileID: 2451251457783030667, guid: 0e3e6e4f4d2c7f241873abc7f2b87921, type: 3}
-  cost: 10
+  cost: 15
   eventType: 3

@@ -10,16 +10,19 @@ public class Mover : NetworkBehaviour
     public bool moveComplete;
     public bool showPath;
     public NavMeshAgent agent;
+    public float lastPositionSensitivity = .5f; //how many seconds do i need to be at the same position before deciding i have stopped
 
     GameObject marker; 
     LineRenderer pathRenderer;
     Vector3 currentTargetPosition;
     Animator animator;
-    Vector3 lastPosition = Vector3.zero;
+    Vector3 lastPosition;
+    float currentLastPositionTime;
 
     // Start is called before the first frame update
     void Start()
     {
+        lastPosition = transform.position;
         moveComplete = true;
         agent = GetComponent<NavMeshAgent>();
         pathRenderer = GetComponent<LineRenderer>();
@@ -47,13 +50,17 @@ public class Mover : NetworkBehaviour
                 animator.ResetTrigger("idle");
             } else
             {
-                //we are not moving
-                animator.SetTrigger("idle");
-                animator.ResetTrigger("move");
+                if (currentLastPositionTime > lastPositionSensitivity)
+                {
+                    //we are not moving
+                    animator.SetTrigger("idle");
+                    animator.ResetTrigger("move");
+                    currentLastPositionTime = 0f;
+                }
+                currentLastPositionTime += Time.deltaTime;
             }
             lastPosition = transform.position;
         }
-        
 
         if (hasAuthority && showPath) ShowPath();
     }

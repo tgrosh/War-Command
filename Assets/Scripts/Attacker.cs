@@ -16,6 +16,8 @@ public class Attacker : NetworkBehaviour
     bool showAttack;
     bool isAttacking;
     float attackTimer;
+    [SyncVar]
+    Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -56,11 +58,18 @@ public class Attacker : NetworkBehaviour
             StopAttack();
         }
 
+        if (attackTarget && targetPosition != attackTarget.transform.position)
+        {
+            targetPosition = attackTarget.transform.position;
+            CmdUpdateTargetPosition(attackTarget.transform.position);
+        }
+
         if (showAttack)
         {
             animator.SetTrigger("shoot");
             animator.ResetTrigger("idle");
             animator.ResetTrigger("move");
+            transform.LookAt(new Vector3(targetPosition.x, transform.position.y, targetPosition.z));
         }
         
         if (isAttacking) {
@@ -96,6 +105,12 @@ public class Attacker : NetworkBehaviour
     void CmdSetShowAttack(bool showAttack)
     {
         this.showAttack = showAttack;
+    }
+
+    [Command]
+    void CmdUpdateTargetPosition(Vector3 newPosition)
+    {
+        targetPosition = newPosition;
     }
 
     void StopAttack()

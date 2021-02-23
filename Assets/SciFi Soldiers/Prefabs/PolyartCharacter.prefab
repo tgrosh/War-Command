@@ -1830,7 +1830,7 @@ MonoBehaviour:
   moveComplete: 0
   showPath: 0
   agent: {fileID: 0}
-  lastPositionSensitivity: 0.2
+  lastPositionSensitivity: 0.5
 --- !u!136 &5468002025877655313
 CapsuleCollider:
   m_ObjectHideFlags: 0

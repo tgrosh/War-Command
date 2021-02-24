@@ -19,3 +19,5 @@ MonoBehaviour:
   attackSpeed: 1
   healthDamage: 15
   shieldDamage: 5
+  attackSoundPath: Assets/Resources/Audio/machine_gun.wav
+  continuousSound: 0

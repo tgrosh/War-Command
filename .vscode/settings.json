@@ -1,0 +1,23 @@
+{
+    "files.exclude": {
+        "*.vsconfig": true,
+        "**/.DS_Store": true,
+        "**/.git": false,
+        "**/.git*": true,
+        "**/*.*.meta": true,
+        "**/*.csproj": true,
+        "**/*.cubemap": true,
+        "**/*.fbx": true,
+        "**/*.FBX": true,
+        "**/*.mat": true,
+        "**/*.meta": true,
+        "**/*.prefab": true,
+        "**/*.sln": true,
+        "**/*.tga": true,
+        "**/*.unity": true,
+        "**/*.unityproj": true,
+        "**/Library": true,
+        "**/ProjectSettings": true,
+        "**/Temp": true
+    }
+}

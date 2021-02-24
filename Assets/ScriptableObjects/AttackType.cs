@@ -12,4 +12,10 @@ public class AttackType : ScriptableObject
     public float attackSpeed;
     public int healthDamage;
     public int shieldDamage;
+    public string attackSoundPath;
+    public bool continuousSound;
+
+    public AudioClip GetAudioClip() {
+        return Resources.Load<AudioClip>(attackSoundPath.Replace("Assets/Resources/", ""));
+    }
 }

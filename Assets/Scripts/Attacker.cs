@@ -11,6 +11,8 @@ public class Attacker : NetworkBehaviour
     Animator animator;
     Targeter targeter;
     Attackable attackTarget;
+    AudioSource audioSource;
+    AudioClip attackClip;
     bool canAttack;
     [SyncVar]
     bool showAttack;
@@ -23,6 +25,8 @@ public class Attacker : NetworkBehaviour
         mover = GetComponent<Mover>();
         targeter = GetComponent<Targeter>();
         animator = GetComponent <Animator>();
+        audioSource = GetComponent<AudioSource>();
+        attackClip = attackType.GetAudioClip();
     }
 
     // Update is called once per frame
@@ -61,6 +65,18 @@ public class Attacker : NetworkBehaviour
             animator.SetTrigger("shoot");
             animator.ResetTrigger("idle");
             animator.ResetTrigger("move");
+
+            if (audioSource && !audioSource.isPlaying && attackType.attackSoundPath != "" && attackType.continuousSound) {
+                audioSource.clip = attackClip;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+        } else {
+            if (audioSource && audioSource.isPlaying && audioSource.clip == attackClip) {
+                audioSource.clip = null;
+                audioSource.loop = false;
+                audioSource.Stop();
+            }
         }
         
         if (isAttacking)

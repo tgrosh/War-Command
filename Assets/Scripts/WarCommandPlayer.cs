@@ -6,29 +6,21 @@ using UnityEngine;
 public class WarCommandPlayer : NetworkBehaviour
 {
     public GameObject startingProbe;
+    CameraController cameraController;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraController = GetComponent<CameraController>();
+        Camera.main.transform.SetParent(this.transform, false);
+        cameraController.cameraTransform = Camera.main.transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnStartLocalPlayer()
     {
-        
-    }
+        CmdSpawnProbe();
 
-    public override void OnStartClient()
-    {
-        if (isLocalPlayer)
-        {
-            Camera.main.transform.SetParent(this.transform, false);
-            GetComponent<CameraController>().cameraTransform = Camera.main.transform;
-            CmdSpawnProbe();
-        }
-
-        base.OnStartClient();
+        base.OnStartLocalPlayer();
     }
 
     [Command]

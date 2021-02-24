@@ -5405,7 +5405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentResources: 0
-  startingResources: 100
+  startingResources: 500
 --- !u!4 &1246359430
 Transform:
   m_ObjectHideFlags: 0

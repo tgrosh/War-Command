@@ -15,6 +15,6 @@ MonoBehaviour:
   id: ProduceSoldier
   title: Produce Soldier
   menuIcon: {fileID: 21300000, guid: 7f127ba8ad5364e68aae56f747b952ca, type: 3}
-  prefab: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
+  prefab: {fileID: 7072444061591711186, guid: c20a21bcf88c564409ef4c9dda0f3942, type: 3}
   cost: 35
   eventType: 3

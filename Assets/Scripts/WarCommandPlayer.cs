@@ -11,9 +11,12 @@ public class WarCommandPlayer : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cameraController = GetComponent<CameraController>();
-        Camera.main.transform.SetParent(this.transform, false);
-        cameraController.cameraTransform = Camera.main.transform;
+        if (isLocalPlayer)
+        {
+            cameraController = GetComponent<CameraController>();
+            Camera.main.transform.SetParent(this.transform, false);
+            cameraController.cameraTransform = Camera.main.transform;
+        }
     }
 
     public override void OnStartLocalPlayer()

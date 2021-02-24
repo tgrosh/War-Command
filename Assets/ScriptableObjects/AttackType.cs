@@ -16,6 +16,6 @@ public class AttackType : ScriptableObject
     public bool continuousSound;
 
     public AudioClip GetAudioClip() {
-        return Resources.Load<AudioClip>(attackSoundPath.Replace("Assets/Resources/", ""));
+        return Resources.Load<AudioClip>(attackSoundPath.Replace("Assets/Resources/", "").Split('.')[0]);
     }
 }

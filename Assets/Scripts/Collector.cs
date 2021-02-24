@@ -120,20 +120,23 @@ public class Collector : NetworkBehaviour
 
     void SetDeliveryTarget()
     {
-        Transform nearest = FindNearestBase();
+        Transform nearest = FindNearestResourceDepot();
         if (nearest)
         {
-            depotTarget = FindNearestBase().GetComponent<ResourceDepot>();
+            depotTarget = FindNearestResourceDepot().GetComponent<ResourceDepot>();
         }
     }
 
-    Transform FindNearestBase()
+    Transform FindNearestResourceDepot()
     {
         ResourceDepot closestDepot = null;
         float closestDistance = 0f;
 
         foreach (ResourceDepot depot in GameObject.FindObjectsOfType<ResourceDepot>())
         {
+            NetworkIdentity ident = depot.GetComponent<NetworkIdentity>();
+            if (!ident || !ident.hasAuthority) continue; //only consider friendly depots
+
             float depotDistance = Vector3.Distance(transform.position, depot.transform.position);
 
             if (closestDepot == null || depotDistance < closestDistance)

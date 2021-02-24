@@ -82,14 +82,21 @@ public class InputHandler : NetworkBehaviour
 
             if (hit.collider)
             {
-                if (hit.collider.GetComponentInParent<Targetable>())
+                Targetable targetable = hit.collider.GetComponentInParent<Targetable>();
+
+                if (targetable)
                 {
-                    foreach (Mover mover in GetMovers())
+                    NetworkIdentity ident = targetable.GetComponent<NetworkIdentity>();
+
+                    if (ident && !ident.hasAuthority)
                     {
-                        Targeter targeter = mover.GetComponent<Targeter>();
-                        if (targeter)
+                        foreach (Mover mover in GetMovers())
                         {
-                            targeter.SetTarget(hit.collider.transform);
+                            Targeter targeter = mover.GetComponent<Targeter>();
+                            if (targeter)
+                            {
+                                targeter.SetTarget(targetable);
+                            }
                         }
                     }
                 }

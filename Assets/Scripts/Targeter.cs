@@ -31,9 +31,9 @@ public class Targeter : MonoBehaviour
         }
     }
 
-    public void SetTarget(Transform targetTransform)
+    public void SetTarget(Targetable targetable)
     {
-        target = targetTransform;
+        target = targetable.transform;
     }
 
     public void ShowMarker()

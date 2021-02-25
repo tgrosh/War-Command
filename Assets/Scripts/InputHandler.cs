@@ -124,7 +124,7 @@ public class InputHandler : NetworkBehaviour
         GameObject prefab = FindObjectOfType<WarCommandNetworkManager>().spawnPrefabs.Find(go => go.name == prefabName);
         if (prefab)
         {
-            currentBuildable = Instantiate(prefab, position, transform.rotation).GetComponent<Buildable>();
+            currentBuildable = Instantiate(prefab, position, Quaternion.identity).GetComponent<Buildable>();
             currentBuildable.currentBuildState = buildState;
         }
         NetworkServer.Spawn(currentBuildable.gameObject, connectionToClient);

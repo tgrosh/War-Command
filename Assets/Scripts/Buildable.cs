@@ -12,8 +12,11 @@ public class Buildable : NetworkBehaviour
     public GameObject placeholderActor;
     public GameObject placeholderInvalidActor;
     public GameObject inProgressActor;
-
     public GameObject currentActor;
+
+    [SyncVar]
+    Vector3 buildPosition;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -28,22 +31,28 @@ public class Buildable : NetworkBehaviour
         SetActor(placeholderInvalidActor, (currentBuildState == BuildState.InvalidPlacement));
         SetActor(inProgressActor, (currentBuildState == BuildState.PendingBuild));
         SetActor(actor, (currentBuildState == BuildState.Built));
+
+        if (currentBuildState == BuildState.PendingBuild || currentBuildState == BuildState.Built)
+        {
+            transform.position = buildPosition;
+        }
     }
 
     public void ShowPendingBuild()
     {
-        CmdSetBuildState(BuildState.PendingBuild);
+        CmdSetBuildState(BuildState.PendingBuild, transform.position);
     }
 
     [Command]
-    public void CmdSetBuildState(BuildState buildState)
+    public void CmdSetBuildState(BuildState buildState, Vector3 position)
     {
+        buildPosition = position;
         currentBuildState = buildState;
     }
 
     public void Build()
     {
-        CmdSetBuildState(BuildState.Built); //do more later
+        CmdSetBuildState(BuildState.Built, transform.position); //do more later
     }
 
     public void SetActor(GameObject actor, bool isActive)

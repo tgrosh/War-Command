@@ -15,7 +15,7 @@ public class Buildable : NetworkBehaviour
     public GameObject currentActor;
 
     [SyncVar]
-    Vector3 buildPosition;
+    Vector3 buildPosition = Vector3.zero;
     
 
     // Start is called before the first frame update

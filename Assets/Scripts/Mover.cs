@@ -77,6 +77,7 @@ public class Mover : NetworkBehaviour
             ClearDestination();
             agent.destination = navHit.position;
             currentTargetPosition = navHit.position;
+            currentTargetPosition = targetPosition;
             moveComplete = false;
         }
     }

@@ -128,6 +128,7 @@ MonoBehaviour:
   moveComplete: 0
   showPath: 1
   agent: {fileID: 0}
+  lastPositionSensitivity: 0.5
 --- !u!114 &2451251457783030679
 MonoBehaviour:
   m_ObjectHideFlags: 0

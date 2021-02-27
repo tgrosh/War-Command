@@ -289,6 +289,7 @@ MonoBehaviour:
   toolbarActions:
   - {fileID: 11400000, guid: ead3298431fe882479b256d688251810, type: 2}
   - {fileID: 11400000, guid: feb4c23260afe9346b2873e50a4230a8, type: 2}
+  - {fileID: 11400000, guid: 35f241bc1e4dc4241aba5157ac499d88, type: 2}
 --- !u!114 &8604904531699388562
 MonoBehaviour:
   m_ObjectHideFlags: 0

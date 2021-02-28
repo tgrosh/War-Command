@@ -54,7 +54,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 10
+  m_Speed: 8
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 720
@@ -63,7 +63,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0
+  m_BaseOffset: -0.167
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!54 &2451251457783030673
@@ -126,7 +126,7 @@ MonoBehaviour:
   syncInterval: 0.1
   locationMarkerPrefab: {fileID: 6886364940454071289, guid: 38b19a26bc823a246a2384e809601e20, type: 3}
   moveComplete: 0
-  showPath: 1
+  showPath: 0
   agent: {fileID: 0}
   lastPositionSensitivity: 0.5
 --- !u!114 &2451251457783030679

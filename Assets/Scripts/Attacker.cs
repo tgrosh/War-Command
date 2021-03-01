@@ -51,11 +51,11 @@ public class Attacker : NetworkBehaviour
         {
             Attack();
         }
-        if (!canAttack && isAttacking)
+        if (isAttacking && !canAttack)
         {
             StopAttack();
         }
-        if (!attackTarget && isAttacking)
+        if (isAttacking && (!attackTarget || attackTarget.health.currentHealth == 0))
         {
             StopAttack();
         }

@@ -6,15 +6,9 @@ public class BillboardFX : MonoBehaviour
 {
 	public Transform camTransform;
 
-	Quaternion originalRotation;
-
-    void Start()
-    {
-        originalRotation = transform.rotation;
-    }
-
     void Update()
     {
-     	transform.rotation = camTransform.rotation * originalRotation;   
+        transform.LookAt(transform.position + camTransform.rotation * Vector3.forward,
+            camTransform.rotation * Vector3.up); 
     }
 }

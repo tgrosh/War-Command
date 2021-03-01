@@ -11,15 +11,15 @@ GameObject:
   - component: {fileID: 1168726800330117379}
   - component: {fileID: 1168726800330117388}
   - component: {fileID: 1168726800330117386}
+  - component: {fileID: 1168726800330117398}
   - component: {fileID: 1168726800330117396}
   - component: {fileID: 1168726800330117385}
+  - component: {fileID: 1168726800330117387}
   - component: {fileID: 1168726800330117384}
   - component: {fileID: 1168726800330117391}
   - component: {fileID: 1168726800330117390}
   - component: {fileID: 1168726800330117389}
-  - component: {fileID: 1168726800330117387}
   - component: {fileID: 2530102623984246004}
-  - component: {fileID: 1168726800330117398}
   - component: {fileID: 1168726800330117397}
   m_Layer: 0
   m_Name: Cheetah
@@ -80,6 +80,24 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &1168726800330117398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168726800330117378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
 --- !u!195 &1168726800330117396
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -118,6 +136,25 @@ MonoBehaviour:
   syncInterval: 0.1
   selectionMarkerPrefab: {fileID: 6886364940454071289, guid: c321f3b41be83f64fbd9ca28fd9ad5a8, type: 3}
   scale: 5
+--- !u!114 &1168726800330117387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168726800330117378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e22299b97efbc4e9510d68ce093a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  locationMarkerPrefab: {fileID: 6886364940454071289, guid: 38b19a26bc823a246a2384e809601e20, type: 3}
+  moveComplete: 0
+  showPath: 0
+  agent: {fileID: 0}
+  lastPositionSensitivity: 0.5
 --- !u!114 &1168726800330117384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,25 +212,6 @@ MonoBehaviour:
   syncInterval: 0.1
   currentHealth: 0
   maxHealth: 85
---- !u!114 &1168726800330117387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168726800330117378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e22299b97efbc4e9510d68ce093a7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  locationMarkerPrefab: {fileID: 6886364940454071289, guid: 38b19a26bc823a246a2384e809601e20, type: 3}
-  moveComplete: 0
-  showPath: 0
-  agent: {fileID: 0}
-  lastPositionSensitivity: 0.5
 --- !u!114 &2530102623984246004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,24 +227,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   attackType: {fileID: 11400000, guid: 0a5e56e6582842747bf108690d6e5ee2, type: 2}
---- !u!114 &1168726800330117398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168726800330117378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
+  guardRadius: 10
 --- !u!82 &1168726800330117397
 AudioSource:
   m_ObjectHideFlags: 0

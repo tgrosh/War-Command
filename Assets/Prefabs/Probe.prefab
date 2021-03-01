@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 2451251457783030675}
   - component: {fileID: 2451251457783030684}
   - component: {fileID: 3616137158467159839}
+  - component: {fileID: -6062008526115168531}
   - component: {fileID: 6533170648564725458}
   - component: {fileID: -9117088485463967042}
   m_Layer: 0
@@ -327,6 +328,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ead3298431fe882479b256d688251810, type: 2}
   - {fileID: 11400000, guid: feb4c23260afe9346b2873e50a4230a8, type: 2}
   - {fileID: 11400000, guid: 35f241bc1e4dc4241aba5157ac499d88, type: 2}
+--- !u!114 &-6062008526115168531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2451251457783030667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303adc367be308d46969afdcc8e6d64b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6533170648564725458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,11 +537,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3182244660871480619, guid: 55aab13c85008db45860e49c80193dd2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5793171510991142646, guid: 55aab13c85008db45860e49c80193dd2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7071182760956848314, guid: 55aab13c85008db45860e49c80193dd2, type: 3}
       propertyPath: m_CastShadows

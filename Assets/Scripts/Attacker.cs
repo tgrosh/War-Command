@@ -73,6 +73,7 @@ public class Attacker : NetworkBehaviour
                 audioSource.Play();
             }
         } else {
+            animator.ResetTrigger("shoot");
             if (audioSource && audioSource.isPlaying && audioSource.clip == attackClip) {
                 audioSource.clip = null;
                 audioSource.loop = false;
@@ -114,6 +115,7 @@ public class Attacker : NetworkBehaviour
         mover.ClearDestination();
         isAttacking = true; //only local needs to actually perform the attack
         if (!showAttack) CmdSetShowAttack(true); // all clients need to know to show the attacking anims
+        showAttack = true;
     }
 
     [Command]
@@ -134,6 +136,7 @@ public class Attacker : NetworkBehaviour
         isAttacking = false;
         attackTarget = null;
         if (showAttack) CmdSetShowAttack(false);
+        showAttack = false;
     }
     
     void MoveToTarget()
@@ -141,5 +144,6 @@ public class Attacker : NetworkBehaviour
         mover.SetDestination(attackTarget.transform.position);
         isAttacking = false;
         if (showAttack) CmdSetShowAttack(false);
+        showAttack = false;
     }
 }

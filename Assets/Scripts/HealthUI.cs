@@ -16,6 +16,7 @@ public class HealthUI : MonoBehaviour
         health = GetComponentInParent<Health>();
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
+        GetComponent<BillboardFX>().camTransform = Camera.main.transform;
     }
 
     // Update is called once per frame

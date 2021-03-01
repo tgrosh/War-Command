@@ -36,6 +36,8 @@ public class Builder : MonoBehaviour
         currentBuildAction = buildAction;
         currentBuildable = buildable;
 
+        GetComponent<Targeter>().SetTarget(buildable.GetComponent<Targetable>());
+
         // goto buildable location
         mover.SetDestination(currentBuildable.transform.position);
     }

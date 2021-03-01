@@ -6,6 +6,7 @@ using UnityEngine;
 public class Attacker : NetworkBehaviour
 {
     public AttackType attackType;
+    public float guardRadius = 10f;
 
     Mover mover;
     Animator animator;
@@ -43,19 +44,19 @@ public class Attacker : NetworkBehaviour
 
         canAttack = attackTarget && Vector3.Distance(transform.position, attackTarget.transform.position) <= attackType.range;
 
-        if (attackTarget && !canAttack)
+        if (hasAuthority && attackTarget && !canAttack)
         {
             MoveToTarget();
         }
-        if (attackTarget && canAttack)
+        if (hasAuthority && attackTarget && canAttack)
         {
             Attack();
         }
-        if (isAttacking && !canAttack)
+        if (hasAuthority && isAttacking && !canAttack)
         {
             StopAttack();
         }
-        if (isAttacking && (!attackTarget || attackTarget.health.currentHealth == 0))
+        if (hasAuthority && isAttacking && (!attackTarget || attackTarget.health.currentHealth == 0))
         {
             StopAttack();
         }
@@ -96,6 +97,16 @@ public class Attacker : NetworkBehaviour
                 }
             }
         }
+
+        if (hasAuthority && !isAttacking && !attackTarget) {
+            // look for a target
+            foreach (Collider collider in Physics.OverlapSphere(transform.position, guardRadius)) {
+                Attackable attackable = collider.GetComponentInParent<Attackable>();
+                if (attackable && !attackable.GetComponentInParent<NetworkIdentity>().hasAuthority) {
+                    targeter.SetTarget(attackable.GetComponent<Targetable>());
+                }
+            }
+        }
     }
 
     void Attack()
@@ -121,6 +132,7 @@ public class Attacker : NetworkBehaviour
     {
         animator.ResetTrigger("shoot");
         isAttacking = false;
+        attackTarget = null;
         if (showAttack) CmdSetShowAttack(false);
     }
     

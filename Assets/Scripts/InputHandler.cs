@@ -2,6 +2,7 @@ using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -20,6 +21,7 @@ public class InputHandler : NetworkBehaviour
     bool isDragSelecting;
     Vector2 selectionSizeDelta;
     Vector2 selectionAnchoredPosition;
+    float dragDelayTimer;
 
     private void Start()
     {
@@ -50,6 +52,8 @@ public class InputHandler : NetworkBehaviour
 
         if (!EventSystem.current.IsPointerOverGameObject(-1) && Mouse.current.leftButton.wasPressedThisFrame)
         {
+            selectionStartPosition = Mouse.current.position.ReadValue();
+
             RaycastHit hit = RayCast(rayLayers);
 
             if (hit.collider)
@@ -92,7 +96,6 @@ public class InputHandler : NetworkBehaviour
                     } else
                     {
                         ClearSelection();
-                        selectionStartPosition = Mouse.current.position.ReadValue();
                     }                   
                 }                
             }
@@ -101,17 +104,20 @@ public class InputHandler : NetworkBehaviour
         if (!EventSystem.current.IsPointerOverGameObject(-1) &&
             Mouse.current.leftButton.isPressed &&
             !Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            // mouse is pressed, but wasnt pressed this frame, so dragging
-            UpdateSelectionBox(selectionStartPosition, Mouse.current.position.ReadValue());
-            isDragSelecting = true;
+        {   
+            if (Vector2.Distance(selectionStartPosition, Mouse.current.position.ReadValue()) > 0f) {
+                // mouse is pressed, but wasnt pressed this frame, so dragging
+                UpdateSelectionBox(selectionStartPosition, Mouse.current.position.ReadValue());
+                isDragSelecting = true;
 
-            SelectSelectablesInBox();
+                SelectSelectablesInBox();
+            }
         }
 
         if (isDragSelecting && !Mouse.current.leftButton.isPressed)
         {
             isDragSelecting = false;
+            dragDelayTimer = 0f;
             EventManager.Emit(EventManager.EventMessage.SelectionBoxUpdated, null);
         }
 

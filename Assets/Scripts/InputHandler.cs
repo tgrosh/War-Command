@@ -12,12 +12,15 @@ public class InputHandler : NetworkBehaviour
     public List<Selectable> selectedObjects = new List<Selectable>();
     public ToolbarAction currentToolbarAction;
     public Buildable currentBuildable;
-    public LayerMask rayLayers;    
+    public LayerMask rayLayers;
+
+    GridSystem<bool> gridSystem;
 
     private void Start()
     {
         if (!isLocalPlayer) return;
 
+        gridSystem = new GridSystem<bool>(100, 100, 5);
         EventManager.Subscribe(EventManager.EventMessage.BuildButtonPressed, BuildButtonPressed);
     }
 
@@ -34,16 +37,24 @@ public class InputHandler : NetworkBehaviour
             {
                 int placeableMask = 1 << NavMesh.GetAreaFromName("Placeable");
                 NavMeshHit navMeshHit = GetNavMeshAtMouse(.25f, placeableMask);
+                Vector2Int gridPosition;
+                Vector3 worldPosition;
 
                 if (navMeshHit.hit)
                 {
-                    currentBuildable.transform.position = navMeshHit.position;
+                    gridPosition = gridSystem.GetXY(navMeshHit.position);
+                    worldPosition = gridSystem.GetWorldPosition(gridPosition.x, gridPosition.y);
+                    worldPosition.y = navMeshHit.position.y;
+                    currentBuildable.transform.position = worldPosition;
                     currentBuildable.currentBuildState = BuildState.Placing;
                 } else
                 {
-                    currentBuildable.transform.position = hit.point;
+                    gridPosition = gridSystem.GetXY(hit.point);
+                    worldPosition = gridSystem.GetWorldPosition(gridPosition.x, gridPosition.y);
+                    worldPosition.y = hit.point.y;
+                    currentBuildable.transform.position = worldPosition;
                     currentBuildable.currentBuildState = BuildState.InvalidPlacement;
-                }
+                }                
             }
         }
 

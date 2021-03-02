@@ -15,6 +15,7 @@ public class InputHandler : NetworkBehaviour
     public LayerMask rayLayers;
 
     GridSystem<bool> gridSystem;
+    Component currentSelectionType;
 
     private void Start()
     {
@@ -61,8 +62,7 @@ public class InputHandler : NetworkBehaviour
                 }
                 else
                 {
-                    //not placing buildable
-                    ClearSelection();
+                    //selecting, not placing buildable
                     Selectable selectable = hit.collider.GetComponentInParent<Selectable>();
                     if (selectable)
                     {
@@ -73,17 +73,22 @@ public class InputHandler : NetworkBehaviour
                             foreach (object o in similar)
                             {
                                 Component comp = o as Component;
-                                Selectable compSelectable = comp.GetComponent<Selectable>();
-                                compSelectable.Select();
-                                selectedObjects.Add(compSelectable);
+                                AddSelection(comp.GetComponent<Selectable>());
                             }
+                        }
+                        else if (Keyboard.current.ctrlKey.isPressed && selectable.selectionType)
+                        {
+                            ToggleSelection(selectable);
                         }
                         else
                         {
-                            selectable.Select();
-                            selectedObjects.Add(selectable);
+                            ClearSelection();
+                            AddSelection(selectable);
                         }
-                    }                    
+                    } else
+                    {
+                        ClearSelection();
+                    }                   
                 }                
             }
         }
@@ -171,6 +176,32 @@ public class InputHandler : NetworkBehaviour
             selectable.DeSelect();
         }
         selectedObjects.Clear();
+    }
+
+    void AddSelection(Selectable selectable)
+    {
+        selectable.Select();
+        selectedObjects.Add(selectable);
+    }
+
+    void RemoveSelection(Selectable selectable)
+    {
+        selectable.DeSelect();
+        if (selectedObjects.Contains(selectable))
+        {
+            selectedObjects.Remove(selectable);
+        }
+    }
+
+    void ToggleSelection(Selectable selectable)
+    {
+        if (selectable.IsSelected)
+        {
+            RemoveSelection(selectable);
+        } else
+        {
+            AddSelection(selectable);
+        }
     }
 
     Builder GetCurrentBuilder()

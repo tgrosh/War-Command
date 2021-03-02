@@ -79,7 +79,6 @@ public class Buildable : NetworkBehaviour
 
     public bool CanBuildHere() {
         Collider[] colliders = Physics.OverlapBox(transform.position, extents, transform.rotation, invalidCollisions);
-        Debug.Log(colliders.Length);
         return GetNavMeshAtCurrentPosition().hit && colliders.Length == 0;
     }
 

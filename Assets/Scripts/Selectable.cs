@@ -36,6 +36,17 @@ public class Selectable : NetworkBehaviour
         marker.transform.localScale = new Vector3(scale, 1, scale);
     }
 
+    public void Toggle()
+    {
+        if (isSelected)
+        {
+            DeSelect();
+        } else
+        {
+            Select();
+        }
+    }
+
     public void Select()
     {
         if (hasAuthority) isSelected = true;

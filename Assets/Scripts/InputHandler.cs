@@ -74,8 +74,9 @@ public class InputHandler : NetworkBehaviour
                     Selectable selectable = hit.collider.GetComponentInParent<Selectable>();
                     if (selectable)
                     {
-                        if (Keyboard.current.shiftKey.isPressed && selectable.selectionType)
+                        if (Keyboard.current.ctrlKey.isPressed && selectable.selectionType)
                         {
+                            //select all similar units
                             object[] similar = GameObject.FindObjectsOfType(selectable.selectionType.GetType());
 
                             foreach (object o in similar)
@@ -84,7 +85,7 @@ public class InputHandler : NetworkBehaviour
                                 AddSelection(comp.GetComponent<Selectable>());
                             }
                         }
-                        else if (Keyboard.current.ctrlKey.isPressed && selectable.selectionType)
+                        else if (Keyboard.current.shiftKey.isPressed && selectable.selectionType)
                         {
                             ToggleSelection(selectable);
                         }

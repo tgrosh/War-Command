@@ -18,7 +18,8 @@ public class InputHandler : NetworkBehaviour
 
     Vector2 selectionStartPosition;
     bool isDragSelecting;
-    
+    Vector2 selectionSizeDelta;
+    Vector2 selectionAnchoredPosition;
 
     private void Start()
     {
@@ -104,6 +105,8 @@ public class InputHandler : NetworkBehaviour
             // mouse is pressed, but wasnt pressed this frame, so dragging
             UpdateSelectionBox(selectionStartPosition, Mouse.current.position.ReadValue());
             isDragSelecting = true;
+
+            SelectSelectablesInBox();
         }
 
         if (isDragSelecting && !Mouse.current.leftButton.isPressed)
@@ -159,10 +162,28 @@ public class InputHandler : NetworkBehaviour
         float width = mousePosition.x - startPosition.x;
         float height = mousePosition.y - startPosition.y;
 
-        Vector2 sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
-        Vector2 anchoredPosition = startPosition + new Vector2(width / 2, height / 2);
+        selectionSizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+        selectionAnchoredPosition = startPosition + new Vector2(width / 2, height / 2);
 
-        EventManager.Emit(EventManager.EventMessage.SelectionBoxUpdated, new Vector2[] {sizeDelta, anchoredPosition} );
+        EventManager.Emit(EventManager.EventMessage.SelectionBoxUpdated, new Vector2[] {selectionSizeDelta, selectionAnchoredPosition} );
+    }
+
+    void SelectSelectablesInBox()
+    {
+        ClearSelection();
+
+        Vector2 min = selectionAnchoredPosition - (selectionSizeDelta / 2);
+        Vector2 max = selectionAnchoredPosition + (selectionSizeDelta / 2);
+
+        foreach (Selectable selectable in FindObjectsOfType<Selectable>())
+        {
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(selectable.transform.position);
+
+            if (screenPosition.x > min.x && screenPosition.x < max.x && screenPosition.y > min.y && screenPosition.y < max.y)
+            {
+                AddSelection(selectable);
+            }
+        }
     }
 
     [Command]
@@ -210,16 +231,20 @@ public class InputHandler : NetworkBehaviour
 
     void AddSelection(Selectable selectable)
     {
-        selectable.Select();
-        selectedObjects.Add(selectable);
+        if (selectable.Select())
+        {
+            selectedObjects.Add(selectable);
+        }
     }
 
     void RemoveSelection(Selectable selectable)
     {
-        selectable.DeSelect();
-        if (selectedObjects.Contains(selectable))
+        if (selectable.DeSelect())
         {
-            selectedObjects.Remove(selectable);
+            if (selectedObjects.Contains(selectable))
+            {
+                selectedObjects.Remove(selectable);
+            }
         }
     }
 

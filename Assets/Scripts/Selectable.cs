@@ -47,13 +47,15 @@ public class Selectable : NetworkBehaviour
         }
     }
 
-    public void Select()
+    public bool Select()
     {
         if (hasAuthority) isSelected = true;
+        return hasAuthority;
     }
 
-    public void DeSelect()
+    public bool DeSelect()
     {
         if (hasAuthority) isSelected = false;
+        return hasAuthority;
     }
 }

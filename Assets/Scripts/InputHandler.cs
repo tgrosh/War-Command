@@ -63,7 +63,7 @@ public class InputHandler : NetworkBehaviour
                     if (currentBuildable.currentBuildState != BuildState.InvalidPlacement) {
                         //placing buildable
                         currentBuildable.ShowPendingBuild();
-                        GetCurrentBuilder().Build(currentBuildable, currentToolbarAction);
+                        GetCurrentBuilder().Build(currentBuildable);
                         currentBuildable = null;
                         currentToolbarAction = null;
                     }
@@ -101,9 +101,7 @@ public class InputHandler : NetworkBehaviour
             }
         }
 
-        if (!EventSystem.current.IsPointerOverGameObject(-1) &&
-            Mouse.current.leftButton.isPressed &&
-            !Mouse.current.leftButton.wasPressedThisFrame)
+        if (!EventSystem.current.IsPointerOverGameObject(-1) && Mouse.current.leftButton.isPressed && !Mouse.current.leftButton.wasPressedThisFrame)
         {   
             if (Vector2.Distance(selectionStartPosition, Mouse.current.position.ReadValue()) > 0f) {
                 // mouse is pressed, but wasnt pressed this frame, so dragging
@@ -121,20 +119,19 @@ public class InputHandler : NetworkBehaviour
             EventManager.Emit(EventManager.EventMessage.SelectionBoxUpdated, null);
         }
 
-        if (Mouse.current.rightButton.wasPressedThisFrame && selectedObjects.Count > 0)
+        if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             RaycastHit hit = RayCast(rayLayers);
 
-            if (hit.collider)
+            if (selectedObjects.Count > 0)
             {
-                Targetable targetable = hit.collider.GetComponentInParent<Targetable>();
 
-                if (targetable)
+                if (hit.collider)
                 {
-                    NetworkIdentity ident = targetable.GetComponent<NetworkIdentity>();
+                    Targetable targetable = hit.collider.GetComponentInParent<Targetable>();
 
-                    if (ident && !ident.hasAuthority)
-                    {
+                    if (targetable)
+                    {                        
                         foreach (Mover mover in GetMovers())
                         {
                             Targeter targeter = mover.GetComponent<Targeter>();
@@ -144,19 +141,29 @@ public class InputHandler : NetworkBehaviour
                             }
                         }
                     }
-                }
-                else
-                {
-                    foreach (Mover mover in GetMovers())
+                    else
                     {
-                        mover.SetDestination(hit.point);
-                        mover.ShowDestinationMarker();
-
-                        Targeter targeter = mover.GetComponent<Targeter>();
-                        if (targeter)
+                        foreach (Mover mover in GetMovers())
                         {
-                            targeter.ClearTarget();
+                            mover.SetDestination(hit.point);
+                            mover.ShowDestinationMarker();
+
+                            Targeter targeter = mover.GetComponent<Targeter>();
+                            if (targeter)
+                            {
+                                targeter.ClearTarget();
+                            }
                         }
+                    }
+                }
+            } else
+            {
+                if (hit.collider)
+                {
+                    Buildable buildable = hit.collider.GetComponentInParent<Buildable>();
+                    if (buildable && buildable.currentBuildState == BuildState.PendingBuild)
+                    {
+                        buildable.CancelBuild();
                     }
                 }
             }
@@ -193,13 +200,14 @@ public class InputHandler : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSpawnBuildable(string prefabName, Vector3 position, BuildState buildState)
+    private void CmdSpawnBuildable(string prefabName, Vector3 position, int cost)
     {
         GameObject prefab = FindObjectOfType<WarCommandNetworkManager>().spawnPrefabs.Find(go => go.name == prefabName);
         if (prefab)
         {
             currentBuildable = Instantiate(prefab, position, Quaternion.identity).GetComponent<Buildable>();
-            currentBuildable.currentBuildState = buildState;
+            currentBuildable.currentBuildState = BuildState.None;
+            currentBuildable.cost = cost;
         }
         NetworkServer.Spawn(currentBuildable.gameObject, connectionToClient);
         RpcSetCurrentBuildable(currentBuildable);
@@ -222,7 +230,7 @@ public class InputHandler : NetworkBehaviour
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
-            CmdSpawnBuildable(currentToolbarAction.prefab.name, hit.point, BuildState.None);
+            CmdSpawnBuildable(currentToolbarAction.prefab.name, hit.point, currentToolbarAction.cost);
         }
     }
 

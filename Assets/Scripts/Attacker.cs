@@ -35,7 +35,12 @@ public class Attacker : NetworkBehaviour
     {
         if (targeter.target)
         {
-            attackTarget = targeter.target.GetComponentInParent<Attackable>();
+            NetworkIdentity ident = targeter.target.GetComponent<NetworkIdentity>();
+
+            if (ident && !ident.hasAuthority) //if its an enemy
+            {
+                attackTarget = targeter.target.GetComponentInParent<Attackable>();
+            }
         }
         else
         {

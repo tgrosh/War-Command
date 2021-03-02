@@ -17,6 +17,7 @@ public class Buildable : NetworkBehaviour
     public GameObject inProgressActor;
     public GameObject currentActor;
     public LayerMask invalidCollisions;
+    public int cost;
 
     [SyncVar]
     Vector3 buildPosition = Vector3.zero;

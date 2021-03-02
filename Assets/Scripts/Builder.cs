@@ -10,7 +10,6 @@ public class Builder : MonoBehaviour
 
     Mover mover;
     Targeter targeter;
-    ToolbarAction currentBuildAction;
     Buildable buildTarget;
 
     bool atBuildTarget;    
@@ -29,12 +28,7 @@ public class Builder : MonoBehaviour
         }
         else
         {
-            if (buildTarget && buildTarget.currentBuildState == BuildState.PendingBuild)
-            {
-                buildTarget.CancelBuild();
-            }
             buildTarget = null;
-            currentBuildAction = null;
         }
 
         atBuildTarget = mover.moveComplete && buildTarget && Vector3.Distance(transform.position, buildTarget.transform.position) < buildRange;
@@ -53,10 +47,8 @@ public class Builder : MonoBehaviour
         }
     }
 
-    public void Build(Buildable buildable, ToolbarAction buildAction)
+    public void Build(Buildable buildable)
     {
-        currentBuildAction = buildAction;
-
         GetComponent<Targeter>().SetTarget(buildable.GetComponent<Targetable>());
     }
 
@@ -64,7 +56,7 @@ public class Builder : MonoBehaviour
     {
         transform.LookAt(new Vector3(buildTarget.transform.position.x, transform.position.y, buildTarget.transform.position.z));
 
-        if (ResourceBank.Withdraw(currentBuildAction.cost))
+        if (ResourceBank.Withdraw(buildTarget.cost))
         {
             buildTarget.GetComponent<Buildable>().Build();
             targeter.ClearTarget();

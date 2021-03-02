@@ -84,8 +84,7 @@ MonoBehaviour:
   currentBuildable: {fileID: 0}
   rayLayers:
     serializedVersion: 2
-    m_Bits: 63
-  dragDelay: 0.2
+    m_Bits: 4294967295
 --- !u!114 &797214024039896143
 MonoBehaviour:
   m_ObjectHideFlags: 0

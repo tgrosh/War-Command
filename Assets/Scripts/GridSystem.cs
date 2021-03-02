@@ -36,7 +36,7 @@ public class GridSystem<T>
 
     public Vector2Int GetXY(Vector3 worldPosition)
     {
-        return new Vector2Int(Mathf.FloorToInt((worldPosition-origin).x / cellSize), Mathf.FloorToInt((worldPosition - origin).y / cellSize));
+        return new Vector2Int(Mathf.FloorToInt((worldPosition-origin).x / cellSize), Mathf.FloorToInt((worldPosition - origin).z / cellSize));
     }
 
     public void SetValue(int x, int y, T value)

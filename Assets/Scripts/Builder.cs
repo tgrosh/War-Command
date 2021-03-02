@@ -9,21 +9,39 @@ public class Builder : MonoBehaviour
     public float buildRange;
 
     Mover mover;
+    Targeter targeter;
     ToolbarAction currentBuildAction;
-    Buildable currentBuildable;
+    Buildable buildTarget;
 
-    bool atBuildTarget;
+    bool atBuildTarget;    
 
     private void Start()
     {
         mover = GetComponent<Mover>();
+        targeter = GetComponent<Targeter>();
     }
 
     private void Update()
     {
-        atBuildTarget = mover.moveComplete && currentBuildable && Vector3.Distance(transform.position, currentBuildable.transform.position) < buildRange;
+        if (targeter.target)
+        {
+            buildTarget = targeter.target.GetComponent<Buildable>();
+        }
+        else
+        {
+            buildTarget = null;
+            currentBuildAction = null;
+        }
 
-        if (atBuildTarget)
+        atBuildTarget = mover.moveComplete && buildTarget && Vector3.Distance(transform.position, buildTarget.transform.position) < buildRange;
+
+        if (buildTarget && !atBuildTarget)
+        {
+            //move to build target
+            mover.SetDestination(buildTarget.transform.position);
+        }
+
+        if (buildTarget && atBuildTarget)
         {
             //start the build
             mover.ClearDestination();
@@ -34,21 +52,18 @@ public class Builder : MonoBehaviour
     public void Build(Buildable buildable, ToolbarAction buildAction)
     {
         currentBuildAction = buildAction;
-        currentBuildable = buildable;
 
         GetComponent<Targeter>().SetTarget(buildable.GetComponent<Targetable>());
-
-        // goto buildable location
-        mover.SetDestination(currentBuildable.transform.position);
     }
 
     void StartBuild()
     {
+        transform.LookAt(new Vector3(buildTarget.transform.position.x, transform.position.y, buildTarget.transform.position.z));
+
         if (ResourceBank.Withdraw(currentBuildAction.cost))
         {
-            currentBuildable.GetComponent<Buildable>().Build();
-            currentBuildAction = null;
-            currentBuildable = null;
+            buildTarget.GetComponent<Buildable>().Build();
+            targeter.ClearTarget();
         }
     }
 

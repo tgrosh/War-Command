@@ -64,12 +64,26 @@ public class InputHandler : NetworkBehaviour
                     //not placing buildable
                     ClearSelection();
                     Selectable selectable = hit.collider.GetComponentInParent<Selectable>();
-
                     if (selectable)
                     {
-                        selectable.Select();
-                        selectedObjects.Add(selectable);
-                    }
+                        if (Keyboard.current.shiftKey.isPressed && selectable.selectionType)
+                        {
+                            object[] similar = GameObject.FindObjectsOfType(selectable.selectionType.GetType());
+
+                            foreach (object o in similar)
+                            {
+                                Component comp = o as Component;
+                                Selectable compSelectable = comp.GetComponent<Selectable>();
+                                compSelectable.Select();
+                                selectedObjects.Add(compSelectable);
+                            }
+                        }
+                        else
+                        {
+                            selectable.Select();
+                            selectedObjects.Add(selectable);
+                        }
+                    }                    
                 }                
             }
         }

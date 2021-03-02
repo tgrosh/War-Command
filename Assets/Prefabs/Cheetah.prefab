@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 1168726800330117389}
   - component: {fileID: 2530102623984246004}
   - component: {fileID: 1168726800330117397}
+  - component: {fileID: -1515462849469506945}
   m_Layer: 0
   m_Name: Cheetah
   m_TagString: Untagged
@@ -136,6 +137,7 @@ MonoBehaviour:
   syncInterval: 0.1
   selectionMarkerPrefab: {fileID: 6886364940454071289, guid: c321f3b41be83f64fbd9ca28fd9ad5a8, type: 3}
   scale: 5
+  selectionType: {fileID: -1515462849469506945}
 --- !u!114 &1168726800330117387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +326,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-1515462849469506945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168726800330117378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaf0119982b2b754c8b111161915ba58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1168726801449710767
 GameObject:
   m_ObjectHideFlags: 0

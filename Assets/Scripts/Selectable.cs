@@ -8,6 +8,7 @@ public class Selectable : NetworkBehaviour
 {
     public GameObject selectionMarkerPrefab;
     public float scale;
+    public Component selectionType;
     
     GameObject marker;
 

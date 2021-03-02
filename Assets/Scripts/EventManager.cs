@@ -14,7 +14,8 @@ public class EventManager : MonoBehaviour
         ProducerButtonPressed,
         ResourceAmountChanged,
         RegisterToolbarProvider,
-        UnRegisterToolbarProvider
+        UnRegisterToolbarProvider,
+        SelectionBoxUpdated
     }
 
     private static EventManager eventManager;

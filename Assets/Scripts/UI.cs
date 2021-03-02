@@ -9,6 +9,7 @@ public class UI : MonoBehaviour
     public Text resourceCounter;
     public GameObject toolbar;
     public Button toolbarButtonPrefab;
+    public RectTransform selectionBox;
 
     ToolbarProvider currentProvider;
     int resources;
@@ -18,6 +19,21 @@ public class UI : MonoBehaviour
         EventManager.Subscribe(EventManager.EventMessage.ResourceAmountChanged, ResourceAmountChanged);
         EventManager.Subscribe(EventManager.EventMessage.RegisterToolbarProvider, RegisterToolbarProvider);
         EventManager.Subscribe(EventManager.EventMessage.UnRegisterToolbarProvider, UnRegisterToolbarProvider);
+        EventManager.Subscribe(EventManager.EventMessage.SelectionBoxUpdated, SelectionBoxUpdated);
+    }
+
+    private void SelectionBoxUpdated(object arg0)
+    {
+        Vector2[] vectors = arg0 as Vector2[];
+        bool isValidVectorArray = vectors != null && vectors.Length == 2;
+
+        selectionBox.gameObject.SetActive(isValidVectorArray);
+
+        if (isValidVectorArray)
+        {
+            selectionBox.sizeDelta = vectors[0];
+            selectionBox.anchoredPosition = vectors[1];
+        }
     }
 
     private void UnRegisterToolbarProvider(object arg0)

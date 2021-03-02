@@ -15,7 +15,10 @@ public class InputHandler : NetworkBehaviour
     public LayerMask rayLayers;
 
     GridSystem<bool> gridSystem;
-    Component currentSelectionType;
+
+    Vector2 selectionStartPosition;
+    bool isDragSelecting;
+    
 
     private void Start()
     {
@@ -88,9 +91,25 @@ public class InputHandler : NetworkBehaviour
                     } else
                     {
                         ClearSelection();
+                        selectionStartPosition = Mouse.current.position.ReadValue();
                     }                   
                 }                
             }
+        }
+
+        if (!EventSystem.current.IsPointerOverGameObject(-1) &&
+            Mouse.current.leftButton.isPressed &&
+            !Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            // mouse is pressed, but wasnt pressed this frame, so dragging
+            UpdateSelectionBox(selectionStartPosition, Mouse.current.position.ReadValue());
+            isDragSelecting = true;
+        }
+
+        if (isDragSelecting && !Mouse.current.leftButton.isPressed)
+        {
+            isDragSelecting = false;
+            EventManager.Emit(EventManager.EventMessage.SelectionBoxUpdated, null);
         }
 
         if (Mouse.current.rightButton.wasPressedThisFrame && selectedObjects.Count > 0)
@@ -133,6 +152,17 @@ public class InputHandler : NetworkBehaviour
                 }
             }
         }
+    }
+
+    void UpdateSelectionBox(Vector2 startPosition, Vector2 mousePosition)
+    {
+        float width = mousePosition.x - startPosition.x;
+        float height = mousePosition.y - startPosition.y;
+
+        Vector2 sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+        Vector2 anchoredPosition = startPosition + new Vector2(width / 2, height / 2);
+
+        EventManager.Emit(EventManager.EventMessage.SelectionBoxUpdated, new Vector2[] {sizeDelta, anchoredPosition} );
     }
 
     [Command]

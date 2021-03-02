@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,11 @@ public class Buildable : NetworkBehaviour
     public void Build()
     {
         CmdSetBuildState(BuildState.Built, transform.position); //do more later
+    }
+
+    public void CancelBuild()
+    {
+        Destroy(gameObject);
     }
 
     public void SetActor(GameObject actor, bool isActive)

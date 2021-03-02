@@ -29,6 +29,10 @@ public class Builder : MonoBehaviour
         }
         else
         {
+            if (buildTarget && buildTarget.currentBuildState == BuildState.PendingBuild)
+            {
+                buildTarget.CancelBuild();
+            }
             buildTarget = null;
             currentBuildAction = null;
         }

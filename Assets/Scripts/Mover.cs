@@ -65,6 +65,13 @@ public class Mover : NetworkBehaviour
         if (hasAuthority && showPath) ShowPath();
     }
 
+    void OnDestroy() {
+        if (marker)
+        {
+            Destroy(marker);
+        }
+    }
+
 
     public void SetDestination(Vector3 targetPosition, float range = 10f, int navLayerMask = NavMesh.AllAreas)
     {

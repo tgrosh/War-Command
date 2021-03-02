@@ -31,6 +31,10 @@ public class Targeter : MonoBehaviour
         }
     }
 
+    void OnDestroy() {
+        ClearMarker();
+    }
+
     public void SetTarget(Targetable targetable)
     {
         target = targetable.transform;

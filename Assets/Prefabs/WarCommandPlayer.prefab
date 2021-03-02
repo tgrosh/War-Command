@@ -77,6 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d046f7a8a1f3a34f947d63a8552d199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   selectedObjects: []
   currentToolbarAction: {fileID: 0}
   currentBuildable: {fileID: 0}

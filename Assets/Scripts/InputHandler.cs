@@ -31,46 +31,33 @@ public class InputHandler : NetworkBehaviour
 
         if (currentBuildable)
         {
-            RaycastHit hit = RayCast();
+            int sceneryMask = 1 << LayerMask.NameToLayer("Scenery");
+            RaycastHit hit = RayCast(sceneryMask);
 
             if (hit.collider)
             {
-                int placeableMask = 1 << NavMesh.GetAreaFromName("Placeable");
-                NavMeshHit navMeshHit = GetNavMeshAtMouse(.25f, placeableMask);
-                Vector2Int gridPosition;
-                Vector3 worldPosition;
-
-                if (navMeshHit.hit)
-                {
-                    gridPosition = gridSystem.GetXY(navMeshHit.position);
-                    worldPosition = gridSystem.GetWorldPosition(gridPosition.x, gridPosition.y);
-                    worldPosition.y = navMeshHit.position.y;
-                    currentBuildable.transform.position = worldPosition;
-                    currentBuildable.currentBuildState = BuildState.Placing;
-                } else
-                {
-                    gridPosition = gridSystem.GetXY(hit.point);
-                    worldPosition = gridSystem.GetWorldPosition(gridPosition.x, gridPosition.y);
-                    worldPosition.y = hit.point.y;
-                    currentBuildable.transform.position = worldPosition;
-                    currentBuildable.currentBuildState = BuildState.InvalidPlacement;
-                }                
+                Vector2Int gridPosition = gridSystem.GetXY(hit.point);
+                Vector3 worldPosition = gridSystem.GetWorldPosition(gridPosition.x, gridPosition.y);
+                worldPosition.y = hit.point.y;
+                currentBuildable.transform.position = worldPosition;                            
             }
         }
 
         if (!EventSystem.current.IsPointerOverGameObject(-1) && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            RaycastHit hit = RayCast();
+            RaycastHit hit = RayCast(rayLayers);
 
             if (hit.collider)
             {
                 if (currentBuildable)
                 {
-                    //placing buildable
-                    currentBuildable.ShowPendingBuild();
-                    GetCurrentBuilder().Build(currentBuildable, currentToolbarAction);
-                    currentBuildable = null;
-                    currentToolbarAction = null;
+                    if (currentBuildable.currentBuildState != BuildState.InvalidPlacement) {
+                        //placing buildable
+                        currentBuildable.ShowPendingBuild();
+                        GetCurrentBuilder().Build(currentBuildable, currentToolbarAction);
+                        currentBuildable = null;
+                        currentToolbarAction = null;
+                    }
                 }
                 else
                 {
@@ -89,7 +76,7 @@ public class InputHandler : NetworkBehaviour
 
         if (Mouse.current.rightButton.wasPressedThisFrame && selectedObjects.Count > 0)
         {
-            RaycastHit hit = RayCast();
+            RaycastHit hit = RayCast(rayLayers);
 
             if (hit.collider)
             {
@@ -193,17 +180,17 @@ public class InputHandler : NetworkBehaviour
         return movers;
     }
 
-    RaycastHit RayCast() {
+    RaycastHit RayCast(LayerMask layers) {
         RaycastHit hit;
 
-        Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 500, rayLayers);
+        Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 500, layers);
 
         return hit;
     }
 
     NavMeshHit GetNavMeshAtMouse(float range, int navMeshAreaMask)
     {
-        RaycastHit hit = RayCast();
+        RaycastHit hit = RayCast(rayLayers);
         NavMeshHit navMeshHit;
 
         NavMesh.SamplePosition(hit.point, out navMeshHit, range, navMeshAreaMask);

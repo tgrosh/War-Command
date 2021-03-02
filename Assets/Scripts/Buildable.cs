@@ -1,6 +1,8 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,17 +15,18 @@ public class Buildable : NetworkBehaviour
     public GameObject placeholderInvalidActor;
     public GameObject inProgressActor;
     public GameObject currentActor;
+    public LayerMask invalidCollisions;
 
     [SyncVar]
     Vector3 buildPosition = Vector3.zero;
 
     Vector3 previousPosition;
-    
+    Vector3 extents;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        extents = actor.GetComponent<NavMeshObstacle>().size;
     }
 
     // Update is called once per frame
@@ -39,7 +42,7 @@ public class Buildable : NetworkBehaviour
             transform.position = buildPosition;
         }
 
-        if (transform.position != previousPosition && currentBuildState == BuildState.Placing || currentBuildState == BuildState.InvalidPlacement) {
+        if (transform.position != previousPosition && (currentBuildState == BuildState.Placing || currentBuildState == BuildState.InvalidPlacement)) {
             currentBuildState = CanBuildHere() == true ? BuildState.Placing : BuildState.InvalidPlacement;
             previousPosition = transform.position;
         }
@@ -69,8 +72,11 @@ public class Buildable : NetworkBehaviour
     }
 
     public bool CanBuildHere() {
-        return GetNavMeshAtCurrentPosition().hit;
+        Collider[] colliders = Physics.OverlapBox(transform.position, extents, transform.rotation, invalidCollisions);
+        Debug.Log(colliders.Length);
+        return GetNavMeshAtCurrentPosition().hit && colliders.Length == 0;
     }
+
     NavMeshHit GetNavMeshAtCurrentPosition()
     {
         int placeableMask = 1 << NavMesh.GetAreaFromName("Placeable");
@@ -80,4 +86,5 @@ public class Buildable : NetworkBehaviour
 
         return navMeshHit;
     }
+
 }

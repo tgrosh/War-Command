@@ -17,6 +17,7 @@ public class Buildable : NetworkBehaviour
     public GameObject inProgressActor;
     public GameObject currentActor;
     public LayerMask invalidCollisions;
+    public BuildOn buildOn = BuildOn.Scenery;
     public int cost;
 
     [SyncVar]
@@ -79,8 +80,22 @@ public class Buildable : NetworkBehaviour
     }
 
     public bool CanBuildHere() {
-        Collider[] colliders = Physics.OverlapBox(transform.position, extents, transform.rotation, invalidCollisions);
-        return GetNavMeshAtCurrentPosition().hit && colliders.Length == 0;
+        if (buildOn == BuildOn.Scenery)
+        {
+            Collider[] colliders = Physics.OverlapBox(transform.position, extents, transform.rotation, invalidCollisions);
+            return GetNavMeshAtCurrentPosition().hit && colliders.Length == 0;
+        } else
+        {
+            OilDeposit[] oilDeposits = FindObjectsOfType<OilDeposit>();
+            foreach (OilDeposit oilDeposit in oilDeposits)
+            {
+                if (oilDeposit.transform.position == transform.position)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     NavMeshHit GetNavMeshAtCurrentPosition()

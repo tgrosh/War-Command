@@ -21,6 +21,7 @@ public class InputHandler : NetworkBehaviour
     bool isDragSelecting;
     Vector2 selectionSizeDelta;
     Vector2 selectionAnchoredPosition;
+    OilDeposit closestNearbyOilDeposit;
 
     private void Start()
     {
@@ -37,7 +38,7 @@ public class InputHandler : NetworkBehaviour
 
         // buildable following cursor
         if (currentBuildable)
-        {
+        {            
             int sceneryMask = 1 << LayerMask.NameToLayer("Scenery");
             RaycastHit hit = RayCast(sceneryMask);
 
@@ -46,8 +47,18 @@ public class InputHandler : NetworkBehaviour
                 Vector2Int gridPosition = gridSystem.GetXY(hit.point);
                 Vector3 worldPosition = gridSystem.GetWorldPosition(gridPosition.x, gridPosition.y);
                 worldPosition.y = hit.point.y;
-                currentBuildable.transform.position = worldPosition;                            
-            }
+                currentBuildable.transform.position = worldPosition;
+
+                if (currentBuildable.buildOn == BuildOn.OilDeposit)
+                {
+                    closestNearbyOilDeposit = GetClosestNearbyOilDeposit(currentBuildable.transform.position);
+                    if (closestNearbyOilDeposit)
+                    {
+                        currentBuildable.transform.position = closestNearbyOilDeposit.transform.position;
+                        currentBuildable.transform.rotation = closestNearbyOilDeposit.transform.rotation;
+                    }
+                }
+            }            
         }
 
         // left mouse click
@@ -173,6 +184,23 @@ public class InputHandler : NetworkBehaviour
             isDragSelecting = false;
             EventManager.Emit(EventManager.EventMessage.SelectionBoxUpdated, null);
         }
+    }
+
+    private OilDeposit GetClosestNearbyOilDeposit(Vector3 currentPosition)
+    {
+        OilDeposit closestNearbyOilDeposit = null;
+
+        OilDeposit[] oilDeposits = FindObjectsOfType<OilDeposit>();
+        foreach (OilDeposit oilDeposit in oilDeposits)
+        {
+            float distanceToOilDeposit = Vector3.Distance(currentPosition, oilDeposit.transform.position);
+            if (distanceToOilDeposit < 12f && (closestNearbyOilDeposit == null || distanceToOilDeposit < Vector3.Distance(currentPosition, closestNearbyOilDeposit.transform.position)))
+            {
+                closestNearbyOilDeposit = oilDeposit;
+            }
+        }
+
+        return closestNearbyOilDeposit;
     }
 
     void UpdateSelectionBox(Vector2 startPosition, Vector2 mousePosition)

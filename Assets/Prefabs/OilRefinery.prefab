@@ -94,7 +94,7 @@ MonoBehaviour:
   invalidCollisions:
     serializedVersion: 2
     m_Bits: 17
-  cost: 55
+  cost: 0
 --- !u!114 &839115745507091014
 MonoBehaviour:
   m_ObjectHideFlags: 0

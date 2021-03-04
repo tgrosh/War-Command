@@ -12,10 +12,11 @@ public class EventManager : MonoBehaviour
         BuildButtonPressed,
         ResourcesWithdrawn,
         ProducerButtonPressed,
-        ResourceAmountChanged,
+        IronAmountChanged,
         RegisterToolbarProvider,
         UnRegisterToolbarProvider,
-        SelectionBoxUpdated
+        SelectionBoxUpdated,
+        OilAmountChanged
     }
 
     private static EventManager eventManager;

@@ -593,7 +593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbeb5ed1d92ffbf4d8cde631ca4cc470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceCounter: {fileID: 1196573499}
+  ironCounter: {fileID: 1196573499}
   oilCounter: {fileID: 821860057}
   toolbar: {fileID: 577354627}
   toolbarButtonPrefab: {fileID: 3329804753779398292, guid: 9971d3aba0efadd4e8ec34a4e400af1e, type: 3}
@@ -2549,7 +2549,7 @@ MonoBehaviour:
   m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
-  m_FillCenter: 0
+  m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
@@ -4147,7 +4147,7 @@ GameObject:
   - component: {fileID: 1196573500}
   - component: {fileID: 1196573499}
   m_Layer: 5
-  m_Name: ResourceCounter
+  m_Name: IronCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4528,8 +4528,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45bbc08305b604a49bfaeda976f3f084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentResources: 0
-  startingResources: 500
+  currentIron: 0
+  currentOil: 0
+  startingIron: 200
+  startingOil: 200
 --- !u!4 &1246359430
 Transform:
   m_ObjectHideFlags: 0
@@ -6497,7 +6499,7 @@ GameObject:
   - component: {fileID: 1758304246}
   - component: {fileID: 1758304245}
   m_Layer: 5
-  m_Name: ResourceLabel
+  m_Name: IronLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

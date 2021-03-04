@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class ResourceDepot : MonoBehaviour
 {
-    public void Deposit(int amount)
+    public void DepositIron(int amount)
     {
-        ResourceBank.Deposit(amount);
+        ResourceBank.DepositIron(amount);
+    }
+
+    public void DepositOil(int amount)
+    {
+        ResourceBank.DepositOil(amount);
     }
 }

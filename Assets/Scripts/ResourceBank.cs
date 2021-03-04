@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ResourceBank : MonoBehaviour
 {
-    public int currentResources;
-    public int startingResources = 200;
+    public int currentIron;
+    public int currentOil;
+    public int startingIron = 200;
+    public int startingOil = 200;
 
     private static ResourceBank resourceBank;
     public static ResourceBank instance
@@ -23,27 +25,39 @@ public class ResourceBank : MonoBehaviour
 
     private void Start()
     {
-        instance.currentResources = startingResources;
-        EventManager.Emit(EventManager.EventMessage.ResourceAmountChanged, instance.currentResources);
+        instance.currentIron = startingIron;
+        instance.currentOil = startingOil;
+        EventManager.Emit(EventManager.EventMessage.IronAmountChanged, instance.currentIron);
+        EventManager.Emit(EventManager.EventMessage.OilAmountChanged, instance.currentOil);
     }
 
-    public static int GetCurrentResources()
+    public static void DepositIron(int amount)
     {
-        return instance.currentResources;
+        instance.currentIron += amount;
+        EventManager.Emit(EventManager.EventMessage.IronAmountChanged, instance.currentIron);
     }
 
-    public static void Deposit(int amount)
+    public static void DepositOil(int amount)
     {
-        instance.currentResources += amount;
-        EventManager.Emit(EventManager.EventMessage.ResourceAmountChanged, instance.currentResources);
+        instance.currentOil += amount;
+        EventManager.Emit(EventManager.EventMessage.OilAmountChanged, instance.currentOil);
     }
 
-    public static bool Withdraw(int amount)
+    public static bool WithdrawIron(int amount)
     {
-        if (instance.currentResources < amount) return false;
+        if (instance.currentIron < amount) return false;
 
-        instance.currentResources -= amount;
-        EventManager.Emit(EventManager.EventMessage.ResourceAmountChanged, instance.currentResources);
+        instance.currentIron -= amount;
+        EventManager.Emit(EventManager.EventMessage.IronAmountChanged, instance.currentIron);
+        return true;
+    }
+
+    public static bool WithdrawOil(int amount)
+    {
+        if (instance.currentOil < amount) return false;
+
+        instance.currentOil -= amount;
+        EventManager.Emit(EventManager.EventMessage.OilAmountChanged, instance.currentOil);
         return true;
     }
 }

@@ -27,7 +27,7 @@ public class Producer : NetworkBehaviour
 
         if (navHit.hit)
         {
-            if (ResourceBank.Withdraw(action.cost))
+            if (ResourceBank.WithdrawIron(action.cost))
             {
                 CmdSpawnProducable(action.prefab.name, navHit.position, Quaternion.LookRotation(navHit.position - transform.position));                
             }

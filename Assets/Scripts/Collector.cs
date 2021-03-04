@@ -114,7 +114,13 @@ public class Collector : NetworkBehaviour
 
     void Deliver()
     {
-        depotTarget.Deposit(currentlyCollectedResources);
+        if (resourceTarget.GetType() == typeof(IronOre))
+        {
+            depotTarget.DepositIron(currentlyCollectedResources);
+        } else if (resourceTarget.GetComponent<OilRefinery>())
+        {
+            depotTarget.DepositOil(currentlyCollectedResources);
+        }
         currentlyCollectedResources = 0;
     }
 

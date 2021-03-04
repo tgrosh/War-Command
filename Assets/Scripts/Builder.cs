@@ -60,7 +60,7 @@ public class Builder : MonoBehaviour
     {
         transform.LookAt(new Vector3(buildTarget.transform.position.x, transform.position.y, buildTarget.transform.position.z));
 
-        if (ResourceBank.Withdraw(buildTarget.cost))
+        if (ResourceBank.WithdrawIron(buildTarget.cost))
         {
             buildTarget.GetComponent<Buildable>().Build();
             targeter.ClearTarget();

@@ -6,18 +6,20 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    public Text resourceCounter;
+    public Text ironCounter;
     public Text oilCounter;
     public GameObject toolbar;
     public Button toolbarButtonPrefab;
     public RectTransform selectionBox;
 
     ToolbarProvider currentProvider;
-    int resources;
+    int currentIronAmount;
+    int currentOilAmount;
 
     void Awake()
     {
-        EventManager.Subscribe(EventManager.EventMessage.ResourceAmountChanged, ResourceAmountChanged);
+        EventManager.Subscribe(EventManager.EventMessage.IronAmountChanged, ResourceAmountChanged);
+        EventManager.Subscribe(EventManager.EventMessage.OilAmountChanged, OilAmountChanged);
         EventManager.Subscribe(EventManager.EventMessage.RegisterToolbarProvider, RegisterToolbarProvider);
         EventManager.Subscribe(EventManager.EventMessage.UnRegisterToolbarProvider, UnRegisterToolbarProvider);
         EventManager.Subscribe(EventManager.EventMessage.SelectionBoxUpdated, SelectionBoxUpdated);
@@ -75,15 +77,21 @@ public class UI : MonoBehaviour
         }
     }
 
+    private void OilAmountChanged(object arg0)
+    {
+        currentOilAmount = (int)arg0;
+    }
+
     private void ResourceAmountChanged(object arg)
     {
-        resources = (int)arg;
+        currentIronAmount = (int)arg;
     }
 
     void Update()
     {
-        resourceCounter.text = resources.ToString();
-        if(currentProvider == null)
+        ironCounter.text = currentIronAmount.ToString();
+        oilCounter.text = currentOilAmount.ToString();
+        if (currentProvider == null)
         {
             ClearToolbar();
         }

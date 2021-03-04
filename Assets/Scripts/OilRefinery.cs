@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OilRefinery : MonoBehaviour
 {
-    OilDeposit oilDeposit;
+    OilDeposit sourceOilDeposit;
     ResourceNode resourceNode;
     Buildable buildable;
 
@@ -20,7 +20,7 @@ public class OilRefinery : MonoBehaviour
     {
         if (buildable && buildable.currentBuildState == BuildState.Built && !resourceNode.enabled)
         {
-            ResourceNode oilDepositResourceNode = oilDeposit.GetComponent<ResourceNode>();
+            ResourceNode oilDepositResourceNode = sourceOilDeposit.GetComponent<ResourceNode>();
 
             resourceNode.enabled = true;
             resourceNode.totalResourceAmount = oilDepositResourceNode.totalResourceAmount;
@@ -31,6 +31,6 @@ public class OilRefinery : MonoBehaviour
 
     public void AssignOilDeposit(OilDeposit oilDeposit)
     {
-        this.oilDeposit = oilDeposit;
+        this.sourceOilDeposit = oilDeposit;
     }
 }

@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 839115745507091032}
   - component: {fileID: 839115745507091033}
   - component: {fileID: 1395309269516611602}
-  - component: {fileID: 3808229980796688504}
+  - component: {fileID: -1142149905257550346}
   m_Layer: 0
   m_Name: OilRefinery
   m_TagString: Untagged
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7125b6bbfc905469c458e0820da364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3808229980796688504
+--- !u!114 &-1142149905257550346
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

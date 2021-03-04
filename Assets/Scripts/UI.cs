@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     public Text resourceCounter;
+    public Text oilCounter;
     public GameObject toolbar;
     public Button toolbarButtonPrefab;
     public RectTransform selectionBox;

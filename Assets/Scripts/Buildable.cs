@@ -18,7 +18,8 @@ public class Buildable : NetworkBehaviour
     public GameObject currentActor;
     public LayerMask invalidCollisions;
     public BuildOn buildOn = BuildOn.Scenery;
-    public int cost;
+    public int ironCost;
+    public int oilCost;
 
     [SyncVar]
     Vector3 buildPosition = Vector3.zero;

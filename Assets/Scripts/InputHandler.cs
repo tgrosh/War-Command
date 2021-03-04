@@ -239,14 +239,15 @@ public class InputHandler : NetworkBehaviour
     }
 
     [Command]
-    private void CmdSpawnBuildable(string prefabName, Vector3 position, int cost)
+    private void CmdSpawnBuildable(string prefabName, Vector3 position, int ironCost, int oilCost)
     {
         GameObject prefab = FindObjectOfType<WarCommandNetworkManager>().spawnPrefabs.Find(go => go.name == prefabName);
         if (prefab)
         {
             currentBuildable = Instantiate(prefab, position, Quaternion.identity).GetComponent<Buildable>();
             currentBuildable.currentBuildState = BuildState.None;
-            currentBuildable.cost = cost;
+            currentBuildable.ironCost = ironCost;
+            currentBuildable.oilCost = oilCost;
         }
         NetworkServer.Spawn(currentBuildable.gameObject, connectionToClient);
         RpcSetCurrentBuildable(currentBuildable);
@@ -269,7 +270,7 @@ public class InputHandler : NetworkBehaviour
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit))
         {
-            CmdSpawnBuildable(currentToolbarAction.prefab.name, hit.point, currentToolbarAction.cost);
+            CmdSpawnBuildable(currentToolbarAction.prefab.name, hit.point, currentToolbarAction.ironCost, currentToolbarAction.oilCost);
         }
     }
 

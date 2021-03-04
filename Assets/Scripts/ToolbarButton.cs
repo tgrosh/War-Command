@@ -20,7 +20,7 @@ public class ToolbarButton : MonoBehaviour
 
     private void Update()
     {
-        button.enabled = toolbarAction.cost <= ResourceBank.instance.currentIron;
+        button.enabled = toolbarAction.ironCost <= ResourceBank.instance.currentIron && toolbarAction.oilCost <= ResourceBank.instance.currentOil;
         if (button.enabled)
         {
             button.transform.Find("Image").GetComponent<Image>().color = originalImageColor;

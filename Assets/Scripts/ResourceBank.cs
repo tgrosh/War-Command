@@ -43,21 +43,16 @@ public class ResourceBank : MonoBehaviour
         EventManager.Emit(EventManager.EventMessage.OilAmountChanged, instance.currentOil);
     }
 
-    public static bool WithdrawIron(int amount)
+    public static bool Withdraw(int ironAmount, int oilAmount)
     {
-        if (instance.currentIron < amount) return false;
+        if (instance.currentIron < ironAmount) return false;
+        if (instance.currentOil < oilAmount) return false;
 
-        instance.currentIron -= amount;
+        instance.currentIron -= ironAmount;
+        instance.currentOil -= oilAmount;
         EventManager.Emit(EventManager.EventMessage.IronAmountChanged, instance.currentIron);
-        return true;
-    }
-
-    public static bool WithdrawOil(int amount)
-    {
-        if (instance.currentOil < amount) return false;
-
-        instance.currentOil -= amount;
         EventManager.Emit(EventManager.EventMessage.OilAmountChanged, instance.currentOil);
+
         return true;
     }
 }

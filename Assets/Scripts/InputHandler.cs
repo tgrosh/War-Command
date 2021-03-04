@@ -73,6 +73,12 @@ public class InputHandler : NetworkBehaviour
                 if (currentBuildable)
                 {
                     if (currentBuildable.currentBuildState != BuildState.InvalidPlacement) {
+                        OilRefinery refinery = currentBuildable.GetComponent<OilRefinery>();
+                        if (refinery)
+                        {
+                            refinery.AssignOilDeposit(closestNearbyOilDeposit);
+                        }
+
                         //placing buildable
                         currentBuildable.ShowPendingBuild();
                         GetCurrentBuilder().Build(currentBuildable);

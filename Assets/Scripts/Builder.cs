@@ -25,7 +25,7 @@ public class Builder : MonoBehaviour
         if (targeter.target)
         {
             buildTarget = targeter.target.GetComponent<Buildable>();
-            if (buildTarget.currentBuildState != BuildState.PendingBuild)
+            if (buildTarget && buildTarget.currentBuildState != BuildState.PendingBuild)
             {
                 buildTarget = null;
             }

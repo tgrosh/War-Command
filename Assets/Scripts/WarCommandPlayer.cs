@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WarCommandPlayer : NetworkBehaviour
 {
-    public GameObject startingProbe;
+    public GameObject startingUnit;
     CameraController cameraController;
 
     // Start is called before the first frame update
@@ -29,7 +29,8 @@ public class WarCommandPlayer : NetworkBehaviour
     [Command]
     void CmdSpawnProbe()
     {
-        GameObject probe = Instantiate(startingProbe, transform.position, transform.rotation);
-        NetworkServer.Spawn(probe, connectionToClient);
+        GameObject startingBase = Instantiate(startingUnit, transform.position, transform.rotation);
+        NetworkServer.Spawn(startingBase, connectionToClient);
+        startingBase.GetComponent<Buildable>().Build();
     }
 }

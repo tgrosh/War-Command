@@ -25,12 +25,10 @@ public class Buildable : NetworkBehaviour
     Vector3 buildPosition = Vector3.zero;
 
     Vector3 previousPosition;
-    Vector3 extents;
 
     // Start is called before the first frame update
     void Start()
     {
-        extents = inProgressActor.GetComponent<NavMeshObstacle>().size;
     }
 
     // Update is called once per frame
@@ -88,7 +86,7 @@ public class Buildable : NetworkBehaviour
     public bool CanBuildHere() {
         if (buildOn == BuildOn.Scenery)
         {
-            Collider[] colliders = Physics.OverlapBox(transform.position, extents * .75f, transform.rotation, invalidCollisions);
+            Collider[] colliders = Physics.OverlapBox(transform.position, GetBounds().extents * .75f, transform.rotation, invalidCollisions);
             return GetNavMeshAtCurrentPosition().hit && colliders.Length == 0;
         } else
         {
@@ -112,6 +110,17 @@ public class Buildable : NetworkBehaviour
         NavMesh.SamplePosition(transform.position, out navMeshHit, .25f, placeableMask);
 
         return navMeshHit;
+    }
+
+    public Bounds GetBounds()
+    {
+        Bounds combinedBounds = new Bounds(transform.position, Vector3.zero);
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+        {
+            combinedBounds.Encapsulate(renderer.bounds);
+        }
+
+        return combinedBounds;
     }
 
 }

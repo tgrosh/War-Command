@@ -6,8 +6,6 @@ using UnityEngine.AI;
 
 public class Builder : MonoBehaviour
 {
-    public float buildRange;
-
     Mover mover;
     ActionQueue queue;
     Action currentAction;
@@ -45,12 +43,11 @@ public class Builder : MonoBehaviour
             buildTarget = null;
         }
 
-        atBuildTarget = mover.moveComplete && buildTarget && Vector3.Distance(transform.position, buildTarget.transform.position) < buildRange;
+        atBuildTarget = mover.moveComplete && buildTarget && Vector3.Distance(transform.position, buildTarget.transform.position) < buildTarget.GetBounds().extents.magnitude;
 
         if (buildTarget && !atBuildTarget)
         {
-            //move to build target
-            mover.SetDestination(buildTarget.transform.position);
+            mover.SetDestination(buildTarget.GetBounds().ClosestPoint(transform.position));
         }
 
         if (buildTarget && atBuildTarget)

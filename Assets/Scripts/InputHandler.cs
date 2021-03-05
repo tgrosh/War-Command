@@ -129,7 +129,16 @@ public class InputHandler : NetworkBehaviour
             {
                 if (hit.collider)
                 {
-                    Action action = GetAction(hit.collider.gameObject);
+                    Action action;
+
+                    //if scenery... create move action
+                    if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("Scenery"))
+                    {
+                        action = new Action(ActionType.Move, hit.collider.transform.position);
+                    } else
+                    {
+                        action = GetAction(hit.collider.gameObject);
+                    }
 
                     if (action != null)
                     {
@@ -230,13 +239,6 @@ public class InputHandler : NetworkBehaviour
         if (refinery && identity && identity.hasAuthority)
         {
             return new Action(ActionType.Collect, refinery.gameObject);
-        }
-
-        //if scenery... create move action
-        if (targetGameObject.transform.root.gameObject.layer == LayerMask.NameToLayer("Scenery"))
-        {
-            //create a marker at position, and use that as move target
-            return new Action(ActionType.Move, null); // TODO
         }
 
         return null;

@@ -134,7 +134,7 @@ public class InputHandler : NetworkBehaviour
                     //if scenery... create move action
                     if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("Scenery"))
                     {
-                        action = new Action(ActionType.Move, hit.collider.transform.position);
+                        action = new Action(ActionType.Move, hit.point);
                     } else
                     {
                         action = GetAction(hit.collider.gameObject);
@@ -144,6 +144,7 @@ public class InputHandler : NetworkBehaviour
                     {
                         foreach (ActionQueue queue in GetSelectedActionQueues())
                         {
+                            queue.Clear();
                             queue.Add(action);
                         }
                     }

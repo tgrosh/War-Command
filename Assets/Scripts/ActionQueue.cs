@@ -34,4 +34,13 @@ public class ActionQueue : MonoBehaviour
     {
         actions.Clear();
     }
+    public Action Peek()
+    {
+        return actions.Count > 0 ? actions[0] : null;
+    }
+
+    public void Next()
+    {
+        actions.RemoveAt(0);
+    }
 }

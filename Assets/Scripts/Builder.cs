@@ -9,7 +9,8 @@ public class Builder : MonoBehaviour
     public float buildRange;
 
     Mover mover;
-    Targeter targeter;
+    ActionQueue queue;
+    Action currentAction;
     Buildable buildTarget;
 
     bool atBuildTarget;    
@@ -17,14 +18,23 @@ public class Builder : MonoBehaviour
     private void Start()
     {
         mover = GetComponent<Mover>();
-        targeter = GetComponent<Targeter>();
+        queue = GetComponent<ActionQueue>();
     }
 
     private void Update()
     {
-        if (targeter.target)
+        if (queue.Peek() != null && queue.Peek().actionType == ActionType.Build)
         {
-            buildTarget = targeter.target.GetComponent<Buildable>();
+            currentAction = queue.Peek();
+        }
+        else
+        {
+            currentAction = null;
+        }
+
+        if (currentAction != null)
+        {
+            buildTarget = currentAction.actionTarget.GetComponent<Buildable>();
             if (buildTarget && buildTarget.currentBuildState != BuildState.PendingBuild)
             {
                 buildTarget = null;
@@ -53,7 +63,8 @@ public class Builder : MonoBehaviour
 
     public void Build(Buildable buildable)
     {
-        GetComponent<Targeter>().SetTarget(buildable.GetComponent<Targetable>());
+        queue.Clear();
+        queue.Add(new Action(ActionType.Build, buildable.gameObject));
     }
 
     void StartBuild()
@@ -63,7 +74,7 @@ public class Builder : MonoBehaviour
         if (ResourceBank.Withdraw(buildTarget.ironCost, buildTarget.oilCost))
         {
             buildTarget.GetComponent<Buildable>().Build();
-            targeter.ClearTarget();
+            queue.Next();
         }
     }
 

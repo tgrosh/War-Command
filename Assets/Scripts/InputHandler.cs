@@ -148,33 +148,6 @@ public class InputHandler : NetworkBehaviour
                             queue.Add(action);
                         }
                     }
-
-                    //Targetable targetable = hit.collider.GetComponentInParent<Targetable>();
-                    //if (targetable)
-                    //{
-                    //    foreach (Mover mover in GetMovers())
-                    //    {
-                    //        Targeter targeter = mover.GetComponent<Targeter>();
-                    //        if (targeter)
-                    //        {
-                    //            targeter.SetTarget(targetable);
-                    //        }
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    foreach (Mover mover in GetMovers())
-                    //    {
-                    //        mover.SetDestination(hit.point);
-                    //        mover.ShowDestinationMarker();
-
-                    //        Targeter targeter = mover.GetComponent<Targeter>();
-                    //        if (targeter)
-                    //        {
-                    //            targeter.ClearTarget();
-                    //        }
-                    //    }
-                    //}
                 }
             } else
             {

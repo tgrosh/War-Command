@@ -10,8 +10,9 @@ public class Attacker : NetworkBehaviour
 
     Mover mover;
     Animator animator;
-    Targeter targeter;
     Attackable attackTarget;
+    ActionQueue queue;
+    Action currentAction;
     AudioSource audioSource;
     AudioClip attackClip;
     bool canAttack;
@@ -24,23 +25,27 @@ public class Attacker : NetworkBehaviour
     void Start()
     {
         mover = GetComponent<Mover>();
-        targeter = GetComponent<Targeter>();
         animator = GetComponent <Animator>();
         audioSource = GetComponent<AudioSource>();
         attackClip = attackType.GetAudioClip();
+        queue = GetComponent<ActionQueue>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (targeter.target)
+        if (queue.Peek() != null && queue.Peek().actionType == ActionType.Attack)
         {
-            NetworkIdentity ident = targeter.target.GetComponent<NetworkIdentity>();
+            currentAction = queue.Peek();
+        }
+        else
+        {
+            currentAction = null;
+        }
 
-            if (ident && !ident.hasAuthority) //if its an enemy
-            {
-                attackTarget = targeter.target.GetComponentInParent<Attackable>();
-            }
+        if (currentAction != null)
+        {
+            attackTarget = currentAction.actionTarget.GetComponentInParent<Attackable>();
         }
         else
         {
@@ -96,11 +101,6 @@ public class Attacker : NetworkBehaviour
             {
                 CmdAttackTarget(attackTarget, attackType);
                 attackTimer = 0f;
-
-                if (attackTarget.health.currentHealth == 0)
-                {
-                    StopAttack();
-                }
             }
         }
 
@@ -108,8 +108,9 @@ public class Attacker : NetworkBehaviour
             // look for a target
             foreach (Collider collider in Physics.OverlapSphere(transform.position, guardRadius)) {
                 Attackable attackable = collider.GetComponentInParent<Attackable>();
-                if (attackable && !attackable.GetComponentInParent<NetworkIdentity>().hasAuthority) {
-                    targeter.SetTarget(attackable.GetComponent<Targetable>());
+                if (attackable && attackable.health.currentHealth > 0 && !attackable.GetComponentInParent<NetworkIdentity>().hasAuthority) {
+                    queue.Clear();
+                    queue.Add(new Action(ActionType.Attack, attackable.gameObject));
                 }
             }
         }
@@ -138,7 +139,9 @@ public class Attacker : NetworkBehaviour
     void StopAttack()
     {
         animator.ResetTrigger("shoot");
+        queue.Next();
         isAttacking = false;
+        currentAction = null;
         attackTarget = null;
         if (showAttack) CmdSetShowAttack(false);
         showAttack = false;

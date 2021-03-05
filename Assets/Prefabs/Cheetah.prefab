@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 2530102623984246004}
   - component: {fileID: 1168726800330117397}
   - component: {fileID: -1515462849469506945}
+  - component: {fileID: 6853192169612463695}
   m_Layer: 0
   m_Name: Cheetah
   m_TagString: Untagged
@@ -338,6 +339,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf0119982b2b754c8b111161915ba58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6853192169612463695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168726800330117378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b628a518571a18240952748d52c7799e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: []
 --- !u!1 &1168726801449710767
 GameObject:
   m_ObjectHideFlags: 0

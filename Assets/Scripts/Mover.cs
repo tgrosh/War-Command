@@ -15,6 +15,7 @@ public class Mover : NetworkBehaviour
     GameObject marker; 
     LineRenderer pathRenderer;
     Vector3 currentTargetPosition;
+    Transform currentTargetTransform;
     Animator animator;
     Vector3 lastPosition;
     float currentLastPositionTime;
@@ -99,6 +100,24 @@ public class Mover : NetworkBehaviour
         agent.stoppingDistance = range;
         currentTargetPosition = targetPosition;
         moveComplete = false;
+    }
+
+    public void SetDestination(Transform targetTransform)
+    {
+        if (currentTargetTransform == targetTransform) return;
+
+        SetDestination(GetBounds(targetTransform).ClosestPoint(transform.position));
+    }
+
+    Bounds GetBounds(Transform targetTransform)
+    {
+        Bounds combinedBounds = new Bounds(targetTransform.position, Vector3.zero);
+        foreach (Renderer renderer in targetTransform.GetComponentsInChildren<Renderer>())
+        {
+            combinedBounds.Encapsulate(renderer.bounds);
+        }
+
+        return combinedBounds;
     }
 
     public void ClearDestination()

@@ -60,7 +60,7 @@ public class Collector : NetworkBehaviour
         if (resourceTarget && !atResourceTarget && CanCollectFromResource(resourceTarget))
         {
             //move to resource node
-            mover.SetDestination(resourceTarget.transform.position);
+            mover.SetDestination(resourceTarget.transform);
         }
 
         //if we have a resource target, and we are at the resource, and we are not full
@@ -96,7 +96,7 @@ public class Collector : NetworkBehaviour
 
             if (depotTarget)
             {
-                mover.SetDestination(depotTarget.transform.position);
+                mover.SetDestination(depotTarget.transform);
             }
         }
 

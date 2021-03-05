@@ -47,7 +47,7 @@ public class Builder : MonoBehaviour
 
         if (buildTarget && !atBuildTarget)
         {
-            mover.SetDestination(buildTarget.GetBounds().ClosestPoint(transform.position));
+            mover.SetDestination(buildTarget.transform);
         }
 
         if (buildTarget && atBuildTarget)

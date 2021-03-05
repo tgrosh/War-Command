@@ -149,7 +149,7 @@ public class Attacker : NetworkBehaviour
     
     void MoveToTarget()
     {
-        mover.SetDestination(attackTarget.transform.position);
+        mover.SetDestination(attackTarget.transform);
         isAttacking = false;
         if (showAttack) CmdSetShowAttack(false);
         showAttack = false;

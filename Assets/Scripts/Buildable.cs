@@ -30,7 +30,7 @@ public class Buildable : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        extents = actor.GetComponent<NavMeshObstacle>().size;
+        extents = inProgressActor.GetComponent<NavMeshObstacle>().size;
     }
 
     // Update is called once per frame

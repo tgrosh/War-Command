@@ -127,36 +127,44 @@ public class InputHandler : NetworkBehaviour
 
             if (selectedObjects.Count > 0)
             {
-
                 if (hit.collider)
                 {
-                    Targetable targetable = hit.collider.GetComponentInParent<Targetable>();
+                    Action action = GetAction(hit.collider.gameObject);
 
-                    if (targetable)
-                    {                        
-                        foreach (Mover mover in GetMovers())
-                        {
-                            Targeter targeter = mover.GetComponent<Targeter>();
-                            if (targeter)
-                            {
-                                targeter.SetTarget(targetable);
-                            }
-                        }
-                    }
-                    else
+                    if (action != null)
                     {
-                        foreach (Mover mover in GetMovers())
+                        foreach (ActionQueue queue in GetSelectedActionQueues())
                         {
-                            mover.SetDestination(hit.point);
-                            mover.ShowDestinationMarker();
-
-                            Targeter targeter = mover.GetComponent<Targeter>();
-                            if (targeter)
-                            {
-                                targeter.ClearTarget();
-                            }
+                            queue.Add(action);
                         }
                     }
+
+                    //Targetable targetable = hit.collider.GetComponentInParent<Targetable>();
+                    //if (targetable)
+                    //{
+                    //    foreach (Mover mover in GetMovers())
+                    //    {
+                    //        Targeter targeter = mover.GetComponent<Targeter>();
+                    //        if (targeter)
+                    //        {
+                    //            targeter.SetTarget(targetable);
+                    //        }
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    foreach (Mover mover in GetMovers())
+                    //    {
+                    //        mover.SetDestination(hit.point);
+                    //        mover.ShowDestinationMarker();
+
+                    //        Targeter targeter = mover.GetComponent<Targeter>();
+                    //        if (targeter)
+                    //        {
+                    //            targeter.ClearTarget();
+                    //        }
+                    //    }
+                    //}
                 }
             } else
             {
@@ -190,6 +198,48 @@ public class InputHandler : NetworkBehaviour
             isDragSelecting = false;
             EventManager.Emit(EventManager.EventMessage.SelectionBoxUpdated, null);
         }
+    }
+
+    Action GetAction(GameObject targetGameObject)
+    {
+        NetworkIdentity identity = targetGameObject.GetComponentInParent<NetworkIdentity>();
+
+        //if attackable, and not friendly... create attack action
+        Attackable attackable = targetGameObject.GetComponentInParent<Attackable>();
+        if (attackable && identity && !identity.hasAuthority)
+        {
+            return new Action(ActionType.Attack, attackable.gameObject);
+        }
+
+        //if buildable, and friendly... create build action
+        Buildable buildable = targetGameObject.GetComponentInParent<Buildable>();
+        if (buildable && identity && identity.hasAuthority)
+        {
+            return new Action(ActionType.Build, buildable.gameObject);
+        }
+
+        //if resource node, create collect action
+        ResourceNode resourceNode = targetGameObject.GetComponentInParent<ResourceNode>();
+        if (resourceNode)
+        {
+            return new Action(ActionType.Collect, resourceNode.gameObject);
+        }
+
+        //if oil refinery, and friendly... create collect action
+        OilRefinery refinery = targetGameObject.GetComponentInParent<OilRefinery>();
+        if (refinery && identity && identity.hasAuthority)
+        {
+            return new Action(ActionType.Collect, refinery.gameObject);
+        }
+
+        //if scenery... create move action
+        if (targetGameObject.transform.root.gameObject.layer == LayerMask.NameToLayer("Scenery"))
+        {
+            //create a marker at position, and use that as move target
+            return new Action(ActionType.Move, null); // TODO
+        }
+
+        return null;
     }
 
     private OilDeposit GetClosestNearbyOilDeposit(Vector3 currentPosition)
@@ -332,6 +382,22 @@ public class InputHandler : NetworkBehaviour
         }
 
         return movers;
+    }
+
+    List<ActionQueue> GetSelectedActionQueues()
+    {
+        List<ActionQueue> queues = new List<ActionQueue>();
+
+        foreach (Selectable selectable in selectedObjects)
+        {
+            ActionQueue queue = selectable.GetComponent<ActionQueue>();
+            if (queue)
+            {
+                queues.Add(queue);
+            }
+        }
+
+        return queues;
     }
 
     RaycastHit RayCast(LayerMask layers) {

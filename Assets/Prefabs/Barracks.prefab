@@ -127,7 +127,7 @@ MonoBehaviour:
   currentActor: {fileID: 0}
   invalidCollisions:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 55
   buildOn: 0
   ironCost: 0
   oilCost: 0

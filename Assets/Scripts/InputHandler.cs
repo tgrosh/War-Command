@@ -123,40 +123,47 @@ public class InputHandler : NetworkBehaviour
         // right mouse click
         if (Mouse.current.rightButton.wasPressedThisFrame && !EventSystem.current.IsPointerOverGameObject(-1))
         {
-            RaycastHit hit = RayCast(rayLayers);
-
-            if (selectedObjects.Count > 0)
+            if (currentBuildable)
             {
-                if (hit.collider)
-                {
-                    Action action;
-
-                    //if scenery... create move action
-                    if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("Scenery"))
-                    {
-                        action = new Action(ActionType.Move, hit.point);
-                    } else
-                    {
-                        action = GetAction(hit.collider.gameObject);
-                    }
-
-                    if (action != null)
-                    {
-                        foreach (ActionQueue queue in GetSelectedActionQueues())
-                        {
-                            queue.Clear();
-                            queue.Add(action);
-                        }
-                    }
-                }
+                currentBuildable.CancelBuild();
+                currentBuildable = null;
             } else
             {
-                if (hit.collider)
+                RaycastHit hit = RayCast(rayLayers);
+
+                if (selectedObjects.Count > 0)
                 {
-                    Buildable buildable = hit.collider.GetComponentInParent<Buildable>();
-                    if (buildable && buildable.currentBuildState == BuildState.PendingBuild)
+                    if (hit.collider)
                     {
-                        buildable.CancelBuild();
+                        Action action;
+
+                        //if scenery... create move action
+                        if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("Scenery"))
+                        {
+                            action = new Action(ActionType.Move, hit.point);
+                        } else
+                        {
+                            action = GetAction(hit.collider.gameObject);
+                        }
+
+                        if (action != null)
+                        {
+                            foreach (ActionQueue queue in GetSelectedActionQueues())
+                            {
+                                queue.Clear();
+                                queue.Add(action);
+                            }
+                        }
+                    }
+                } else
+                {
+                    if (hit.collider)
+                    {
+                        Buildable buildable = hit.collider.GetComponentInParent<Buildable>();
+                        if (buildable && buildable.currentBuildState == BuildState.PendingBuild)
+                        {
+                            buildable.CancelBuild();
+                        }
                     }
                 }
             }

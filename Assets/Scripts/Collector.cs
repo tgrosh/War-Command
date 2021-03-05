@@ -13,7 +13,8 @@ public class Collector : NetworkBehaviour
     public int currentlyCollectedResources;
 
     Mover mover;
-    Targeter targeter;
+    ActionQueue queue;
+    Action currentAction;
 
     bool atResourceTarget;
     bool atDeliveryTarget;
@@ -27,7 +28,7 @@ public class Collector : NetworkBehaviour
     void Start()
     {
         mover = GetComponent<Mover>();
-        targeter = GetComponent<Targeter>();
+        queue = GetComponent<ActionQueue>();
     }
 
     // Update is called once per frame
@@ -35,14 +36,22 @@ public class Collector : NetworkBehaviour
     {
         if (!hasAuthority) return;
 
-        if (targeter.target)
+        if (queue.Peek() != null && queue.Peek().actionType == ActionType.Collect)
         {
-            resourceTarget = targeter.target.GetComponent<ResourceNode>();
+            currentAction = queue.Peek();
+        } else
+        {
+            currentAction = null;
+        }  
+
+        if (currentAction != null)
+        {
+            resourceTarget = currentAction.actionTarget.GetComponent<ResourceNode>();
         }
         else
         {
             resourceTarget = null;
-        }        
+        }
 
         atResourceTarget = mover.moveComplete && resourceTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
         atDeliveryTarget = mover.moveComplete && depotTarget && Vector3.Distance(transform.position, depotTarget.transform.position) < deliveryRange;

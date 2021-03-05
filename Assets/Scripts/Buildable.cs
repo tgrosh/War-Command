@@ -83,7 +83,7 @@ public class Buildable : NetworkBehaviour
     public bool CanBuildHere() {
         if (buildOn == BuildOn.Scenery)
         {
-            Collider[] colliders = Physics.OverlapBox(transform.position, extents * .5f, transform.rotation, invalidCollisions);
+            Collider[] colliders = Physics.OverlapBox(transform.position, extents * .75f, transform.rotation, invalidCollisions);
             return GetNavMeshAtCurrentPosition().hit && colliders.Length == 0;
         } else
         {

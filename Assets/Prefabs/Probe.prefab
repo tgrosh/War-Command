@@ -93,7 +93,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2451251457783030667}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
+  m_Radius: 0.1
   m_Speed: 8
   m_Acceleration: 20
   avoidancePriority: 50
@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3df3720272572749bd929856ad5c81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   targetMarkerPrefab: {fileID: 6886364940454071289, guid: 484b1db94be870d4394906cb04d003b6, type: 3}
+  target: {fileID: 0}
 --- !u!114 &2451251457783030678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,7 +314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb53ecb062b6e740a07d62f2c57033e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildRange: 15
 --- !u!114 &3616137158467159839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,6 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b628a518571a18240952748d52c7799e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actions: []
 --- !u!1 &2451251458627253515
 GameObject:
   m_ObjectHideFlags: 0

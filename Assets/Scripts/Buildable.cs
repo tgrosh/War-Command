@@ -54,7 +54,10 @@ public class Buildable : NetworkBehaviour
 
     public void ShowPendingBuild()
     {
-        CmdSetBuildState(BuildState.PendingBuild, transform.position);
+        if (ResourceBank.Withdraw(ironCost, oilCost))
+        {
+            CmdSetBuildState(BuildState.PendingBuild, transform.position);
+        }
     }
 
     [Command]
@@ -71,6 +74,8 @@ public class Buildable : NetworkBehaviour
 
     public void CancelBuild()
     {
+        ResourceBank.DepositIron(ironCost);
+        ResourceBank.DepositOil(oilCost);
         Destroy(gameObject);
     }
 

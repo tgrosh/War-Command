@@ -70,12 +70,9 @@ public class Builder : MonoBehaviour
     void StartBuild()
     {
         transform.LookAt(new Vector3(buildTarget.transform.position.x, transform.position.y, buildTarget.transform.position.z));
-
-        if (ResourceBank.Withdraw(buildTarget.ironCost, buildTarget.oilCost))
-        {
-            buildTarget.GetComponent<Buildable>().Build();
-            queue.Next();
-        }
+                
+        buildTarget.GetComponent<Buildable>().Build();
+        queue.Next();
     }
 
 }

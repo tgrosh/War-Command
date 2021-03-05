@@ -90,19 +90,15 @@ public class Mover : NetworkBehaviour
         }
     }
 
-    public void SetDestination(Vector3 targetPosition, float range = 10f, int navLayerMask = NavMesh.AllAreas)
+    public void SetDestination(Vector3 targetPosition, float range = .1f, int navLayerMask = NavMesh.AllAreas)
     {
         if (currentTargetPosition == targetPosition) return;
 
-        NavMeshHit navHit;
-        NavMesh.SamplePosition(targetPosition, out navHit, range, navLayerMask);
-        
-        if (navHit.hit) {
-            ClearDestination();
-            agent.destination = navHit.position;
-            currentTargetPosition = targetPosition;
-            moveComplete = false;
-        }
+        ClearDestination();
+        agent.SetDestination(targetPosition);
+        agent.stoppingDistance = range;
+        currentTargetPosition = targetPosition;
+        moveComplete = false;
     }
 
     public void ClearDestination()

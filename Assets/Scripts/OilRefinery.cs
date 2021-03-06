@@ -2,31 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OilRefinery : MonoBehaviour
+public class OilRefinery : ResourceNode
 {
     OilDeposit sourceOilDeposit;
-    ResourceNode resourceNode;
     Buildable buildable;
 
     // Start is called before the first frame update
     void Start()
     {
-        resourceNode = GetComponent<ResourceNode>();
         buildable = GetComponent<Buildable>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (buildable && buildable.currentBuildState == BuildState.Built && !resourceNode.enabled)
+        if (buildable && buildable.currentBuildState == BuildState.Built && sourceOilDeposit.enabled)
         {
-            ResourceNode oilDepositResourceNode = sourceOilDeposit.GetComponent<ResourceNode>();
+            totalResourceAmount = sourceOilDeposit.totalResourceAmount;
+            availableResourceAmount = sourceOilDeposit.availableResourceAmount;
+            resourcesPerCollect = sourceOilDeposit.resourcesPerCollect;
 
-            resourceNode.enabled = true;
-            resourceNode.totalResourceAmount = oilDepositResourceNode.totalResourceAmount;
-            resourceNode.availableResourceAmount = oilDepositResourceNode.availableResourceAmount;
-            resourceNode.resourcesPerCollect = oilDepositResourceNode.resourcesPerCollect;
+            sourceOilDeposit.enabled = false;
         }
+    }
+
+    private void OnDestroy()
+    {
+        sourceOilDeposit.enabled = true;
+        sourceOilDeposit.availableResourceAmount = availableResourceAmount;
     }
 
     public void AssignOilDeposit(OilDeposit oilDeposit)

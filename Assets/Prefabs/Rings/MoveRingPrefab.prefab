@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6886364940454071288}
-  m_Layer: 0
-  m_Name: TargetRing1
+  m_Layer: 7
+  m_Name: MoveRingPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6886364940834259671}
   - component: {fileID: 6886364940834259669}
   - component: {fileID: 6886364940834259670}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}

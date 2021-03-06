@@ -54,13 +54,14 @@ public class Collector : NetworkBehaviour
         }
 
         atResourceTarget = mover.moveComplete && resourceTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
-        atDeliveryTarget = mover.moveComplete && depotTarget && Vector3.Distance(transform.position, depotTarget.transform.position) < deliveryRange;
-
+        atDeliveryTarget = mover.moveComplete && resourceTarget && depotTarget && Vector3.Distance(transform.position, depotTarget.transform.position) < deliveryRange;
+        
         //if we have a resource target, and we are not at the resource, and we are not full
         if (resourceTarget && !atResourceTarget && CanCollectFromResource(resourceTarget))
         {
             //move to resource node
             mover.SetDestination(resourceTarget.transform);
+            depotTarget = null;
         }
 
         //if we have a resource target, and we are at the resource, and we are not full
@@ -68,6 +69,7 @@ public class Collector : NetworkBehaviour
         {
             if (hasAuthority)
             {
+                depotTarget = null;
                 transform.LookAt(new Vector3(resourceTarget.transform.position.x, transform.position.y, resourceTarget.transform.position.z));
                 if (collectionPerSecond > 0 && collectionTimer > 1 / collectionPerSecond)
                 {
@@ -81,7 +83,6 @@ public class Collector : NetworkBehaviour
                     collectionTimer = 0f;
                 }
                 collectionTimer += Time.deltaTime;
-
             }
         }
 

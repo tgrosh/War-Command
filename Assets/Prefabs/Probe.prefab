@@ -282,7 +282,7 @@ MonoBehaviour:
   maxResources: 5
   collectionPerSecond: 1
   collectionRange: 5
-  deliveryRange: 7
+  deliveryRange: 10
   collectorEffect: {fileID: 2451251458627253526}
   currentlyCollectedResources: 0
 --- !u!114 &2451251457783030675

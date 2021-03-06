@@ -114,7 +114,10 @@ public class Mover : NetworkBehaviour
         Bounds combinedBounds = new Bounds(targetTransform.position, Vector3.zero);
         foreach (Renderer renderer in targetTransform.GetComponentsInChildren<Renderer>())
         {
-            combinedBounds.Encapsulate(renderer.bounds);
+            if (renderer.gameObject.layer != LayerMask.NameToLayer("SelectionRing"))
+            {
+                combinedBounds.Encapsulate(renderer.bounds);
+            }
         }
 
         return combinedBounds;

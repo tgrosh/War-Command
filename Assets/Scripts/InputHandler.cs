@@ -14,6 +14,7 @@ public class InputHandler : NetworkBehaviour
     public ToolbarAction currentToolbarAction;
     public Buildable currentBuildable;
     public LayerMask rayLayers;
+    public float dragThreshold;
 
     GridSystem<bool> gridSystem;
 
@@ -172,7 +173,7 @@ public class InputHandler : NetworkBehaviour
         // holding left mouse
         if (Mouse.current.leftButton.isPressed && !Mouse.current.leftButton.wasPressedThisFrame && !EventSystem.current.IsPointerOverGameObject(-1))
         {
-            if (Vector2.Distance(selectionStartPosition, Mouse.current.position.ReadValue()) > 0f)
+            if (Vector2.Distance(selectionStartPosition, Mouse.current.position.ReadValue()) > dragThreshold)
             {
                 // mouse is pressed, but wasnt pressed this frame, so dragging
                 UpdateSelectionBox(selectionStartPosition, Mouse.current.position.ReadValue());

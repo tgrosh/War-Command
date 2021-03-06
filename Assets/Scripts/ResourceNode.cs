@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ResourceNode : NetworkBehaviour
 {
+    public float collectionRange;
     [SyncVar]
     public int availableResourceAmount;
     public int totalResourceAmount;

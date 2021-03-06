@@ -115,9 +115,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  collectionRange: 2.5
   availableResourceAmount: 0
   totalResourceAmount: 500
   resourcesPerCollect: 1
+  isOccupiedBy: {fileID: 0}
+  assignedCollectorCount: 0
 --- !u!1 &1074589251595736
 GameObject:
   m_ObjectHideFlags: 0

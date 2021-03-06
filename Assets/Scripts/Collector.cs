@@ -7,7 +7,6 @@ public class Collector : NetworkBehaviour
 {
     public int maxResources;
     public float collectionPerSecond;
-    public float collectionRange;
     public float deliveryRange;
     public VisualEffect collectorEffect;
     public int currentlyCollectedResources;
@@ -53,7 +52,7 @@ public class Collector : NetworkBehaviour
             resourceTarget = null;
         }
 
-        atResourceTarget = mover.moveComplete && resourceTarget && !depotTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
+        atResourceTarget = mover.moveComplete && resourceTarget && !depotTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < resourceTarget.collectionRange;
         atDeliveryTarget = mover.moveComplete && resourceTarget && depotTarget && Vector3.Distance(transform.position, depotTarget.transform.position) < deliveryRange;
         
         //if we have a resource target, and we are not at the resource, and we are not full

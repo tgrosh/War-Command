@@ -33,7 +33,6 @@ GameObject:
   - component: {fileID: 839115745507091032}
   - component: {fileID: 839115745507091033}
   - component: {fileID: 1395309269516611602}
-  - component: {fileID: -1142149905257550346}
   m_Layer: 0
   m_Name: OilRefinery
   m_TagString: Untagged
@@ -187,23 +186,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7125b6bbfc905469c458e0820da364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-1142149905257550346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 839115745507091035}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2f8eaf716781aa4592cdaf890d37a06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  collectionRange: 7
   availableResourceAmount: 0
   totalResourceAmount: 0
-  resourcesPerCollect: 0
+  resourcesPerCollect: 1
 --- !u!1 &839115745788848198
 GameObject:
   m_ObjectHideFlags: 0

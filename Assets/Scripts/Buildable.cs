@@ -66,7 +66,13 @@ public class Buildable : NetworkBehaviour
 
     public void Build()
     {
-        CmdSetBuildState(BuildState.Built, transform.position); //do more later
+        buildPosition = transform.position;
+        currentBuildState = BuildState.Built;
+
+        if (hasAuthority)
+        {
+            CmdSetBuildState(BuildState.Built, transform.position); //do more later
+        }
     }
 
     public void CancelBuild()

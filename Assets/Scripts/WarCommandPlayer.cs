@@ -21,13 +21,13 @@ public class WarCommandPlayer : NetworkBehaviour
 
     public override void OnStartLocalPlayer()
     {
-        CmdSpawnProbe();
+        CmdSpawnStartingUnit();
 
         base.OnStartLocalPlayer();
     }
 
     [Command]
-    void CmdSpawnProbe()
+    void CmdSpawnStartingUnit()
     {
         GameObject startingBase = Instantiate(startingUnit, transform.position, transform.rotation);
         NetworkServer.Spawn(startingBase, connectionToClient);

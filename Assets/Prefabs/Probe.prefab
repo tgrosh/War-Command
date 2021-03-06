@@ -281,7 +281,7 @@ MonoBehaviour:
   syncInterval: 0.1
   maxResources: 5
   collectionPerSecond: 1
-  collectionRange: 5
+  collectionRange: 10
   deliveryRange: 10
   collectorEffect: {fileID: 2451251458627253526}
   currentlyCollectedResources: 0

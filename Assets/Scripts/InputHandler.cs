@@ -204,7 +204,7 @@ public class InputHandler : NetworkBehaviour
 
         //if buildable, and friendly... create build action
         Buildable buildable = targetGameObject.GetComponentInParent<Buildable>();
-        if (buildable && identity && identity.hasAuthority)
+        if (buildable && buildable.currentBuildState == BuildState.PendingBuild && identity && identity.hasAuthority)
         {
             return new Action(ActionType.Build, buildable.gameObject);
         }

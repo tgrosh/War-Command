@@ -53,7 +53,7 @@ public class Collector : NetworkBehaviour
             resourceTarget = null;
         }
 
-        atResourceTarget = mover.moveComplete && resourceTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
+        atResourceTarget = mover.moveComplete && resourceTarget && !depotTarget && Vector3.Distance(transform.position, resourceTarget.transform.position) < collectionRange;
         atDeliveryTarget = mover.moveComplete && resourceTarget && depotTarget && Vector3.Distance(transform.position, depotTarget.transform.position) < deliveryRange;
         
         //if we have a resource target, and we are not at the resource, and we are not full

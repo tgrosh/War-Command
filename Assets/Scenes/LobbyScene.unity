@@ -263,7 +263,7 @@ MonoBehaviour:
   serverBatching: 0
   serverBatchInterval: 0
   offlineScene: Assets/Scenes/LobbyScene.unity
-  onlineScene: Assets/Scenes/MultiplayerTest.unity
+  onlineScene: Assets/Scenes/TerrainTest.unity
   transport: {fileID: 227122131}
   networkAddress: 192.168.1.89
   maxConnections: 2

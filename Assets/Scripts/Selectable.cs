@@ -31,7 +31,7 @@ public class Selectable : NetworkBehaviour
 
     void ShowMarker()
     {
-        marker = Instantiate(selectionMarkerPrefab, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
+        marker = Instantiate(selectionMarkerPrefab, transform.position, Quaternion.identity);
         marker.transform.parent = transform;
         marker.transform.localScale = new Vector3(scale, 1, scale);
     }

@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  collectionRange: 2.5
+  collectionRange: 4
   availableResourceAmount: 0
   totalResourceAmount: 500
   resourcesPerCollect: 1

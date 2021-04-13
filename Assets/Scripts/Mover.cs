@@ -51,7 +51,7 @@ public class Mover : NetworkBehaviour
             ShowDestinationMarker();
         }
 
-        if (!moveComplete && agent.remainingDistance < agent.stoppingDistance)
+        if (!moveComplete && agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
         {
             ClearDestination();
             if (currentAction != null)

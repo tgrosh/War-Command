@@ -51,7 +51,7 @@ public class Mover : NetworkBehaviour
             ShowDestinationMarker();
         }
 
-        if (!moveComplete && agent.hasPath && agent.remainingDistance < agent.stoppingDistance)
+        if (!moveComplete && agent.remainingDistance < agent.stoppingDistance)
         {
             ClearDestination();
             if (currentAction != null)
@@ -106,21 +106,15 @@ public class Mover : NetworkBehaviour
     {
         if (currentTargetTransform == targetTransform) return;
 
-        SetDestination(GetBounds(targetTransform).ClosestPoint(transform.position));
-    }
+        Collider collider = targetTransform.GetComponentInChildren<Collider>();
 
-    Bounds GetBounds(Transform targetTransform)
-    {
-        Bounds combinedBounds = new Bounds(targetTransform.position, Vector3.zero);
-        foreach (Renderer renderer in targetTransform.GetComponentsInChildren<Renderer>())
+        if (collider)
         {
-            if (renderer.gameObject.layer != LayerMask.NameToLayer("SelectionRing"))
-            {
-                combinedBounds.Encapsulate(renderer.bounds);
-            }
+            SetDestination(collider.ClosestPoint(transform.position));
+        } else
+        {
+            SetDestination(targetTransform.position);
         }
-
-        return combinedBounds;
     }
 
     public void ClearDestination()
